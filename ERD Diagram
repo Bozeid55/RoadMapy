@@ -1,0 +1,531 @@
+erDiagram
+    %% Identity and access control
+    accounts {
+        bigint account_id PK
+        nvarchar email UK
+        nvarchar display_name
+        nvarchar account_status
+    }
+    roles {
+        int role_id PK
+        nvarchar role_code UK
+    }
+    account_roles {
+        bigint account_id PK, FK
+        int role_id PK, FK
+        bigint assigned_by_account_id FK
+    }
+    learner_profiles {
+        bigint account_id PK, FK
+        bit ai_mentor_enabled
+    }
+    mentor_profiles {
+        bigint account_id PK, FK
+        nvarchar mentor_username UK
+        nvarchar mentor_code UK
+    }
+    auth_sessions {
+        bigint auth_session_id PK
+        bigint account_id FK
+        nvarchar refresh_token_hash UK
+    }
+    password_reset_tokens {
+        bigint password_reset_token_id PK
+        bigint account_id FK
+        nvarchar token_hash UK
+    }
+
+    %% Organizations and groups
+    organizations {
+        bigint organization_id PK
+        bigint created_by_account_id FK
+        nvarchar name
+        nvarchar organization_status
+    }
+    organization_memberships {
+        bigint organization_id PK, FK
+        bigint account_id PK, FK
+        nvarchar membership_role
+        nvarchar membership_status
+    }
+    mentor_groups {
+        bigint group_id PK
+        bigint organization_id FK
+        bigint created_by_account_id FK
+        nvarchar name
+    }
+    group_mentors {
+        bigint group_id PK, FK
+        bigint mentor_account_id PK, FK
+        nvarchar group_role
+        nvarchar membership_status
+    }
+    group_learners {
+        bigint group_id PK, FK
+        bigint learner_account_id PK, FK
+        nvarchar membership_status
+    }
+    group_messages {
+        bigint group_message_id PK
+        bigint group_id FK
+        bigint sender_account_id FK
+        nvarchar message_text
+    }
+
+    %% Mentor assignment and transfer history
+    mentor_assignments {
+        bigint mentor_assignment_id PK
+        bigint learner_account_id FK
+        bigint mentor_account_id FK
+        nvarchar assignment_source
+        nvarchar assignment_status
+    }
+    mentor_change_requests {
+        bigint mentor_change_request_id PK
+        bigint learner_account_id FK
+        bigint previous_assignment_id FK
+        bigint previous_mentor_account_id FK
+        bigint target_mentor_account_id FK
+        bigint resulting_assignment_id FK
+        bigint decided_by_mentor_account_id FK
+        nvarchar request_status
+    }
+    mentor_history_access {
+        bigint mentor_change_request_id PK, FK
+        bigint mentor_account_id FK
+        nvarchar history_scope PK
+        datetime2 granted_at
+        datetime2 revoked_at
+    }
+
+    %% Roadmaps and learning content
+    topics {
+        bigint topic_id PK
+        bigint created_by_account_id FK
+        nvarchar name
+        nvarchar topic_status
+    }
+    ai_runs {
+        bigint ai_run_id PK
+        bigint learner_account_id FK
+        nvarchar run_type
+        nvarchar model_name
+        nvarchar run_status
+    }
+    roadmaps {
+        bigint roadmap_id PK
+        bigint created_by_account_id FK
+        bigint learner_account_id FK
+        bigint ai_run_id FK, UK
+        bigint based_on_assessment_attempt_id FK
+        nvarchar roadmap_type
+        nvarchar title
+    }
+    roadmap_topics {
+        bigint roadmap_topic_id PK
+        bigint roadmap_id FK
+        bigint topic_id FK
+        int sequence_number
+    }
+    learning_resources {
+        bigint learning_resource_id PK
+        bigint created_by_account_id FK
+        bigint platform_admin_account_id FK
+        bigint owner_mentor_account_id FK
+        bigint owner_organization_id FK
+        bigint owner_group_id FK
+        nvarchar resource_type
+        nvarchar scope_type
+        nvarchar resource_status
+    }
+    resource_versions {
+        bigint resource_version_id PK
+        bigint learning_resource_id FK
+        bigint author_account_id FK
+        int version_number
+        nvarchar version_status
+        nvarchar title
+    }
+    topic_resources {
+        bigint topic_resource_id PK
+        bigint topic_id FK
+        bigint learning_resource_id FK
+        int sequence_number
+    }
+    ai_catalog_entries {
+        bigint learning_resource_id PK, FK
+        bigint curated_by_admin_account_id FK
+        nvarchar catalog_status
+    }
+    learner_known_topics {
+        bigint learner_account_id PK, FK
+        bigint topic_id PK, FK
+        nvarchar self_reported_level
+    }
+    learner_goals {
+        bigint learner_goal_id PK
+        bigint learner_account_id FK
+        nvarchar goal_status
+        date target_date
+    }
+
+    %% Assignments and progress
+    assignment_batches {
+        bigint assignment_batch_id PK
+        bigint target_group_id FK
+        bigint assigned_by_account_id FK
+        nvarchar assignment_source
+    }
+    learning_assignments {
+        bigint learning_assignment_id PK
+        bigint assignment_batch_id FK
+        bigint learner_account_id FK
+        bigint roadmap_id FK
+        nvarchar assignment_status
+    }
+    assigned_topics {
+        bigint assigned_topic_id PK
+        bigint learning_assignment_id FK
+        bigint topic_id FK
+        bigint source_roadmap_topic_id FK
+        nvarchar progress_status
+    }
+    assigned_resources {
+        bigint assigned_resource_id PK
+        bigint assigned_topic_id FK
+        bigint resource_version_id FK
+        nvarchar progress_status
+    }
+
+    %% Assessment and AI evaluation
+    assessments {
+        bigint assessment_id PK
+        bigint created_by_account_id FK
+        nvarchar assessment_type
+        nvarchar assessment_status
+    }
+    assessment_topics {
+        bigint assessment_id PK, FK
+        bigint topic_id PK, FK
+    }
+    assessment_items {
+        bigint assessment_item_id PK
+        bigint assessment_id FK
+        int sequence_number
+        nvarchar response_type
+    }
+    assessment_attempts {
+        bigint assessment_attempt_id PK
+        bigint assessment_id FK
+        bigint learner_account_id FK
+        bigint assigned_topic_id FK
+        bigint evaluator_account_id FK
+        bigint ai_run_id FK, UK
+        nvarchar evaluator_type
+        decimal score
+    }
+    assessment_responses {
+        bigint assessment_response_id PK
+        bigint assessment_attempt_id FK
+        bigint assessment_id FK
+        bigint assessment_item_id FK
+        nvarchar response_payload
+        decimal score
+    }
+    work_submissions {
+        bigint work_submission_id PK
+        bigint assigned_resource_id FK
+        bigint learner_account_id FK
+        nvarchar submission_status
+    }
+    ai_recommendations {
+        bigint ai_recommendation_id PK
+        bigint ai_run_id FK
+        bigint target_topic_id FK
+        bigint target_resource_id FK
+        bigint target_roadmap_id FK
+        nvarchar recommendation_type
+    }
+    ai_work_evaluations {
+        bigint ai_work_evaluation_id PK
+        bigint work_submission_id FK
+        bigint learner_account_id FK
+        bigint ai_run_id FK, UK
+        bigint ai_recommendation_id FK
+        nvarchar evaluation_outcome
+    }
+
+    %% Platform-managed GitHub projects and reviews
+    project_repositories {
+        bigint project_repository_id PK
+        bigint learner_account_id FK
+        nvarchar provider_repository_id UK
+        nvarchar repository_url UK
+        nvarchar repository_status
+    }
+    project_submissions {
+        bigint project_submission_id PK
+        bigint learner_account_id FK
+        bigint project_repository_id FK
+        bigint assigned_resource_id FK
+        nvarchar commit_sha
+        nvarchar submission_status
+    }
+    project_reviews {
+        bigint project_review_id PK
+        bigint project_submission_id FK
+        bigint mentor_account_id FK
+        bigint feedback_request_id FK, UK
+        nvarchar decision
+        nvarchar feedback_text
+    }
+
+    %% Sessions and feedback
+    mentor_availability_slots {
+        bigint mentor_availability_slot_id PK
+        bigint mentor_account_id FK
+        datetime2 starts_at_utc
+        datetime2 ends_at_utc
+        nvarchar slot_status
+    }
+    mentor_sessions {
+        bigint mentor_session_id PK
+        bigint mentor_availability_slot_id FK, UK
+        bigint mentor_account_id FK
+        bigint learner_account_id FK
+        nvarchar session_type
+        nvarchar session_status
+    }
+    feedback_requests {
+        bigint feedback_request_id PK
+        bigint learner_account_id FK
+        bigint mentor_account_id FK
+        bigint assigned_topic_id FK
+        bigint assigned_resource_id FK
+        bigint project_submission_id FK
+        bigint mentor_session_id FK
+        nvarchar request_status
+    }
+    learning_feedback {
+        bigint learning_feedback_id PK
+        bigint learner_account_id FK
+        bigint author_account_id FK
+        bigint feedback_request_id FK, UK
+        bigint assigned_topic_id FK
+        bigint assigned_resource_id FK
+        bigint mentor_session_id FK
+        nvarchar feedback_text
+    }
+
+    %% Group challenges
+    group_challenges {
+        bigint group_challenge_id PK
+        bigint group_id FK
+        bigint created_by_mentor_account_id FK
+        nvarchar title
+        datetime2 due_at
+    }
+    challenge_participations {
+        bigint group_challenge_id PK, FK
+        bigint learner_account_id PK, FK
+        nvarchar participation_status
+        decimal score
+    }
+
+    %% Mentor-to-mentor contact
+    mentor_connection_requests {
+        bigint mentor_connection_request_id PK
+        bigint requesting_mentor_account_id FK
+        bigint target_mentor_account_id FK
+        bigint decided_by_mentor_account_id FK
+        nvarchar request_status
+    }
+    mentor_connections {
+        bigint mentor_connection_id PK
+        bigint mentor_connection_request_id FK, UK
+        bigint mentor_low_account_id FK
+        bigint mentor_high_account_id FK
+        nvarchar connection_status
+    }
+    mentor_conversations {
+        bigint mentor_conversation_id PK
+        bigint mentor_connection_id FK, UK
+        nvarchar conversation_status
+    }
+    mentor_messages {
+        bigint mentor_message_id PK
+        bigint mentor_conversation_id FK
+        bigint sender_mentor_account_id FK
+        nvarchar message_text
+    }
+
+    %% Notifications and audit
+    notifications {
+        bigint notification_id PK
+        bigint recipient_account_id FK
+        nvarchar notification_type
+        datetime2 read_at
+    }
+    notification_deliveries {
+        bigint notification_delivery_id PK
+        bigint notification_id FK
+        nvarchar delivery_channel
+        nvarchar delivery_status
+    }
+    outbox_events {
+        bigint outbox_event_id PK
+        nvarchar aggregate_type
+        bigint aggregate_id
+        nvarchar event_type
+        datetime2 published_at
+    }
+    audit_logs {
+        bigint audit_log_id PK
+        bigint actor_account_id FK
+        nvarchar entity_type
+        bigint entity_id
+        nvarchar action_code
+    }
+
+    %% Identity relationships
+    accounts ||--o{ account_roles : has
+    accounts o|--o{ account_roles : assigned_role_by
+    roles ||--o{ account_roles : grants
+    accounts ||--o| learner_profiles : may_have
+    accounts ||--o| mentor_profiles : may_have
+    accounts ||--o{ auth_sessions : opens
+    accounts ||--o{ password_reset_tokens : requests
+
+    %% Organization and group relationships
+    accounts ||--o{ organizations : creates
+    organizations ||--o{ organization_memberships : has
+    accounts ||--o{ organization_memberships : joins
+    organizations o|--o{ mentor_groups : contains
+    accounts ||--o{ mentor_groups : creates
+    mentor_groups ||--o{ group_mentors : has
+    mentor_profiles ||--o{ group_mentors : mentors
+    mentor_groups ||--o{ group_learners : has
+    learner_profiles ||--o{ group_learners : joins
+    mentor_groups ||--o{ group_messages : contains
+    accounts ||--o{ group_messages : sends
+
+    %% Mentor assignment and transfer relationships
+    learner_profiles ||--o{ mentor_assignments : has_history
+    mentor_profiles ||--o{ mentor_assignments : mentors
+    learner_profiles ||--o{ mentor_change_requests : requests
+    mentor_profiles ||--o{ mentor_change_requests : is_target
+    mentor_profiles o|--o{ mentor_change_requests : decides
+    mentor_assignments ||--o{ mentor_change_requests : may_be_previous
+    mentor_change_requests o|--o| mentor_assignments : may_result_in
+    mentor_change_requests ||--o{ mentor_history_access : grants
+    mentor_profiles ||--o{ mentor_history_access : receives
+    mentor_profiles ||--o{ mentor_change_requests : was_previous_mentor
+
+    %% Roadmap and content relationships
+    accounts ||--o{ topics : creates
+    learner_profiles ||--o{ ai_runs : uses
+    accounts o|--o{ roadmaps : creates
+    learner_profiles o|--o{ roadmaps : owns
+    ai_runs o|--o| roadmaps : generates
+    roadmaps ||--o{ roadmap_topics : contains
+    topics ||--o{ roadmap_topics : appears_in
+    accounts ||--o{ learning_resources : creates
+    accounts o|--o{ learning_resources : platform_scope
+    mentor_profiles o|--o{ learning_resources : mentor_scope
+    organizations o|--o{ learning_resources : organization_scope
+    mentor_groups o|--o{ learning_resources : group_scope
+    learning_resources ||--o{ resource_versions : versions
+    accounts ||--o{ resource_versions : authors
+    topics ||--o{ topic_resources : includes
+    learning_resources ||--o{ topic_resources : linked_to
+    learning_resources ||--o| ai_catalog_entries : may_be_curated
+    accounts ||--o{ ai_catalog_entries : curates
+    learner_profiles ||--o{ learner_known_topics : reports
+    topics ||--o{ learner_known_topics : is_reported
+    learner_profiles ||--o{ learner_goals : sets
+
+    %% Assignment and progress relationships
+    mentor_groups o|--o{ assignment_batches : targets
+    accounts o|--o{ assignment_batches : creates
+    assignment_batches ||--o{ learning_assignments : expands_to
+    learner_profiles ||--o{ learning_assignments : receives
+    roadmaps o|--o{ learning_assignments : may_define
+    learning_assignments ||--o{ assigned_topics : tracks
+    topics ||--o{ assigned_topics : assigned_as
+    roadmap_topics o|--o{ assigned_topics : may_source
+    assigned_topics ||--o{ assigned_resources : tracks
+    resource_versions ||--o{ assigned_resources : assigned_version
+
+    %% Assessment and AI relationships
+    accounts ||--o{ assessments : creates
+    assessments ||--o{ assessment_topics : covers
+    topics ||--o{ assessment_topics : assessed_in
+    assessments ||--o{ assessment_items : contains
+    assessments ||--o{ assessment_attempts : attempted
+    learner_profiles ||--o{ assessment_attempts : takes
+    assigned_topics o|--o{ assessment_attempts : may_be_checked
+    mentor_profiles o|--o{ assessment_attempts : evaluates
+    ai_runs o|--o| assessment_attempts : may_evaluate
+    assessment_attempts o|--o{ roadmaps : placement_basis
+    assessment_attempts ||--o{ assessment_responses : has
+    assessment_items ||--o{ assessment_responses : answered
+    %% assessment_responses.assessment_id participates in both composite FKs above.
+    assigned_resources ||--o{ work_submissions : receives
+    learner_profiles ||--o{ work_submissions : submits
+    ai_runs ||--o{ ai_recommendations : produces
+    topics o|--o{ ai_recommendations : may_recommend
+    learning_resources o|--o{ ai_recommendations : may_recommend
+    roadmaps o|--o{ ai_recommendations : may_recommend
+    work_submissions ||--o{ ai_work_evaluations : receives
+    ai_runs ||--o| ai_work_evaluations : evaluates
+    ai_recommendations ||--o| ai_work_evaluations : supplies_next_step
+
+    %% Platform-managed GitHub project relationships
+    learner_profiles ||--o{ project_repositories : owns
+    project_repositories ||--o{ project_submissions : stores
+    learner_profiles ||--o{ project_submissions : submits
+    assigned_resources ||--o{ project_submissions : fulfills
+    project_submissions ||--o{ project_reviews : receives
+    mentor_profiles ||--o{ project_reviews : reviews
+    feedback_requests o|--o| project_reviews : may_be_answered_by
+
+    %% Session and feedback relationships
+    mentor_profiles ||--o{ mentor_availability_slots : publishes
+    mentor_availability_slots ||--o| mentor_sessions : reserves
+    mentor_profiles ||--o{ mentor_sessions : hosts
+    learner_profiles ||--o{ mentor_sessions : books
+    learner_profiles ||--o{ feedback_requests : requests
+    mentor_profiles ||--o{ feedback_requests : receives
+    assigned_topics o|--o{ feedback_requests : may_concern
+    assigned_resources o|--o{ feedback_requests : may_concern
+    project_submissions o|--o{ feedback_requests : may_concern
+    mentor_sessions o|--o{ feedback_requests : may_concern
+    learner_profiles ||--o{ learning_feedback : receives
+    accounts ||--o{ learning_feedback : authors
+    feedback_requests o|--o| learning_feedback : may_be_answered_by
+    assigned_topics o|--o{ learning_feedback : may_concern
+    assigned_resources o|--o{ learning_feedback : may_concern
+    mentor_sessions o|--o{ learning_feedback : may_concern
+
+    %% Group challenge relationships
+    group_mentors ||--o{ group_challenges : creates
+    group_challenges ||--o{ challenge_participations : has
+    learner_profiles ||--o{ challenge_participations : participates
+
+    %% Mentor connection relationships
+    mentor_profiles ||--o{ mentor_connection_requests : requests
+    mentor_profiles ||--o{ mentor_connection_requests : receives
+    mentor_profiles o|--o{ mentor_connection_requests : decides
+    mentor_connection_requests ||--o| mentor_connections : may_approve
+    mentor_profiles ||--o{ mentor_connections : low_pair_member
+    mentor_profiles ||--o{ mentor_connections : high_pair_member
+    mentor_connections ||--o| mentor_conversations : enables
+    mentor_conversations ||--o{ mentor_messages : contains
+    mentor_profiles ||--o{ mentor_messages : sends
+
+    %% Notification and audit relationships
+    accounts ||--o{ notifications : receives
+    notifications ||--o{ notification_deliveries : has
+    accounts o|--o{ audit_logs : performs
+
+
