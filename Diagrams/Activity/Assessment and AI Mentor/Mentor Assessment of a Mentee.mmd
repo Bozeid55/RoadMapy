@@ -1,0 +1,71 @@
+---
+title: Roadmapy - Mentor Assessment of a Mentee Activity
+---
+flowchart LR
+    subgraph mentor["Mentor"]
+        direction TB
+        start@{ shape: f-circ, label: "" }
+        selectMenteeTopic["Select an assigned mentee and topic"]
+        selectAssessment["Select an active assessment for the assigned topic"]
+        gradeResponses["Review responses and record the mentor's scores"]
+    end
+
+    subgraph learner["Mentee"]
+        direction TB
+        answerAssessment["Answer the assessment items"]
+        correctAnswers["Correct missing or invalid answers"]
+    end
+
+    subgraph system["Roadmapy System"]
+        direction TB
+        verifyScope["Verify the active mentor assignment and assigned topic"]
+        scopeDecision{"Mentee and topic are within mentor scope?"}
+        rejectScope["Reject access; do not create an assessment attempt"]
+        loadAssessment["Load active assessment_items for the selected topic"]
+        assessmentDecision{"Eligible assessment exists?"}
+        noAssessment["Report that no eligible assessment is available"]
+        createAttempt["Create one assessment_attempt with evaluator_type Mentor and evaluator_account_id"]
+        attemptDecision{"Attempt created?"}
+        retryAttempt["Retry creation with the same attempt ID"]
+        attemptRetryDecision{"Bounded retry remains?"}
+        attemptFailure["Report that the assessment could not be started"]
+        validateResponses["Validate required answers against assessment_items"]
+        responseDecision{"All required answers valid?"}
+        persistResponses["Save assessment_responses under the existing assessment_attempt"]
+        responseSaveDecision{"Responses committed?"}
+        retryResponses["Retry saving the same response IDs"]
+        responseRetryDecision{"Bounded retry remains?"}
+        responseFailure["Keep the attempt incomplete and report unsaved responses"]
+        persistScore["Save the mentor's score on assessment_attempt and scored responses"]
+        scoreDecision{"Assessment result committed?"}
+        retryScore["Retry the same result update idempotently"]
+        scoreRetryDecision{"Bounded retry remains?"}
+        scoreFailure["Report that the result was not finalized; retain saved responses"]
+        showResult["Show the saved assessment result to the mentor and mentee"]
+        activityFinal@{ shape: dbl-circ, label: "●" }
+    end
+
+    start --> selectMenteeTopic --> verifyScope --> scopeDecision
+    scopeDecision -->|No| rejectScope --> activityFinal
+    scopeDecision -->|Yes| selectAssessment --> loadAssessment --> assessmentDecision
+    assessmentDecision -->|No| noAssessment --> activityFinal
+    assessmentDecision -->|Yes| createAttempt --> attemptDecision
+    attemptDecision -->|No| retryAttempt --> attemptRetryDecision
+    attemptRetryDecision -->|Yes| createAttempt
+    attemptRetryDecision -->|No| attemptFailure --> activityFinal
+    attemptDecision -->|Yes| answerAssessment --> validateResponses --> responseDecision
+    responseDecision -->|No| correctAnswers --> validateResponses
+    responseDecision -->|Yes| persistResponses --> responseSaveDecision
+    responseSaveDecision -->|No| retryResponses --> responseRetryDecision
+    responseRetryDecision -->|Yes| persistResponses
+    responseRetryDecision -->|No| responseFailure --> activityFinal
+    responseSaveDecision -->|Yes| gradeResponses --> persistScore --> scoreDecision
+    scoreDecision -->|Yes| showResult --> activityFinal
+    scoreDecision -->|No| retryScore --> scoreRetryDecision
+    scoreRetryDecision -->|Yes| persistScore
+    scoreRetryDecision -->|No| scoreFailure --> activityFinal
+
+    classDef umlInitial fill:#111,stroke:#111,color:#111;
+    classDef umlFinal fill:#fff,stroke:#111,stroke-width:3px,color:#111;
+    class start umlInitial;
+    class activityFinal umlFinal;

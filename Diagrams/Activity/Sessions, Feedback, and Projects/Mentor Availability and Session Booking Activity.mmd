@@ -1,0 +1,77 @@
+---
+title: Roadmapy - Mentor Availability and Session Booking Activity
+---
+flowchart LR
+    subgraph actor["Mentor or Learner"]
+        direction TB
+        start@{ shape: f-circ, label: "" }
+        chooseAction{"Publish availability, book a session, or review a booking?"}
+    end
+
+    subgraph mentor["Mentor"]
+        direction TB
+        enterSlot["Enter the availability start and end time; convert to UTC"]
+        reviewBooking["Select a booking to review"]
+    end
+
+    subgraph learner["Learner"]
+        direction TB
+        browseSlots["Browse the selected mentor's available slots"]
+        chooseSlot["Select a slot and session type"]
+        chooseSessionType["Choose regular meeting or mock interview"]
+    end
+
+    subgraph system["Roadmapy System"]
+        direction TB
+        verifyMentor["Verify mentor account and slot ownership"]
+        mentorDecision{"Mentor is authorized?"}
+        saveSlot["Create or update mentor_availability_slots"]
+        slotDecision{"Availability saved?"}
+        retrySlot["Retry the same slot update"]
+        slotRetryDecision{"Bounded retry remains?"}
+        slotFailure["Report that availability was not saved"]
+        validateLearner["Verify an active mentor assignment for this learner"]
+        learnerDecision{"Learner may book this mentor?"}
+        rejectBooking["Reject the booking request"]
+        validateSlot["Check the UTC time window and current slot status; enforce one booking per unique slot"]
+        availableDecision{"Slot is still available?"}
+        conflict["Show that the slot is unavailable and reload choices"]
+        createSession["Atomically reserve the unique slot and create mentor_sessions with Meeting or Mock Interview type"]
+        bookingDecision{"Session booking committed?"}
+        retryBooking["Retry with the same mentor_session_id and slot ID"]
+        bookingRetryDecision{"Bounded retry remains?"}
+        bookingFailure["Report that the session was not booked"]
+        showConfirmation["Confirm the session details to learner and mentor"]
+        loadBooking["Load the selected mentor_sessions record"]
+        verifyReviewScope["Verify the signed-in mentor matches mentor_sessions.mentor_account_id"]
+        reviewScopeDecision{"Booking belongs to this mentor?"}
+        denyReview["Deny access without exposing booking details"]
+        activityFinal@{ shape: dbl-circ, label: "●" }
+    end
+
+    start --> chooseAction
+    chooseAction -->|Publish availability| verifyMentor --> mentorDecision
+    mentorDecision -->|No| activityFinal
+    mentorDecision -->|Yes| enterSlot --> saveSlot --> slotDecision
+    slotDecision -->|Yes| activityFinal
+    slotDecision -->|No| retrySlot --> slotRetryDecision
+    slotRetryDecision -->|Yes| saveSlot
+    slotRetryDecision -->|No| slotFailure --> activityFinal
+    chooseAction -->|Book a session| browseSlots
+    browseSlots --> chooseSlot --> chooseSessionType --> validateLearner --> learnerDecision
+    learnerDecision -->|No| rejectBooking --> activityFinal
+    learnerDecision -->|Yes| validateSlot --> availableDecision
+    availableDecision -->|No| conflict --> browseSlots
+    availableDecision -->|Yes| createSession --> bookingDecision
+    bookingDecision -->|Yes| showConfirmation --> activityFinal
+    bookingDecision -->|No| retryBooking --> bookingRetryDecision
+    bookingRetryDecision -->|Yes| createSession
+    bookingRetryDecision -->|No| bookingFailure --> activityFinal
+    chooseAction -->|Review a booking| reviewBooking --> loadBooking --> verifyReviewScope --> reviewScopeDecision
+    reviewScopeDecision -->|No| denyReview --> activityFinal
+    reviewScopeDecision -->|Yes| showConfirmation
+
+    classDef umlInitial fill:#111,stroke:#111,color:#111;
+    classDef umlFinal fill:#fff,stroke:#111,stroke-width:3px,color:#111;
+    class start umlInitial;
+    class activityFinal umlFinal;

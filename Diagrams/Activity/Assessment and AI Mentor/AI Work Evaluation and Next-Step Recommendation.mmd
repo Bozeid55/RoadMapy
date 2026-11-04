@@ -1,0 +1,104 @@
+---
+title: Roadmapy - AI Work Evaluation and Next-Step Recommendation Activity
+---
+%% Each explicit resume opens a new bounded AI or database retry window, reuses the same ai_run_id and original submission context, and resets only that window's finite counter.
+%% The locked ERD does not persist submitted work content/input snapshots or validated AI output. Restart recovery is not guaranteed.
+flowchart LR
+    subgraph learner["Learner"]
+        direction TB
+        start@{ shape: f-circ, label: "" }
+        requestKindDecision{"Submit new work or resume an existing AI run?"}
+        submitWork["Submit work for an assigned resource"]
+        supplyRunId["Provide the original ai_run_id"]
+    end
+
+    subgraph system["Roadmapy System"]
+        direction TB
+        validateAssignment["Verify the learner owns the active assigned_resource"]
+        assignmentDecision{"Submission is in scope and eligible?"}
+        rejectSubmission["Reject the submission without starting an AI run"]
+        saveSubmission["Persist one work_submissions record or update its permitted submission state"]
+        submissionDecision{"Submission saved?"}
+        retrySubmission["Retry with the same work_submission_id"]
+        submissionRetryDecision{"Bounded retry remains?"}
+        submissionFailure["Report that the submission was not saved"]
+        createRun["Create or retrieve one WORK_EVALUATION ai_runs record for this saved submission"]
+        findRun["Find the exact ai_runs record and its original work_submission"]
+        runDecision{"Run found and linked to the same submission?"}
+        missingRun["Do not create a replacement run; report that the original run cannot be resumed"]
+        failedRunNotice["Report the existing run as failed; preserve the saved work submission"]
+        statusDecision{"Current ai_run status?"}
+        resumeContextDecision{"Original submitted work and evaluation input are available for a provider retry?"}
+        retryPhaseDecision{"Resume provider evaluation or database persistence?"}
+        contextUnavailable["Mark the run FAILED if possible; preserve the submission and do not call AI with replacement input"]
+        resultAvailableDecision{"Validated output remains available in the active process for database persistence?"}
+        resultUnavailable["Mark the run FAILED if possible; do not call AI again or replace the lost result"]
+        showExisting["Show the already saved evaluation and recommendation"]
+        beginAiRetryWindow["Start a bounded AI retry window; reset only its counter and reuse the same run and original input"]
+        runMerge{"Merge first provider call and provider retry"}
+        callAi["Request evaluation using the saved submission and its assigned resource context"]
+        providerDecision{"AI response valid and complete?"}
+        providerRetry["Retry the same ai_run_id with the same saved submission context"]
+        providerRetryDecision{"Bounded provider retry remains?"}
+        providerUnavailable["Keep the run RETRYABLE and report that no valid evaluation could be produced within the retry budget"]
+        validateOutput["Validate evaluation outcome and next-step recommendation"]
+        outputDecision{"Output references valid topics, resources, or roadmap?"}
+        beginDbRetryWindow["Start a bounded database-only retry window; reset only its counter and reuse the validated output"]
+        dbWindowMerge{"Merge first persistence and resumed persistence paths"}
+        saveEvaluation["Persist ai_work_evaluations, ai_recommendations, and ai_runs status atomically"]
+        saveDecision{"Evaluation transaction committed?"}
+        retrySave["Retry only the database transaction; do not call the AI provider again"]
+        saveRetryDecision{"Bounded database retry remains?"}
+        markPersistencePending["Persist ai_runs.run_status as PERSISTENCE_PENDING"]
+        pendingMarkerDecision{"Pending state committed?"}
+        savePending["Keep the same run recoverable and report pending persistence; retain validated output only in the live process"]
+        markerUnavailable["Keep validated output only in this process; do not call AI; restart recovery is unavailable"]
+        showResult["Show the saved evaluation and recommended next step"]
+        activityFinal@{ shape: dbl-circ, label: "●" }
+    end
+
+    subgraph ai["External AI Provider"]
+        direction TB
+        evaluateWork["Evaluate the submitted work and return a structured outcome and next step"]
+    end
+
+    start --> requestKindDecision
+    requestKindDecision -->|New evaluation| submitWork --> validateAssignment --> assignmentDecision
+    requestKindDecision -->|Resume evaluation| supplyRunId --> findRun --> runDecision
+    runDecision -->|No| missingRun --> activityFinal
+    runDecision -->|Yes| statusDecision
+    statusDecision -->|RETRYABLE| retryPhaseDecision
+    retryPhaseDecision -->|Provider evaluation| resumeContextDecision
+    resumeContextDecision -->|Available| beginAiRetryWindow --> runMerge
+    resumeContextDecision -->|Unavailable| contextUnavailable --> activityFinal
+    retryPhaseDecision -->|Database persistence| resultAvailableDecision
+    resultAvailableDecision -->|Yes| dbWindowMerge
+    resultAvailableDecision -->|No| resultUnavailable --> activityFinal
+    statusDecision -->|PERSISTENCE_PENDING| resultAvailableDecision
+    statusDecision -->|SUCCEEDED| showExisting --> activityFinal
+    statusDecision -->|FAILED| failedRunNotice --> activityFinal
+    assignmentDecision -->|No| rejectSubmission --> activityFinal
+    assignmentDecision -->|Yes| saveSubmission --> submissionDecision
+    submissionDecision -->|No| retrySubmission --> submissionRetryDecision
+    submissionRetryDecision -->|Yes| saveSubmission
+    submissionRetryDecision -->|No| submissionFailure --> activityFinal
+    submissionDecision -->|Yes| createRun --> beginAiRetryWindow --> runMerge
+    runMerge --> callAi --> evaluateWork --> providerDecision
+    providerDecision -->|Unavailable or invalid| providerRetry --> providerRetryDecision
+    providerRetryDecision -->|Yes| runMerge
+    providerRetryDecision -->|No| providerUnavailable --> activityFinal
+    providerDecision -->|Valid| validateOutput --> outputDecision
+    outputDecision -->|Invalid| providerRetry --> providerRetryDecision
+    outputDecision -->|Valid| dbWindowMerge
+    dbWindowMerge --> beginDbRetryWindow --> saveEvaluation --> saveDecision
+    saveDecision -->|Yes| showResult --> activityFinal
+    saveDecision -->|No| retrySave --> saveRetryDecision
+    saveRetryDecision -->|Yes| saveEvaluation
+    saveRetryDecision -->|No| markPersistencePending --> pendingMarkerDecision
+    pendingMarkerDecision -->|Yes| savePending --> activityFinal
+    pendingMarkerDecision -->|No| markerUnavailable --> activityFinal
+
+    classDef umlInitial fill:#111,stroke:#111,color:#111;
+    classDef umlFinal fill:#fff,stroke:#111,stroke-width:3px,color:#111;
+    class start umlInitial;
+    class activityFinal umlFinal;

@@ -1,0 +1,44 @@
+---
+title: Roadmapy - Initial Mentor Assignment Activity
+---
+flowchart LR
+    subgraph learner["Learner"]
+        direction TB
+        start@{ shape: f-circ, label: "" }
+        enterCode["Enter the mentor's unique code"]
+        correctCode["Correct the mentor code"]
+    end
+
+    subgraph system["Roadmapy System"]
+        direction TB
+        validateLearner["Validate the learner account and current assignment"]
+        alreadyAssigned{"Active mentor assignment already exists?"}
+        directToChange["Direct the learner to the approved mentor-change workflow"]
+        findMentor["Find mentor_profiles by the unique mentor_code"]
+        mentorFound{"Valid mentor found?"}
+        explainInvalid["Explain that the mentor code is invalid or unavailable"]
+        createAssignment["Atomically create mentor_assignments with learner-code source and active status"]
+        assignmentDecision{"Assignment committed?"}
+        retryAssignment["Retry idempotently with the same learner and mentor IDs"]
+        retryDecision{"Assignment retry budget remains?"}
+        assignmentMerge{"Merge first attempt and bounded retry"}
+        assignmentFailed["Report that the mentor assignment was not saved"]
+        assigned["Confirm the learner is linked to the mentor; keep AI Mentor availability unchanged"]
+        activityFinal@{ shape: dbl-circ, label: "●" }
+    end
+
+    start --> enterCode --> validateLearner --> alreadyAssigned
+    alreadyAssigned -->|Yes| directToChange --> activityFinal
+    alreadyAssigned -->|No| findMentor --> mentorFound
+    mentorFound -->|No| explainInvalid --> correctCode --> findMentor
+    mentorFound -->|Yes| assignmentMerge
+    assignmentMerge --> createAssignment --> assignmentDecision
+    assignmentDecision -->|Yes| assigned --> activityFinal
+    assignmentDecision -->|No| retryAssignment --> retryDecision
+    retryDecision -->|Yes| assignmentMerge
+    retryDecision -->|No| assignmentFailed --> activityFinal
+
+    classDef umlInitial fill:#111,stroke:#111,color:#111;
+    classDef umlFinal fill:#fff,stroke:#111,stroke-width:3px,color:#111;
+    class start umlInitial;
+    class activityFinal umlFinal;

@@ -1,0 +1,42 @@
+---
+title: Roadmapy - Group Communication Activity
+---
+flowchart LR
+    subgraph member["Mentor or Learner"]
+        direction TB
+        start@{ shape: f-circ, label: "" }
+        selectGroup["Open a group conversation and compose a message"]
+        correctMessage["Correct the message or choose another group"]
+    end
+
+    subgraph system["Roadmapy System"]
+        direction TB
+        validateMembership["Verify active membership through group_mentors or group_learners"]
+        membershipDecision{"Sender is an active group member?"}
+        rejectSend["Reject the send; do not persist the message"]
+        validateMessage["Validate that the message is non-empty and within configured limits"]
+        messageDecision{"Message valid?"}
+        showError["Show validation feedback"]
+        persistMessage["Persist one group_messages row for this send operation"]
+        saveDecision{"Message committed?"}
+        retryMessage["Retry with the same operation ID to avoid duplicate messages"]
+        retryDecision{"Bounded retry remains?"}
+        deliveryFailed["Report the message as unsent; retain no false delivery confirmation"]
+        confirmSent["Confirm the message was saved and show it in the group conversation"]
+        activityFinal@{ shape: dbl-circ, label: "●" }
+    end
+
+    start --> selectGroup --> validateMembership --> membershipDecision
+    membershipDecision -->|No| rejectSend --> activityFinal
+    membershipDecision -->|Yes| validateMessage --> messageDecision
+    messageDecision -->|Invalid| showError --> correctMessage --> validateMessage
+    messageDecision -->|Valid| persistMessage --> saveDecision
+    saveDecision -->|Yes| confirmSent --> activityFinal
+    saveDecision -->|No| retryMessage --> retryDecision
+    retryDecision -->|Yes| persistMessage
+    retryDecision -->|No| deliveryFailed --> activityFinal
+
+    classDef umlInitial fill:#111,stroke:#111,color:#111;
+    classDef umlFinal fill:#fff,stroke:#111,stroke-width:3px,color:#111;
+    class start umlInitial;
+    class activityFinal umlFinal;

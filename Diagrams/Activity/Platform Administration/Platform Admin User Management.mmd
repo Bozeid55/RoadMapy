@@ -1,0 +1,54 @@
+---
+title: Roadmapy - Platform Admin User Management Activity
+---
+flowchart LR
+    subgraph admin["Platform Admin"]
+        direction TB
+        start@{ shape: f-circ, label: "" }
+        searchUser["Search for a platform account"]
+        chooseUserAction{"Review account, update status, or manage roles?"}
+        chooseStatus["Choose an allowed account status"]
+        chooseRole["Choose a role to grant or revoke"]
+    end
+
+    subgraph system["Roadmapy System"]
+        direction TB
+        verifyAdmin["Verify the actor has the Platform Admin role"]
+        adminDecision{"Admin authorized?"}
+        denyAccess["Deny the operation and record the security event"]
+        findAccount["Find the account and current account_roles"]
+        accountDecision{"Account found?"}
+        notFound["Report that no matching account exists"]
+        showAccount["Display permitted account details and role state"]
+        validateChange["Validate the requested status or role change; preserve independent roles"]
+        changeDecision{"Requested change is valid?"}
+        rejectChange["Reject the invalid change without updating the account"]
+        applyChange["Atomically update accounts or account_roles, create any missing profile for a granted role, preserve other roles, and append audit_logs"]
+        saveDecision{"User-management transaction committed?"}
+        retryChange["Retry the same update idempotently"]
+        retryDecision{"Bounded retry remains?"}
+        saveFailure["Report that the change was not saved; retain the prior committed state"]
+        showSuccess["Confirm the saved user-management change"]
+        activityFinal@{ shape: dbl-circ, label: "●" }
+    end
+
+    start --> verifyAdmin --> adminDecision
+    adminDecision -->|No| denyAccess --> activityFinal
+    adminDecision -->|Yes| searchUser --> findAccount --> accountDecision
+    accountDecision -->|No| notFound --> activityFinal
+    accountDecision -->|Yes| showAccount --> chooseUserAction
+    chooseUserAction -->|Review only| activityFinal
+    chooseUserAction -->|Update account status| chooseStatus --> validateChange
+    chooseUserAction -->|Grant or revoke role| chooseRole --> validateChange
+    validateChange --> changeDecision
+    changeDecision -->|Invalid| rejectChange --> activityFinal
+    changeDecision -->|Valid| applyChange --> saveDecision
+    saveDecision -->|Yes| showSuccess --> activityFinal
+    saveDecision -->|No| retryChange --> retryDecision
+    retryDecision -->|Yes| applyChange
+    retryDecision -->|No| saveFailure --> activityFinal
+
+    classDef umlInitial fill:#111,stroke:#111,color:#111;
+    classDef umlFinal fill:#fff,stroke:#111,stroke-width:3px,color:#111;
+    class start umlInitial;
+    class activityFinal umlFinal;

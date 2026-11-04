@@ -1,0 +1,75 @@
+---
+title: Roadmapy - Mentor Connection Request and Messaging Activity
+---
+flowchart LR
+    subgraph requester["Requesting Mentor"]
+        direction TB
+        start@{ shape: f-circ, label: "" }
+        enterUsername["Enter the target mentor's username"]
+    end
+
+    subgraph connectedMentor["Either Mentor After Approval"]
+        direction TB
+        composeMessage["Compose a message in the approved conversation"]
+    end
+
+    subgraph target["Target Mentor"]
+        direction TB
+        reviewRequest["Review the connection request"]
+        decideRequest{"Approve the request?"}
+    end
+
+    subgraph system["Roadmapy System"]
+        direction TB
+        validateTarget["Find the target mentor and reject self-requests or duplicate pending requests"]
+        targetDecision{"Eligible target mentor found?"}
+        rejectRequest["Report that the request cannot be created"]
+        createRequest["Create one mentor_connection_requests row with pending status"]
+        requestDecision{"Request committed?"}
+        retryRequest["Retry the same request ID idempotently"]
+        requestRetryDecision{"Bounded retry remains?"}
+        requestFailure["Report that the request was not saved"]
+        pending["Keep messaging unavailable while the request is pending"]
+        rejectConnection["Record rejection; do not create a connection or conversation"]
+        createConnection["On approval, atomically mark the request approved and create mentor_connections and mentor_conversations"]
+        connectionDecision{"Approval transaction committed?"}
+        retryConnection["Retry using the same request, connection, and conversation IDs"]
+        connectionRetryDecision{"Bounded retry remains?"}
+        connectionFailure["Keep the request recoverable; do not expose messaging before commit"]
+        authorizeMessage["Verify the sender belongs to the approved mentor connection"]
+        messageDecision{"Connection is approved and active?"}
+        denyMessage["Reject the message"]
+        saveMessage["Persist one mentor_messages record in the approved conversation"]
+        messageSaveDecision{"Message committed?"}
+        retryMessage["Retry with the same message operation ID"]
+        messageRetryDecision{"Bounded retry remains?"}
+        messageFailure["Report that the message was not sent"]
+        activityFinal@{ shape: dbl-circ, label: "●" }
+    end
+
+    start --> enterUsername --> validateTarget --> targetDecision
+    targetDecision -->|No| rejectRequest --> activityFinal
+    targetDecision -->|Yes| createRequest --> requestDecision
+    requestDecision -->|No| retryRequest --> requestRetryDecision
+    requestRetryDecision -->|Yes| createRequest
+    requestRetryDecision -->|No| requestFailure --> activityFinal
+    requestDecision -->|Yes| reviewRequest --> decideRequest
+    decideRequest -->|No| rejectConnection --> activityFinal
+    decideRequest -->|Pending| pending --> activityFinal
+    decideRequest -->|Yes| createConnection --> connectionDecision
+    connectionDecision -->|No| retryConnection --> connectionRetryDecision
+    connectionRetryDecision -->|Yes| createConnection
+    connectionRetryDecision -->|No| connectionFailure --> activityFinal
+    connectionDecision -->|Yes| composeMessage --> authorizeMessage
+    authorizeMessage --> messageDecision
+    messageDecision -->|No| denyMessage --> activityFinal
+    messageDecision -->|Yes| saveMessage --> messageSaveDecision
+    messageSaveDecision -->|Yes| activityFinal
+    messageSaveDecision -->|No| retryMessage --> messageRetryDecision
+    messageRetryDecision -->|Yes| saveMessage
+    messageRetryDecision -->|No| messageFailure --> activityFinal
+
+    classDef umlInitial fill:#111,stroke:#111,color:#111;
+    classDef umlFinal fill:#fff,stroke:#111,stroke-width:3px,color:#111;
+    class start umlInitial;
+    class activityFinal umlFinal;

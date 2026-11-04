@@ -1,0 +1,56 @@
+---
+title: Roadmapy - Account Registration and Role Setup Activity
+---
+flowchart LR
+    subgraph user["New User"]
+        direction TB
+        start@{ shape: f-circ, label: "" }
+        enterDetails["Enter email, display name, and registration details"]
+        chooseRoles["Choose learner, mentor, or both roles"]
+        correctDetails["Correct registration details"]
+    end
+
+    subgraph auth["Configured Authentication Mechanism"]
+        direction TB
+        provisionCredential["Create or verify credentials for the email"]
+        credentialDecision{"Credential provisioning successful?"}
+    end
+
+    subgraph system["Roadmapy System"]
+        direction TB
+        validateRegistration["Validate required fields and selected roles"]
+        validDecision{"Registration details valid?"}
+        showValidationError["Show validation errors"]
+        checkEmail["Check whether accounts.email already exists"]
+        uniqueDecision{"Email available?"}
+        existingAccount["Explain that the account already exists; direct the user to sign in"]
+        credentialFailure["Report that credentials could not be provisioned; do not create Roadmapy role/profile rows"]
+        accountCreateMerge{"Merge first provisioning and retry paths"}
+        createAccount["Atomically create accounts and account_roles; create selected profiles and generate a unique mentor username and mentor_code when needed"]
+        createDecision{"Roadmapy account transaction committed?"}
+        retryCreate["Retry provisioning idempotently for the same email and account IDs"]
+        retryDecision{"Registration retry budget remains?"}
+        registrationFailed["Report that Roadmapy account setup did not complete"]
+        success["Confirm account creation and show the mentor code when a mentor profile was created"]
+        activityFinal@{ shape: dbl-circ, label: "●" }
+    end
+
+    start --> enterDetails --> chooseRoles --> validateRegistration
+    validateRegistration --> validDecision
+    validDecision -->|Valid| checkEmail --> uniqueDecision
+    validDecision -->|Invalid| showValidationError --> correctDetails --> validateRegistration
+    credentialDecision -->|Yes| accountCreateMerge
+    credentialDecision -->|No| credentialFailure --> activityFinal
+    provisionCredential --> credentialDecision
+    uniqueDecision -->|Yes| provisionCredential
+    uniqueDecision -->|No| existingAccount --> activityFinal
+    accountCreateMerge --> createAccount --> createDecision
+    createDecision -->|Yes| success --> activityFinal
+    createDecision -->|No| retryCreate --> retryDecision
+    retryDecision -->|Yes| accountCreateMerge
+    retryDecision -->|No| registrationFailed --> activityFinal
+
+    classDef umlInitial fill:#111,stroke:#111,color:#111;
+    classDef umlFinal fill:#fff,stroke:#111,stroke-width:3px,color:#111;
+    class start umlInitial;
+    class activityFinal umlFinal;

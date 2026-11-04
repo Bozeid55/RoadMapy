@@ -1,0 +1,45 @@
+---
+title: Roadmapy - Mentor Mentee Management and Progress Monitoring Activity
+---
+flowchart LR
+    subgraph mentor["Mentor"]
+        direction TB
+        start@{ shape: f-circ, label: "" }
+        openMentees["Open the mentor's assigned mentee list"]
+        selectMentee["Select an assigned mentee"]
+        chooseAction{"View progress, show mentor code, or end assignment?"}
+    end
+
+    subgraph system["Roadmapy System"]
+        direction TB
+        verifyScope["Verify an active mentor_assignments row for this mentor and learner"]
+        scopeDecision{"Mentee is within this mentor's scope?"}
+        denyAccess["Deny access outside the mentor's scope"]
+        loadProgress["Load learning_assignments, assigned_topics, assigned_resources, and permitted history"]
+        showProgress["Display the mentee's current learning progress"]
+        showCode["Display this mentor's unique mentor_code for learner-initiated association"]
+        endAssignment["Set the current mentor_assignment to ended; retain the account and learning history"]
+        endDecision{"Assignment update committed?"}
+        retryEnd["Retry the same assignment update idempotently"]
+        retryDecision{"Update retry budget remains?"}
+        endMerge{"Merge first update and bounded retry"}
+        updatePending["Report that the assignment remains active until the update commits"]
+        activityFinal@{ shape: dbl-circ, label: "●" }
+    end
+
+    start --> openMentees --> selectMentee --> verifyScope --> scopeDecision
+    scopeDecision -->|No| denyAccess --> activityFinal
+    scopeDecision -->|Yes| chooseAction
+    chooseAction -->|View progress| loadProgress --> showProgress --> activityFinal
+    chooseAction -->|Show code| showCode --> activityFinal
+    chooseAction -->|End assignment| endMerge
+    endMerge --> endAssignment --> endDecision
+    endDecision -->|Yes| activityFinal
+    endDecision -->|No| retryEnd --> retryDecision
+    retryDecision -->|Yes| endMerge
+    retryDecision -->|No| updatePending --> activityFinal
+
+    classDef umlInitial fill:#111,stroke:#111,color:#111;
+    classDef umlFinal fill:#fff,stroke:#111,stroke-width:3px,color:#111;
+    class start umlInitial;
+    class activityFinal umlFinal;

@@ -1,0 +1,60 @@
+---
+title: Roadmapy - Sign In and Sign Out Activity
+---
+flowchart LR
+    subgraph user["User"]
+        direction TB
+        start@{ shape: f-circ, label: "" }
+        chooseAction{"Sign in or sign out?"}
+        enterCredentials["Enter email and credentials"]
+        submitSession["Submit the current session credential to sign out"]
+    end
+
+    subgraph system["Roadmapy System"]
+        direction TB
+        verifyCredential["Verify credentials through the configured authentication mechanism"]
+        credentialDecision{"Credentials valid?"}
+        checkAccountStatus["Check accounts.account_status"]
+        activeDecision{"Account active?"}
+        createSession["Create auth_sessions record with a hashed refresh token"]
+        sessionDecision{"Session created?"}
+        retrySession["Retry the same session ID and refresh-token hash"]
+        sessionRetryDecision{"Bounded session retry remains?"}
+        sessionFailure["Report that sign in could not be completed; do not claim an active session"]
+        loginSuccess["Start the authenticated session"]
+        loginRejected["Reject sign in without creating a session"]
+        lookupSession["Validate the submitted session against auth_sessions"]
+        sessionDecisionOut{"Session exists?"}
+        deleteSession["Delete the auth_sessions record to end this session"]
+        deleteDecision{"Session removal committed?"}
+        retryDelete["Retry removal of the same auth session"]
+        deleteRetryDecision{"Bounded sign-out retry remains?"}
+        logoutFailure["Report that sign out did not complete; the session may remain active"]
+        logoutSuccess["Confirm sign out"]
+        logoutNoop["Confirm that the session is already absent or invalid"]
+        activityFinal@{ shape: dbl-circ, label: "●" }
+    end
+
+    start --> chooseAction
+    chooseAction -->|Sign in| enterCredentials --> verifyCredential --> credentialDecision
+    credentialDecision -->|No| loginRejected --> activityFinal
+    credentialDecision -->|Yes| checkAccountStatus --> activeDecision
+    activeDecision -->|No| loginRejected
+    activeDecision -->|Yes| createSession --> sessionDecision
+    sessionDecision -->|Yes| loginSuccess --> activityFinal
+    sessionDecision -->|No| retrySession --> sessionRetryDecision
+    sessionRetryDecision -->|Yes| createSession
+    sessionRetryDecision -->|No| sessionFailure --> activityFinal
+
+    chooseAction -->|Sign out| submitSession --> lookupSession --> sessionDecisionOut
+    sessionDecisionOut -->|Yes| deleteSession --> deleteDecision
+    deleteDecision -->|Yes| logoutSuccess --> activityFinal
+    deleteDecision -->|No| retryDelete --> deleteRetryDecision
+    deleteRetryDecision -->|Yes| deleteSession
+    deleteRetryDecision -->|No| logoutFailure --> activityFinal
+    sessionDecisionOut -->|No| logoutNoop --> activityFinal
+
+    classDef umlInitial fill:#111,stroke:#111,color:#111;
+    classDef umlFinal fill:#fff,stroke:#111,stroke-width:3px,color:#111;
+    class start umlInitial;
+    class activityFinal umlFinal;

@@ -1,0 +1,93 @@
+---
+title: Roadmapy - Project Submission and Mentor Review Activity
+---
+flowchart LR
+    subgraph learner["Learner"]
+        direction TB
+        start@{ shape: f-circ, label: "" }
+        selectProject["Select an assigned project and commit to submit"]
+        correctSubmission["Correct repository or commit details"]
+    end
+
+    subgraph github["Platform-managed GitHub"]
+        direction TB
+        ensureRepository["Create or locate the learner's platform-managed repository"]
+        pushCommit["Verify the commit exists in the repository"]
+    end
+
+    subgraph mentor["Assigned Mentor"]
+        direction TB
+        reviewSubmission["Review the submitted project commit"]
+        recordReview["Record approval or request changes and required feedback"]
+    end
+
+    subgraph system["Roadmapy System"]
+        direction TB
+        validateProject["Verify learner ownership, active assignment, and project resource type"]
+        projectDecision{"Project submission is eligible?"}
+        rejectProject["Reject submission without contacting GitHub"]
+        commitDecision{"Commit exists in the platform repository?"}
+        repositoryMerge{"Merge first repository creation and retry"}
+        repositoryDecision{"Platform repository is available?"}
+        saveRepository["Persist project_repositories with the platform provider repository ID and URL"]
+        repositorySaveDecision{"Repository reference saved?"}
+        retryRepository["Retry idempotently for the same learner and provider repository"]
+        repositoryRetryDecision{"Bounded retry remains?"}
+        repositoryFailure["Report repository setup failure; do not create a submission"]
+        submissionMerge{"Merge first commit check and retry"}
+        checkExistingSubmission["Look for an existing submission for the learner, assigned resource, repository, and commit SHA"]
+        existingSubmissionDecision{"Submission for this exact commit already exists?"}
+        loadExistingSubmission["Reuse the existing submission and linked feedback_request; do not create duplicates"]
+        existingReviewDecision{"Feedback request is still pending?"}
+        loadExistingReview["Load the saved project review; do not create a second review"]
+        saveSubmission["Atomically create one project_submissions row and one linked feedback_requests row"]
+        submissionDecision{"Submission saved?"}
+        retrySubmission["Retry with the same project_submission_id and commit SHA"]
+        submissionRetryDecision{"Bounded retry remains?"}
+        submissionFailure["Report that the project submission was not recorded"]
+        submissionReadyMerge{"Merge new and existing pending submissions"}
+        notifyMentor["Make the submitted commit available to the assigned mentor"]
+        validateReview["Verify mentor scope and require a review decision plus feedback text"]
+        reviewDecision{"Review is valid?"}
+        correctReview["Ask the mentor to provide the missing decision or feedback"]
+        saveReview["Atomically create project_reviews and complete the linked feedback request"]
+        reviewSaveDecision{"Review committed?"}
+        retryReview["Retry the same review and feedback_request_id idempotently"]
+        reviewRetryDecision{"Bounded retry remains?"}
+        reviewFailure["Keep the review pending and report that it was not saved"]
+        showReview["Show the decision and feedback to the learner"]
+        activityFinal@{ shape: dbl-circ, label: "●" }
+    end
+
+    start --> selectProject --> validateProject --> projectDecision
+    projectDecision -->|No| rejectProject --> activityFinal
+    projectDecision -->|Yes| repositoryMerge --> ensureRepository
+    ensureRepository --> repositoryDecision
+    repositoryDecision -->|No| retryRepository --> repositoryRetryDecision
+    repositoryRetryDecision -->|Yes| repositoryMerge
+    repositoryRetryDecision -->|No| repositoryFailure --> activityFinal
+    repositoryDecision -->|Yes| saveRepository --> repositorySaveDecision
+    repositorySaveDecision -->|No| retryRepository --> repositoryRetryDecision
+    repositorySaveDecision -->|Yes| pushCommit --> commitDecision
+    commitDecision -->|No| correctSubmission --> pushCommit
+    commitDecision -->|Yes| checkExistingSubmission --> existingSubmissionDecision
+    existingSubmissionDecision -->|Yes| loadExistingSubmission --> existingReviewDecision
+    existingReviewDecision -->|Yes| submissionReadyMerge
+    existingReviewDecision -->|No, already reviewed| loadExistingReview --> showReview --> activityFinal
+    existingSubmissionDecision -->|No| submissionMerge --> saveSubmission --> submissionDecision
+    submissionDecision -->|No| retrySubmission --> submissionRetryDecision
+    submissionRetryDecision -->|Yes| submissionMerge
+    submissionRetryDecision -->|No| submissionFailure --> activityFinal
+    submissionDecision -->|Yes| submissionReadyMerge
+    submissionReadyMerge --> notifyMentor --> reviewSubmission --> recordReview --> validateReview --> reviewDecision
+    reviewDecision -->|No| correctReview --> recordReview
+    reviewDecision -->|Yes| saveReview --> reviewSaveDecision
+    reviewSaveDecision -->|Yes| showReview --> activityFinal
+    reviewSaveDecision -->|No| retryReview --> reviewRetryDecision
+    reviewRetryDecision -->|Yes| saveReview
+    reviewRetryDecision -->|No| reviewFailure --> activityFinal
+
+    classDef umlInitial fill:#111,stroke:#111,color:#111;
+    classDef umlFinal fill:#fff,stroke:#111,stroke-width:3px,color:#111;
+    class start umlInitial;
+    class activityFinal umlFinal;

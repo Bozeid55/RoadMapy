@@ -1,0 +1,64 @@
+---
+title: Roadmapy - Mentor Content Authoring and Assignment Activity
+---
+flowchart LR
+    subgraph mentor["Mentor"]
+        direction TB
+        start@{ shape: f-circ, label: "" }
+        chooseAction{"Create, edit, or assign learning content?"}
+        enterContent["Enter resource details and its topic relationship"]
+        selectForEdit["Select a mentor-owned resource to edit"]
+        selectForAssignment["Select a mentor-owned resource and target mentees or group"]
+    end
+
+    subgraph system["Roadmapy System"]
+        direction TB
+        verifyAuthorScope["Verify mentor permission and scope for resource authoring"]
+        authorScopeDecision{"Authoring is within mentor scope?"}
+        verifyAssignScope["Verify mentor ownership and scope for assignment"]
+        assignScopeDecision{"Assignment is within mentor scope?"}
+        denyAction["Reject the action without changing content or assignments"]
+        versionMerge{"Merge new-resource and new-version paths"}
+        persistResource["Create learning_resources or append a resource_versions record; preserve prior versions"]
+        resourceDecision{"Resource version committed?"}
+        retryResource["Retry with the same resource and version IDs"]
+        resourceRetryDecision{"Bounded retry remains?"}
+        resourceFailure["Report that the resource version was not saved"]
+        validateTarget["Validate target learners, group membership, and topic association"]
+        targetDecision{"All targets and references valid?"}
+        rejectTarget["Reject assignment; keep the saved resource version unchanged"]
+        createBatch["Create one assignment_batches record for the selected target"]
+        expandAssignment["Create learning_assignments, assigned_topics, and assigned_resources against the exact resource_version_id"]
+        assignmentDecision{"Assignment transaction committed?"}
+        retryAssignment["Retry the same batch and assignment IDs idempotently"]
+        assignmentRetryDecision{"Bounded retry remains?"}
+        assignmentFailure["Report pending or failed assignment creation; do not duplicate assignments"]
+        success["Confirm the resource version or assignment result"]
+        activityFinal@{ shape: dbl-circ, label: "●" }
+    end
+
+    start --> chooseAction
+    chooseAction -->|Create| verifyAuthorScope --> authorScopeDecision
+    chooseAction -->|Edit| selectForEdit --> verifyAuthorScope
+    authorScopeDecision -->|No| denyAction --> activityFinal
+    authorScopeDecision -->|Yes| enterContent --> versionMerge
+    versionMerge --> persistResource --> resourceDecision
+    resourceDecision -->|No| retryResource --> resourceRetryDecision
+    resourceRetryDecision -->|Yes| versionMerge
+    resourceRetryDecision -->|No| resourceFailure --> activityFinal
+    resourceDecision -->|Yes| success --> activityFinal
+    chooseAction -->|Assign| selectForAssignment --> verifyAssignScope --> assignScopeDecision
+    assignScopeDecision -->|No| denyAction
+    assignScopeDecision -->|Yes| validateTarget
+    validateTarget --> targetDecision
+    targetDecision -->|No| rejectTarget --> activityFinal
+    targetDecision -->|Yes| createBatch --> expandAssignment --> assignmentDecision
+    assignmentDecision -->|Yes| success
+    assignmentDecision -->|No| retryAssignment --> assignmentRetryDecision
+    assignmentRetryDecision -->|Yes| createBatch
+    assignmentRetryDecision -->|No| assignmentFailure --> activityFinal
+
+    classDef umlInitial fill:#111,stroke:#111,color:#111;
+    classDef umlFinal fill:#fff,stroke:#111,stroke-width:3px,color:#111;
+    class start umlInitial;
+    class activityFinal umlFinal;

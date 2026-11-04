@@ -1,0 +1,54 @@
+---
+title: Roadmapy - Learner Roadmap and Progress Activity
+---
+flowchart LR
+    subgraph learner["Learner"]
+        direction TB
+        start@{ shape: f-circ, label: "" }
+        openLearning["Open assigned learning"]
+        selectTask["Select a topic or assigned resource"]
+        completeTask["Complete the selected learning task"]
+    end
+
+    subgraph system["Roadmapy System"]
+        direction TB
+        loadAssignments["Load the learner's active learning_assignments"]
+        assignmentDecision{"Active assignment exists?"}
+        noAssignment["Explain that no learning assignment is available"]
+        loadDetails["Load assigned_topics and assigned_resources with their assigned resource versions"]
+        verifyAccess["Verify the learner owns the assignment"]
+        accessDecision{"Learner is authorized?"}
+        denyAccess["Deny access without exposing another learner's progress"]
+        showWork["Display the selected topic, resource, and current progress"]
+        taskActionDecision{"View only or mark selected task complete?"}
+        validateCompletion["Confirm the learner action, validate current task status, and apply the resource's configured completion rule"]
+        completionDecision{"Completion can be recorded?"}
+        showCorrection["Explain missing evidence or that the task is already complete"]
+        persistProgress["Update assigned_resource or assigned_topic progress status idempotently"]
+        saveDecision{"Progress update committed?"}
+        retrySave["Retry the same progress update"]
+        retryDecision{"Bounded retry remains?"}
+        saveFailure["Report that progress was not confirmed; preserve the prior saved status"]
+        updateView["Refresh the learning progress view"]
+        activityFinal@{ shape: dbl-circ, label: "●" }
+    end
+
+    start --> openLearning --> loadAssignments --> assignmentDecision
+    assignmentDecision -->|No| noAssignment --> activityFinal
+    assignmentDecision -->|Yes| loadDetails --> verifyAccess --> accessDecision
+    accessDecision -->|No| denyAccess --> activityFinal
+    accessDecision -->|Yes| selectTask --> showWork
+    showWork --> taskActionDecision
+    taskActionDecision -->|View only| activityFinal
+    taskActionDecision -->|Mark complete| completeTask --> validateCompletion --> completionDecision
+    completionDecision -->|No| showCorrection --> activityFinal
+    completionDecision -->|Yes| persistProgress --> saveDecision
+    saveDecision -->|Yes| updateView --> activityFinal
+    saveDecision -->|No| retrySave --> retryDecision
+    retryDecision -->|Yes| persistProgress
+    retryDecision -->|No| saveFailure --> activityFinal
+
+    classDef umlInitial fill:#111,stroke:#111,color:#111;
+    classDef umlFinal fill:#fff,stroke:#111,stroke-width:3px,color:#111;
+    class start umlInitial;
+    class activityFinal umlFinal;

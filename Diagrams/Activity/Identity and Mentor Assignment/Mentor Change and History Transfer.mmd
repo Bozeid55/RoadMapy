@@ -1,0 +1,53 @@
+---
+title: Roadmapy - Mentor Change and History Transfer Activity
+---
+flowchart LR
+    subgraph learner["Learner"]
+        direction TB
+        start@{ shape: f-circ, label: "" }
+        requestChange["Request a mentor change and select the target mentor"]
+    end
+
+    subgraph system["Roadmapy System"]
+        direction TB
+        validateTarget["Validate the learner's current assignment and target mentor; check for an existing pending request for the same learner and target"]
+        targetDecision{"Target mentor eligible and different from current mentor?"}
+        rejectInvalid["Reject the request; leave the current assignment unchanged"]
+        createRequest["Create mentor_change_requests with pending status"]
+        notifyTarget["Notify the target mentor of the pending request"]
+        waitDecision{"Target mentor decision received?"}
+        decisionLoop["Keep the request pending; do not change assignment"]
+        rejectRequest["Set request to rejected; preserve current assignment and history"]
+        transferMerge{"Merge approved transfer and retry paths"}
+        transferTransaction["Atomically approve the request, end the previous assignment if one exists, create the new assignment, link resulting_assignment_id, and grant only permitted mentor_history_access scopes"]
+        transferDecision{"Transfer transaction committed?"}
+        retryTransfer["Retry the same transfer idempotently using the same request and assignment IDs"]
+        retryDecision{"Transfer retry budget remains?"}
+        transferPending["Keep the request pending; preserve the old assignment until transfer commits"]
+        notifyNewMentor["Notify the learner and new mentor; preserve prior progress, projects, and feedback"]
+        activityFinal@{ shape: dbl-circ, label: "●" }
+    end
+
+    subgraph mentor["Target Mentor"]
+        direction TB
+        reviewRequest["Review the mentor-change request"]
+        decideRequest{"Approve the request?"}
+    end
+
+    start --> requestChange --> validateTarget --> targetDecision
+    targetDecision -->|No| rejectInvalid --> activityFinal
+    targetDecision -->|Yes| createRequest --> notifyTarget --> waitDecision
+    waitDecision -->|Yes| reviewRequest --> decideRequest
+    decideRequest -->|No| rejectRequest --> activityFinal
+    decideRequest -->|Yes| transferMerge
+    transferMerge --> transferTransaction --> transferDecision
+    transferDecision -->|Yes| notifyNewMentor --> activityFinal
+    transferDecision -->|No| retryTransfer --> retryDecision
+    retryDecision -->|Yes| transferMerge
+    retryDecision -->|No| transferPending --> activityFinal
+    waitDecision -->|No| decisionLoop --> waitDecision
+
+    classDef umlInitial fill:#111,stroke:#111,color:#111;
+    classDef umlFinal fill:#fff,stroke:#111,stroke-width:3px,color:#111;
+    class start umlInitial;
+    class activityFinal umlFinal;

@@ -1,0 +1,62 @@
+---
+title: Roadmapy - Platform Admin AI Learning Catalog Management Activity
+---
+flowchart LR
+    subgraph admin["Platform Admin"]
+        direction TB
+        start@{ shape: f-circ, label: "" }
+        chooseCatalogAction{"Create, edit, activate, or deactivate an AI catalog entry?"}
+        enterCatalogResource["Enter resource details and topic references"]
+        selectCatalogResource["Select an existing AI catalog resource"]
+        selectStatusResource["Select a catalog entry to activate or deactivate"]
+    end
+
+    subgraph system["Roadmapy System"]
+        direction TB
+        verifyAdmin["Verify the actor has the Platform Admin role"]
+        adminDecision{"Admin authorized?"}
+        denyAccess["Reject the operation without changing the catalog"]
+        validateScope["Validate resource type, topic references, and catalog constraints"]
+        scopeDecision{"Catalog data is valid?"}
+        correctCatalog["Show validation errors for correction"]
+        catalogMerge{"Merge new catalog entry and new-version paths"}
+        saveCatalog["Create learning_resources, resource_versions, and ai_catalog_entries; or append a new version"]
+        catalogDecision{"Catalog transaction committed?"}
+        retryCatalog["Retry with the same resource, version, and catalog-entry IDs"]
+        retryDecision{"Bounded retry remains?"}
+        catalogFailure["Report that the catalog change was not saved"]
+        validateStatusTarget["Verify that the selected learning_resource has an ai_catalog_entries row"]
+        statusTargetDecision{"Catalog entry exists?"}
+        updateStatus["Change ai_catalog_entries catalog_status without deleting prior versions"]
+        statusDecision{"Catalog status change committed?"}
+        retryStatus["Retry the same status update idempotently"]
+        statusRetryDecision{"Bounded retry remains?"}
+        statusFailure["Report that catalog status was not changed"]
+        success["Confirm the catalog update; existing assignments retain their pinned resource versions"]
+        activityFinal@{ shape: dbl-circ, label: "●" }
+    end
+
+    start --> verifyAdmin --> adminDecision
+    adminDecision -->|No| denyAccess --> activityFinal
+    adminDecision -->|Yes| chooseCatalogAction
+    chooseCatalogAction -->|Create| enterCatalogResource --> validateScope
+    chooseCatalogAction -->|Edit| selectCatalogResource --> validateScope
+    validateScope --> scopeDecision
+    scopeDecision -->|Invalid| correctCatalog --> validateScope
+    scopeDecision -->|Valid new or edited content| catalogMerge --> saveCatalog --> catalogDecision
+    catalogDecision -->|No| retryCatalog --> retryDecision
+    retryDecision -->|Yes| catalogMerge
+    retryDecision -->|No| catalogFailure --> activityFinal
+    catalogDecision -->|Yes| success --> activityFinal
+    chooseCatalogAction -->|Activate or deactivate| selectStatusResource --> validateStatusTarget --> statusTargetDecision
+    statusTargetDecision -->|No| statusFailure --> activityFinal
+    statusTargetDecision -->|Yes| updateStatus --> statusDecision
+    statusDecision -->|Yes| success
+    statusDecision -->|No| retryStatus --> statusRetryDecision
+    statusRetryDecision -->|Yes| updateStatus
+    statusRetryDecision -->|No| statusFailure --> activityFinal
+
+    classDef umlInitial fill:#111,stroke:#111,color:#111;
+    classDef umlFinal fill:#fff,stroke:#111,stroke-width:3px,color:#111;
+    class start umlInitial;
+    class activityFinal umlFinal;

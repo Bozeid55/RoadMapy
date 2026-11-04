@@ -1,0 +1,54 @@
+---
+title: Roadmapy - Group Management Activity
+---
+flowchart LR
+    subgraph mentor["Mentor"]
+        direction TB
+        start@{ shape: f-circ, label: "" }
+        chooseGroupAction{"Create, edit, add learner, or remove learner?"}
+        enterGroupDetails["Enter or update group details"]
+        selectLearnerToAdd["Select a learner to add"]
+        selectLearnerToRemove["Select a current group member to remove"]
+    end
+
+    subgraph system["Roadmapy System"]
+        direction TB
+        verifyMentorScope["Verify the mentor is authorized for the organization or group"]
+        scopeDecision{"Operation is within mentor scope?"}
+        rejectScope["Reject the operation without changing group data"]
+        validateLearner["Verify that the learner has an active assignment to this mentor"]
+        learnerDecision{"Learner is assigned to this mentor?"}
+        rejectLearner["Reject group addition; preserve existing membership"]
+        validateMembership["Verify the learner is an active member of this group"]
+        membershipDecision{"Learner is currently a group member?"}
+        rejectRemoval["Reject removal; preserve group membership"]
+        groupChangeMerge{"Merge authorized group-operation paths"}
+        persistChange["Create the group and creator membership when needed; add or deactivate group_learners membership idempotently"]
+        saveDecision{"Group operation committed?"}
+        retryChange["Retry the same operation with the same IDs"]
+        retryDecision{"Group update retry budget remains?"}
+        pending["Report that the group update is pending; do not create a duplicate membership"]
+        success["Confirm the group change"]
+        activityFinal@{ shape: dbl-circ, label: "●" }
+    end
+
+    start --> verifyMentorScope --> scopeDecision
+    scopeDecision -->|No| rejectScope --> activityFinal
+    scopeDecision -->|Yes| chooseGroupAction
+    chooseGroupAction -->|Create or edit group| enterGroupDetails --> groupChangeMerge
+    chooseGroupAction -->|Add learner| selectLearnerToAdd --> validateLearner --> learnerDecision
+    learnerDecision -->|No| rejectLearner --> activityFinal
+    learnerDecision -->|Yes| groupChangeMerge
+    chooseGroupAction -->|Remove learner| selectLearnerToRemove --> validateMembership --> membershipDecision
+    membershipDecision -->|No| rejectRemoval --> activityFinal
+    membershipDecision -->|Yes| groupChangeMerge
+    groupChangeMerge --> persistChange --> saveDecision
+    saveDecision -->|Yes| success --> activityFinal
+    saveDecision -->|No| retryChange --> retryDecision
+    retryDecision -->|Yes| groupChangeMerge
+    retryDecision -->|No| pending --> activityFinal
+
+    classDef umlInitial fill:#111,stroke:#111,color:#111;
+    classDef umlFinal fill:#fff,stroke:#111,stroke-width:3px,color:#111;
+    class start umlInitial;
+    class activityFinal umlFinal;

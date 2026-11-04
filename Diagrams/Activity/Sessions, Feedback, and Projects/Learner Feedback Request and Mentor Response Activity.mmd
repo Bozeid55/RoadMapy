@@ -1,0 +1,63 @@
+---
+title: Roadmapy - Learner Feedback Request and Mentor Response Activity
+---
+flowchart LR
+    subgraph learner["Learner"]
+        direction TB
+        start@{ shape: f-circ, label: "" }
+        selectFeedbackTarget["Select an assigned topic, assigned resource, or completed mentor session"]
+        describeRequest["Describe the feedback request"]
+    end
+
+    subgraph mentor["Assigned Mentor"]
+        direction TB
+        reviewRequest["Review the pending feedback request"]
+        writeFeedback["Write feedback for the request"]
+    end
+
+    subgraph system["Roadmapy System"]
+        direction TB
+        validateContext["Verify learner ownership, active mentor assignment, and eligible feedback target"]
+        contextDecision{"Request is valid and within scope?"}
+        rejectRequest["Reject the request without creating feedback records"]
+        createRequest["Create one feedback_requests row with exactly one supported context reference"]
+        requestDecision{"Request committed?"}
+        retryRequest["Retry with the same feedback_request_id"]
+        requestRetryDecision{"Bounded retry remains?"}
+        requestFailure["Report that the request was not saved"]
+        notifyMentor["Make the request available to the assigned mentor"]
+        verifyResponder["Verify the signed-in mentor matches feedback_requests.mentor_account_id for this request"]
+        responderDecision{"Responder is the mentor designated for this request?"}
+        denyResponse["Reject the response; do not expose or change the request"]
+        validateResponse["Validate non-empty mentor feedback and pending request status"]
+        responseDecision{"Response is valid?"}
+        correctResponse["Ask the mentor to complete or correct the feedback"]
+        saveFeedback["Atomically create learning_feedback and mark the same request answered"]
+        responseSaveDecision{"Feedback transaction committed?"}
+        retryResponse["Retry the same feedback_request_id idempotently"]
+        responseRetryDecision{"Bounded retry remains?"}
+        responseFailure["Keep the request pending and report that feedback was not saved"]
+        showFeedback["Show the saved feedback to the learner"]
+        activityFinal@{ shape: dbl-circ, label: "●" }
+    end
+
+    start --> selectFeedbackTarget --> describeRequest --> validateContext --> contextDecision
+    contextDecision -->|No| rejectRequest --> activityFinal
+    contextDecision -->|Yes| createRequest --> requestDecision
+    requestDecision -->|No| retryRequest --> requestRetryDecision
+    requestRetryDecision -->|Yes| createRequest
+    requestRetryDecision -->|No| requestFailure --> activityFinal
+    requestDecision -->|Yes| notifyMentor --> verifyResponder --> responderDecision
+    responderDecision -->|No| denyResponse --> activityFinal
+    responderDecision -->|Yes| reviewRequest --> writeFeedback --> validateResponse --> responseDecision
+    responseDecision -->|No| correctResponse --> writeFeedback
+    responseDecision -->|Yes| saveFeedback --> responseSaveDecision
+    responseSaveDecision -->|Yes| showFeedback --> activityFinal
+    responseSaveDecision -->|No| retryResponse --> responseRetryDecision
+    responseRetryDecision -->|Yes| saveFeedback
+    responseRetryDecision -->|No| responseFailure --> activityFinal
+
+    classDef umlInitial fill:#111,stroke:#111,color:#111;
+    classDef umlFinal fill:#fff,stroke:#111,stroke-width:3px,color:#111;
+    class start umlInitial;
+    class activityFinal umlFinal;

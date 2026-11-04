@@ -1,0 +1,71 @@
+---
+title: Roadmapy - Group Challenge Activity
+---
+flowchart LR
+    subgraph actor["Mentor or Learner"]
+        direction TB
+        start@{ shape: f-circ, label: "" }
+        selectAction{"Choose a mentor challenge action or learner participation"}
+    end
+
+    subgraph mentor["Mentor"]
+        direction TB
+        chooseMentorAction{"Create or update a challenge, or review participation?"}
+        enterChallenge["Select the target group; enter the challenge title and due date"]
+        chooseParticipant["Select a learner's participation to review"]
+        recordScore["Record the participation score"]
+    end
+
+    subgraph learner["Learner"]
+        direction TB
+        viewChallenge["View an active challenge in the learner's group"]
+        participate["Mark participation or completion"]
+    end
+
+    subgraph system["Roadmapy System"]
+        direction TB
+        verifyMentorWriteScope["Verify active mentor membership for challenge changes"]
+        mentorWriteDecision{"Mentor authorized for this group?"}
+        verifyMentorReviewScope["Verify active mentor membership for participation review"]
+        mentorReviewDecision{"Mentor authorized for this group?"}
+        verifyLearnerScope["Verify active learner membership in the group"]
+        learnerScopeDecision{"Learner is an active group member?"}
+        challengeMerge{"Merge authorized challenge-management paths"}
+        persistChallenge["Create or update group_challenges using the same challenge ID on retry"]
+        challengeDecision{"Challenge change committed?"}
+        retryChallenge["Retry the same challenge change idempotently"]
+        challengeRetryDecision{"Bounded retry remains?"}
+        challengeFailure["Report that the challenge change was not saved; keep existing challenge data"]
+        saveParticipation["Upsert challenge_participations by group_challenge_id and learner_account_id"]
+        participationDecision{"Participation update committed?"}
+        retryParticipation["Retry the same participation update idempotently"]
+        participationRetryDecision{"Bounded retry remains?"}
+        participationFailure["Report that participation was not saved; do not create a duplicate row"]
+        activityFinal@{ shape: dbl-circ, label: "●" }
+    end
+
+    start --> selectAction
+    selectAction -->|Mentor action| chooseMentorAction
+    selectAction -->|Learner participation| viewChallenge --> verifyLearnerScope --> learnerScopeDecision
+    chooseMentorAction -->|Create or update| verifyMentorWriteScope --> mentorWriteDecision
+    mentorWriteDecision -->|No| activityFinal
+    mentorWriteDecision -->|Yes| enterChallenge --> challengeMerge
+    chooseMentorAction -->|Review participation| verifyMentorReviewScope --> mentorReviewDecision
+    mentorReviewDecision -->|No| activityFinal
+    mentorReviewDecision -->|Yes| chooseParticipant --> recordScore --> saveParticipation
+    learnerScopeDecision -->|No| activityFinal
+    learnerScopeDecision -->|Yes| participate --> saveParticipation --> participationDecision
+    challengeMerge --> persistChallenge --> challengeDecision
+    challengeDecision -->|Yes| activityFinal
+    challengeDecision -->|No| retryChallenge --> challengeRetryDecision
+    challengeRetryDecision -->|Yes| challengeMerge
+    challengeRetryDecision -->|No| challengeFailure --> activityFinal
+    participationDecision -->|Yes| activityFinal
+    participationDecision -->|No| retryParticipation --> participationRetryDecision
+    participationRetryDecision -->|Yes| saveParticipation
+    participationRetryDecision -->|No| participationFailure --> activityFinal
+
+    classDef umlInitial fill:#111,stroke:#111,color:#111;
+    classDef umlFinal fill:#fff,stroke:#111,stroke-width:3px,color:#111;
+    class start umlInitial;
+    class activityFinal umlFinal;
