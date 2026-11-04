@@ -1,0 +1,131 @@
+---
+title: Roadmapy - AI Personalized Roadmap Generation Activity
+---
+%% Run lifecycle: RETRYABLE -> SUCCEEDED; PERSISTENCE_PENDING -> SUCCEEDED through database-only retries. FAILED is reserved for irrecoverable context/result loss. Retry counters reset only when an explicit new bounded retry window starts.
+%% A retry invocation must carry the original ai_run_id. The locked ERD cannot derive a pending roadmap run from assessment_attempt_id before a roadmap exists.
+%% PERSISTENCE_PENDING output and original generation context are process-local. Restart recovery is not guaranteed by the locked ERD.
+%% Each explicit resume opens a bounded retry window with a configured per-window maximum; no durable lifetime-window counter exists in the locked ERD.
+flowchart LR
+    subgraph learner["Learner"]
+        direction TB
+        reenterGoal["Re-enter the learning goal when prompted"]
+        continueGoal{"Continue after correcting the goal?"}
+        reviewRoadmap["Review the generated roadmap and assigned learning work"]
+    end
+
+    subgraph system["Roadmapy System"]
+        direction TB
+        start@{ shape: f-circ, label: "" }
+        requestKindDecision{"New generation request or resume existing run?"}
+        missingRunId["Do not create a replacement ai_run; report that the original retry ID is missing"]
+        resumeContextDecision{"Original assessment, goal, topic, catalog, and resource-version context available?"}
+        resumeStatusDecision{"Current ai_run status?"}
+        resumeOutputDecision{"Validated output still available in the active retry context?"}
+        retryPersistOnly["Reuse validated output and exact resource versions; retry database persistence only"]
+        resumeContextUnavailable["Mark this run FAILED if possible; preserve the assessment result and do not load newer data"]
+        recoveryUnavailable["Mark this run FAILED if possible; do not call AI or create a replacement run"]
+        failedRunNotice["Report that this ai_run is terminally failed; preserve the assessment result"]
+        loadContext["Receive assessment_attempt_id and saved score; load its assessment/topic context, valid topic IDs, and active AI catalog entries with resource versions; use the original goal from the active workflow when available"]
+        goalDecision{"Learning goal text available in the active workflow?"}
+        requestGoal["Ask the learner to re-enter the goal when resuming an interrupted workflow"]
+        validateGoal["Validate the re-entered learning goal"]
+        goalValid{"Re-entered goal valid?"}
+        showGoalError["Show goal validation errors"]
+        cancelGeneration["End roadmap generation at the learner's request"]
+        catalogDecision{"Eligible active catalog content available?"}
+        preserveAssessment["Keep the saved assessment result unchanged"]
+        explainCatalogGap["Explain that eligible catalog content is not available for roadmap generation"]
+        resumeRunDecision{"Original ai_run_id supplied for this retry?"}
+        resumeRun["Reuse the supplied original ai_run_id; do not create a replacement run"]
+        createRun["Create one RETRYABLE ROADMAP_GENERATION ai_run for a new generation request; resume the same ai_run_id when this request is retried"]
+        aiWindowMerge{"Merge new-run and resumed-run paths"}
+        beginAiRetryWindow["Start a bounded AI retry window; reset its counter and reuse the same ai_run_id and original input"]
+        goalMerge{"Merge valid goal paths"}
+        sendRequest["Send learner context and approved topic/resource references with the same ai_run_id as the request correlation/idempotency key"]
+        requestMerge{"Merge initial and retry requests"}
+        responseDecision{"Provider response received?"}
+        validateOutput["Validate ordered topic references and active catalog resource references and types"]
+        outputDecision{"AI roadmap output valid?"}
+        failureMerge{"Merge provider failure paths"}
+        incrementAiRetry["Increment the bounded AI retry counter"]
+        aiRetryDecision{"AI retry budget remains?"}
+        reuseRun["Reuse the same ROADMAP_GENERATION ai_run and saved learner context"]
+        keepRunRetryable["Keep the same ai_run RETRYABLE; preserve the assessment result"]
+        notifyRetry["Tell the learner to resume this same roadmap-generation run later"]
+        checkExisting["Check for an already committed roadmap and assignment for this ai_run"]
+        existingDecision{"Roadmap already committed?"}
+        existingRoadmapMerge{"Merge already-committed roadmap paths"}
+        loadExisting["Load the existing roadmap and progress records"]
+        dbWindowMerge{"Merge initial and resumed database-only retry windows"}
+        beginDbRetryWindow["Start a bounded database-only retry window; reset its counter and reuse the same output and resource versions"]
+        dbPersistMerge{"Merge first save and in-window database retries"}
+        persistRoadmap["In one idempotent transaction, save the roadmap with based_on_assessment_attempt_id set to the incoming attempt ID, roadmap_topics, ai_recommendations, AI-sourced assignment_batch, learning_assignment, assigned_topics, and assigned_resources using the same exact resource_versions; mark the ai_run SUCCEEDED"]
+        dbDecision{"Roadmap transaction committed?"}
+        incrementDbRetry["Increment the bounded database retry counter"]
+        dbRetryDecision{"Database retry budget remains?"}
+        markPersistencePending["Persist ai_run status as PERSISTENCE_PENDING"]
+        pendingMarkerDecision{"PERSISTENCE_PENDING status committed?"}
+        persistencePending["Retain validated output and exact resource_version IDs in the active retry context; resume with database-only persistence and do not call AI"]
+        markerUnavailable["Retain output only in this process; do not call AI; restart recovery is unavailable"]
+        roadmapMerge{"Merge existing and newly persisted roadmap paths"}
+        presentRoadmap["Show the persisted roadmap and learner progress view"]
+        activityFinal@{ shape: dbl-circ, label: "●" }
+    end
+
+    subgraph provider["External AI Provider"]
+        direction TB
+        generateRoadmap["Generate an ordered personalized roadmap and recommendations from the supplied learner context and approved references; the request may fail or return invalid output"]
+    end
+
+    start --> requestKindDecision
+    requestKindDecision -->|New request| loadContext --> goalDecision
+    requestKindDecision -->|Resume existing run| resumeRunDecision
+    resumeRunDecision -->|Yes| resumeRun --> resumeContextDecision
+    resumeRunDecision -->|No| missingRunId --> activityFinal
+    resumeContextDecision -->|Available| resumeStatusDecision
+    resumeContextDecision -->|Unavailable| resumeContextUnavailable --> activityFinal
+    resumeStatusDecision -->|RETRYABLE| aiWindowMerge
+    resumeStatusDecision -->|PERSISTENCE_PENDING| resumeOutputDecision
+    resumeOutputDecision -->|Yes| retryPersistOnly --> dbWindowMerge
+    resumeOutputDecision -->|No| recoveryUnavailable --> activityFinal
+    resumeStatusDecision -->|SUCCEEDED| existingRoadmapMerge
+    resumeStatusDecision -->|FAILED| failedRunNotice --> activityFinal
+    goalDecision -->|Yes| goalMerge
+    goalDecision -->|No| requestGoal --> reenterGoal --> validateGoal --> goalValid
+    goalValid -->|Yes| goalMerge
+    goalValid -->|No| showGoalError --> continueGoal
+    continueGoal -->|Yes| reenterGoal
+    continueGoal -->|No, cancel| cancelGeneration --> activityFinal
+    goalMerge --> catalogDecision
+
+    catalogDecision -->|Yes| createRun --> aiWindowMerge
+    aiWindowMerge --> beginAiRetryWindow --> requestMerge
+    requestMerge --> sendRequest --> generateRoadmap --> responseDecision
+    catalogDecision -->|No| preserveAssessment --> explainCatalogGap --> activityFinal
+
+    responseDecision -->|Yes| validateOutput --> outputDecision
+    responseDecision -->|No or timeout| failureMerge
+    outputDecision -->|Valid| checkExisting --> existingDecision
+    outputDecision -->|Invalid| failureMerge
+    failureMerge --> incrementAiRetry
+    incrementAiRetry --> aiRetryDecision
+    aiRetryDecision -->|Yes| reuseRun --> requestMerge
+    aiRetryDecision -->|No| keepRunRetryable --> notifyRetry --> activityFinal
+
+    existingDecision -->|Yes| existingRoadmapMerge
+    existingDecision -->|No| dbWindowMerge
+    existingRoadmapMerge --> loadExisting --> roadmapMerge
+    dbWindowMerge --> beginDbRetryWindow --> dbPersistMerge
+    dbPersistMerge --> persistRoadmap --> dbDecision
+    dbDecision -->|Yes| roadmapMerge
+    dbDecision -->|No| incrementDbRetry --> dbRetryDecision
+    dbRetryDecision -->|Yes| dbPersistMerge
+    dbRetryDecision -->|No| markPersistencePending --> pendingMarkerDecision
+    pendingMarkerDecision -->|Yes| persistencePending --> activityFinal
+    pendingMarkerDecision -->|No| markerUnavailable --> activityFinal
+    roadmapMerge --> presentRoadmap --> reviewRoadmap --> activityFinal
+
+    classDef umlInitial fill:#111,stroke:#111,color:#111;
+    classDef umlFinal fill:#fff,stroke:#111,stroke-width:3px,color:#111;
+    class start umlInitial;
+    class activityFinal umlFinal;
