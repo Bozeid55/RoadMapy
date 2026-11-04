@@ -1,0 +1,149 @@
+---
+title: Roadmapy - AI Placement Assessment Activity
+---
+%% Run lifecycle: RETRYABLE -> SUCCEEDED; PERSISTENCE_PENDING -> SUCCEEDED through database-only retries. FAILED is reserved for irrecoverable context/result loss. Each explicit resume starts a new bounded retry window and resets only that window's counter (MAX_INITIAL_SAVE_RETRIES, MAX_AI_RETRIES_PER_WINDOW, and MAX_DB_RETRIES_PER_WINDOW are finite configuration values).
+%% PERSISTENCE_PENDING output and original goal/topic context are process-local. Restart recovery is not guaranteed by the locked ERD.
+%% The number of explicit resume windows is not globally capped because the locked ERD has no durable retry-window counter.
+flowchart LR
+    subgraph learner["Learner"]
+        direction TB
+        start@{ shape: f-circ, label: "" }
+        openAi["Open AI Mentor"]
+        assessmentStartDecision{"Start a new assessment or resume an existing attempt?"}
+        selectAttempt["Select the exact saved assessment attempt to resume"]
+        submitContext["Submit known topics and learning goal"]
+        editContext["Correct or complete the submitted context"]
+        continueContext{"Continue editing?"}
+        answerItems["Answer the configured assessment items"]
+        editAnswers["Complete or correct answers"]
+        continueAnswers{"Continue the assessment?"}
+    end
+
+    subgraph system["Roadmapy System"]
+        direction TB
+        checkAccess["Check learner profile and AI Mentor availability"]
+        accessDecision{"AI Mentor enabled?"}
+        showUnavailable["Explain that AI Mentor is unavailable"]
+        findPending["Find the same submitted assessment linked to a RETRYABLE or PERSISTENCE_PENDING LEVEL_ASSESSMENT ai_run"]
+        pendingDecision{"Resumable assessment attempt exists?"}
+        resumeUnavailable["No resumable attempt found; do not create a replacement attempt"]
+        loadPending["Load the same assessment_id, saved responses, and ai_run; do not replace this attempt with newly submitted context"]
+        resumeContextDecision{"Original topics, goal, and retry phase available in the current process?"}
+        resumeContextUnavailable["Mark this run FAILED if possible; preserve the attempt and do not create a replacement"]
+        pendingPhaseDecision{"Known retry phase?"}
+        retryContextUnavailable["Mark this run FAILED if possible; do not call AI with replacement context"]
+        aiWindowMerge{"Merge initial and resumed AI retry windows"}
+        beginAiRetryWindow["Start a bounded AI retry window; reset its counter and reuse the same attempt, responses, and ai_run"]
+        resultContextDecision{"Validated result still available in the current process?"}
+        retryPersistOnly["Reuse the validated result and retry only score persistence"]
+        resultRecoveryUnavailable["Mark this run FAILED if possible; do not call AI or create a replacement attempt"]
+        contextMerge{"Merge context entry paths"}
+        validateContext["Validate submitted topics and goal"]
+        contextDecision{"Context valid?"}
+        showContextErrors["Show validation errors"]
+        saveContext["Persist learner_known_topics; retain goal text only in the active workflow context"]
+        selectAssessment["Select an active PLACEMENT assessment linked to the submitted topics"]
+        assessmentDecision{"Matching active assessment available?"}
+        showNoAssessment["Explain that no matching placement assessment is configured"]
+        presentItems["Present the assessment_items for the selected assessment"]
+        validateAnswers["Validate required responses"]
+        answerDecision{"All required responses complete?"}
+        showAnswerErrors["Identify missing or invalid responses"]
+        cancelMerge{"Merge learner cancellation paths"}
+        attemptSaveMerge{"Merge first-save and database-retry paths"}
+        persistAttempt["Atomically insert or verify one assessment_attempt, one RETRYABLE LEVEL_ASSESSMENT ai_run, and all assessment_responses using the same stable record IDs"]
+        attemptSaveDecision{"Initial persistence committed?"}
+        incrementAttemptSaveRetry["Increment the bounded initial-persistence retry counter"]
+        attemptSaveRetryDecision{"Initial-persistence retry budget remains?"}
+        initialSaveFailed["Report that submission was not saved; do not send an AI request"]
+        requestMerge{"Merge initial and retry requests"}
+        sendRequest["Send saved responses and selected assessment/topic context with the same ai_run_id as the request correlation/idempotency key"]
+        receivedDecision{"Provider response received?"}
+        validateResult["Validate response structure and assessment score"]
+        resultDecision{"AI result valid?"}
+        failureMerge{"Merge provider failure paths"}
+        incrementRetry["Increment the bounded AI retry counter"]
+        retryDecision{"AI retry budget remains?"}
+        reuseAttempt["Reuse the same assessment_attempt, saved responses, and ai_run"]
+        keepRunRetryable["Keep the same ai_run RETRYABLE; preserve the submitted attempt and responses"]
+        notifyRetry["Tell the learner to resume this same assessment attempt later"]
+        dbWindowMerge{"Merge initial and resumed database-only retry windows"}
+        beginDbRetryWindow["Start a bounded database-only retry window; reset its counter and reuse the same validated result"]
+        dbPersistMerge{"Merge first save and in-window database retries"}
+        persistResult["In one transaction, save the score and AI evaluator type; mark the ai_run successful"]
+        dbRetry["Increment the bounded database retry counter"]
+        dbRetryDecision{"Database retry budget remains?"}
+        dbDecision{"Result transaction committed?"}
+        markPersistencePending["Persist ai_run status as PERSISTENCE_PENDING"]
+        pendingMarkerDecision{"PERSISTENCE_PENDING status committed?"}
+        notifyPending["Retain the validated result in the active retry context; resume with database-only persistence and do not call AI"]
+        markerUnavailable["Keep the validated result only in this process; do not call AI; restart recovery is unavailable"]
+        showResult["Return saved assessment_attempt_id and score to roadmap generation; only this saved-result path advances"]
+        cancelled["End without creating a submitted assessment attempt"]
+        activityFinal@{ shape: dbl-circ, label: "●" }
+    end
+
+    subgraph provider["External AI Provider"]
+        direction TB
+        evaluate["Process the request; a response may be returned or the request may time out"]
+    end
+
+    start --> openAi --> checkAccess --> accessDecision
+    accessDecision -->|Yes| assessmentStartDecision
+    assessmentStartDecision -->|New assessment| contextMerge --> submitContext
+    assessmentStartDecision -->|Resume existing| selectAttempt --> findPending --> pendingDecision
+    pendingDecision -->|Yes| loadPending --> resumeContextDecision
+    pendingDecision -->|No| resumeUnavailable --> activityFinal
+    resumeContextDecision -->|Available| pendingPhaseDecision
+    resumeContextDecision -->|Unavailable| resumeContextUnavailable --> activityFinal
+    pendingPhaseDecision -->|AI evaluation retry| aiWindowMerge
+    pendingPhaseDecision -->|Database-only retry| resultContextDecision
+    pendingPhaseDecision -->|Unknown after restart| retryContextUnavailable --> activityFinal
+    aiWindowMerge --> beginAiRetryWindow --> requestMerge
+    resultContextDecision -->|Yes| retryPersistOnly --> dbWindowMerge
+    resultContextDecision -->|No| resultRecoveryUnavailable --> activityFinal
+    accessDecision -->|No| showUnavailable --> activityFinal
+
+    submitContext --> validateContext --> contextDecision
+    contextDecision -->|Valid| saveContext
+    contextDecision -->|Invalid| showContextErrors --> continueContext
+    continueContext -->|Yes| editContext --> contextMerge
+    continueContext -->|No, cancel| cancelMerge
+
+    saveContext --> selectAssessment --> assessmentDecision
+    assessmentDecision -->|Available| presentItems --> answerItems --> validateAnswers --> answerDecision
+    assessmentDecision -->|Unavailable| showNoAssessment --> activityFinal
+    answerDecision -->|Complete| attemptSaveMerge --> persistAttempt --> attemptSaveDecision
+    answerDecision -->|Incomplete| showAnswerErrors --> continueAnswers
+    continueAnswers -->|Yes| editAnswers --> validateAnswers
+    continueAnswers -->|No, cancel| cancelMerge
+    cancelMerge --> cancelled --> activityFinal
+
+    attemptSaveDecision -->|Yes| aiWindowMerge
+    attemptSaveDecision -->|No| incrementAttemptSaveRetry --> attemptSaveRetryDecision
+    attemptSaveRetryDecision -->|Yes| attemptSaveMerge
+    attemptSaveRetryDecision -->|No| initialSaveFailed --> activityFinal
+
+    requestMerge --> sendRequest --> evaluate --> receivedDecision
+    receivedDecision -->|Yes| validateResult --> resultDecision
+    receivedDecision -->|No or timeout| failureMerge
+    resultDecision -->|Invalid| failureMerge
+    failureMerge --> incrementRetry
+    incrementRetry --> retryDecision
+    retryDecision -->|Yes| reuseAttempt --> requestMerge
+    retryDecision -->|No| keepRunRetryable --> notifyRetry --> activityFinal
+
+    dbDecision -->|Yes| showResult --> activityFinal
+    resultDecision -->|Valid| dbWindowMerge
+    dbWindowMerge --> beginDbRetryWindow --> dbPersistMerge
+    dbRetryDecision -->|Yes| dbPersistMerge
+    dbDecision -->|No| dbRetry --> dbRetryDecision
+    dbRetryDecision -->|No| markPersistencePending --> pendingMarkerDecision
+    pendingMarkerDecision -->|Yes| notifyPending --> activityFinal
+    pendingMarkerDecision -->|No| markerUnavailable --> activityFinal
+    dbPersistMerge --> persistResult --> dbDecision
+
+    classDef umlInitial fill:#111,stroke:#111,color:#111;
+    classDef umlFinal fill:#fff,stroke:#111,stroke-width:3px,color:#111;
+    class start umlInitial;
+    class activityFinal umlFinal;
