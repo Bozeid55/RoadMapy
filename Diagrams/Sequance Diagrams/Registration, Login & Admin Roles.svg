@@ -1,0 +1,210 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1421.4790000000005 1315.45" width="1421.4790000000005" height="1315.45" style="--bg:#18181B;--fg:#F4F4F5;--line:#71717A;--muted:#A1A1AA;--surface:#27272A;--border:#3F3F46;background:var(--bg)">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap');
+  text { font-family: 'Inter', system-ui, sans-serif; }
+  svg {
+    /* Derived from --bg and --fg (overridable via --line, --accent, etc.) */
+    --_text:          var(--fg);
+    --_text-sec:      var(--muted, color-mix(in srgb, var(--fg) 60%, var(--bg)));
+    --_text-muted:    var(--muted, color-mix(in srgb, var(--fg) 40%, var(--bg)));
+    --_text-faint:    color-mix(in srgb, var(--fg) 25%, var(--bg));
+    --_line:          var(--line, color-mix(in srgb, var(--fg) 50%, var(--bg)));
+    --_arrow:         var(--accent, color-mix(in srgb, var(--fg) 85%, var(--bg)));
+    --_node-fill:     var(--surface, color-mix(in srgb, var(--fg) 3%, var(--bg)));
+    --_node-stroke:   var(--border, color-mix(in srgb, var(--fg) 20%, var(--bg)));
+    --_group-fill:    var(--bg);
+    --_group-hdr:     color-mix(in srgb, var(--fg) 5%, var(--bg));
+    --_inner-stroke:  color-mix(in srgb, var(--fg) 12%, var(--bg));
+    --_key-badge:     color-mix(in srgb, var(--fg) 10%, var(--bg));
+  }
+</style>
+<defs>
+  <marker id="seq-arrow" markerWidth="8" markerHeight="5" refX="8" refY="2.5" orient="auto-start-reverse">
+    <polygon points="0 0, 8 2.5, 0 5" fill="var(--_arrow)" />
+  </marker>
+  <marker id="seq-arrow-open" markerWidth="8" markerHeight="5" refX="8" refY="2.5" orient="auto-start-reverse">
+    <polyline points="0 0, 8 2.5, 0 5" fill="none" stroke="var(--_arrow)" stroke-width="1" />
+  </marker>
+</defs>
+<line class="lifeline" data-actor="U" x1="80" y1="92.45" x2="80" y2="1285.45" stroke="var(--_line)" stroke-width="0.75" stroke-dasharray="6 4" />
+<line class="lifeline" data-actor="Admin" x1="220" y1="92.45" x2="220" y2="1285.45" stroke="var(--_line)" stroke-width="0.75" stroke-dasharray="6 4" />
+<line class="lifeline" data-actor="Web" x1="373.978" y1="70" x2="373.978" y2="1285.45" stroke="var(--_line)" stroke-width="0.75" stroke-dasharray="6 4" />
+<line class="lifeline" data-actor="API" x1="638.852" y1="70" x2="638.852" y2="1285.45" stroke="var(--_line)" stroke-width="0.75" stroke-dasharray="6 4" />
+<line class="lifeline" data-actor="DB" x1="1012.4279999999999" y1="70" x2="1012.4279999999999" y2="1285.45" stroke="var(--_line)" stroke-width="0.75" stroke-dasharray="6 4" />
+<line class="lifeline" data-actor="GAuth" x1="1164.183" y1="70" x2="1164.183" y2="1285.45" stroke="var(--_line)" stroke-width="0.75" stroke-dasharray="6 4" />
+<g class="block" data-type="alt" data-label="Email and Password Registration or Sign-In">
+  <rect x="30" y="100.44999999999999" width="1196.3555" height="674" rx="0" ry="0" fill="none" stroke="var(--_node-stroke)" stroke-width="1" />
+  <rect x="30" y="100.44999999999999" width="297" height="20" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <text x="38" y="110.44999999999999" font-size="11" font-weight="600" fill="var(--_text-sec)" dy="3.8499999999999996">alt [Email and Password Registration or Sign-In]</text>
+  <line x1="30" y1="438.45" x2="1226.3555" y2="438.45" stroke="var(--_line)" stroke-width="0.75" stroke-dasharray="6 4" />
+  <rect x="35" y="444.3" width="168" height="16.3" rx="2" ry="2" fill="var(--bg)" />
+  <text x="38" y="452.45" font-size="11" text-anchor="start" font-weight="400" fill="var(--_text-muted)" dy="3.8499999999999996">[Google Registration or Sign-In]</text>
+</g>
+<g class="block" data-type="opt" data-label="Assigned Human Mentor role without existing mentor code">
+  <rect x="556.302" y="1015.45" width="525.7084999999998" height="130" rx="0" ry="0" fill="none" stroke="var(--_node-stroke)" stroke-width="1" />
+  <rect x="556.302" y="1015.45" width="384" height="20" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <text x="564.302" y="1025.45" font-size="11" font-weight="600" fill="var(--_text-sec)" dy="3.8499999999999996">opt [Assigned Human Mentor role without existing mentor code]</text>
+</g>
+<g class="block" data-type="opt" data-label="Separate Platform Admin Flow: Assign Role to User">
+  <rect x="150.41750000000002" y="797.45" width="931.5929999999998" height="468" rx="0" ry="0" fill="none" stroke="var(--_node-stroke)" stroke-width="1" />
+  <rect x="150.41750000000002" y="797.45" width="344" height="20" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <text x="158.41750000000002" y="807.45" font-size="11" font-weight="600" fill="var(--_text-sec)" dy="3.8499999999999996">opt [Separate Platform Admin Flow: Assign Role to User]</text>
+</g>
+<g class="message" data-from="U" data-to="Web" data-label="Submit email and password" data-line-style="solid" data-arrow-head="filled" data-self="false">
+  <line x1="80" y1="140.45" x2="373.978" y2="140.45" stroke="var(--_line)" stroke-width="1" marker-end="url(#seq-arrow)" />
+  <rect x="153.989" y="122.29999999999998" width="146" height="16.3" rx="2" ry="2" fill="var(--bg)" />
+  <text x="226.989" y="130.45" font-size="11" text-anchor="middle" font-weight="400" fill="var(--_text-muted)" dy="3.8499999999999996">Submit email and password</text>
+</g>
+<g class="message" data-from="Web" data-to="API" data-label="POST /auth/register or /auth/signin" data-line-style="solid" data-arrow-head="filled" data-self="false">
+  <line x1="373.978" y1="180.45" x2="638.852" y2="180.45" stroke="var(--_line)" stroke-width="1" marker-end="url(#seq-arrow)" />
+  <rect x="412.41499999999996" y="162.29999999999998" width="188" height="16.3" rx="2" ry="2" fill="var(--bg)" />
+  <text x="506.41499999999996" y="170.45" font-size="11" text-anchor="middle" font-weight="400" fill="var(--_text-muted)" dy="3.8499999999999996">POST /auth/register or /auth/signin</text>
+</g>
+<g class="message" data-from="API" data-to="API" data-label="Hash password with one-way hash or verify hash" data-line-style="solid" data-arrow-head="filled" data-self="true">
+  <polyline points="638.852,220.45 668.852,220.45 668.852,240.45 638.852,240.45" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#seq-arrow)" />
+  <rect x="673.852" y="222.29999999999998" width="259" height="16.3" rx="2" ry="2" fill="var(--bg)" />
+  <text x="676.852" y="230.45" font-size="11" text-anchor="start" font-weight="400" fill="var(--_text-muted)" dy="3.8499999999999996">Hash password with one-way hash or verify hash</text>
+</g>
+<g class="message" data-from="API" data-to="DB" data-label="Insert or load user record and load any assigned user roles" data-line-style="solid" data-arrow-head="filled" data-self="false">
+  <line x1="638.852" y1="290.45" x2="1012.4279999999999" y2="290.45" stroke="var(--_line)" stroke-width="1" marker-end="url(#seq-arrow)" />
+  <rect x="668.1399999999999" y="272.3" width="315" height="16.3" rx="2" ry="2" fill="var(--bg)" />
+  <text x="825.6399999999999" y="280.45" font-size="11" text-anchor="middle" font-weight="400" fill="var(--_text-muted)" dy="3.8499999999999996">Insert or load user record and load any assigned user roles</text>
+</g>
+<g class="message" data-from="DB" data-to="API" data-label="User and assigned roles" data-line-style="dashed" data-arrow-head="filled" data-self="false">
+  <line x1="1012.4279999999999" y1="330.45" x2="638.852" y2="330.45" stroke="var(--_line)" stroke-width="1" stroke-dasharray="6 4" marker-end="url(#seq-arrow)" />
+  <rect x="757.6399999999999" y="312.3" width="136" height="16.3" rx="2" ry="2" fill="var(--bg)" />
+  <text x="825.6399999999999" y="320.45" font-size="11" text-anchor="middle" font-weight="400" fill="var(--_text-muted)" dy="3.8499999999999996">User and assigned roles</text>
+</g>
+<g class="message" data-from="API" data-to="Web" data-label="200 OK with JWT Bearer Token (user ID and roles)" data-line-style="dashed" data-arrow-head="filled" data-self="false">
+  <line x1="638.852" y1="370.45" x2="373.978" y2="370.45" stroke="var(--_line)" stroke-width="1" stroke-dasharray="6 4" marker-end="url(#seq-arrow)" />
+  <rect x="372.91499999999996" y="352.3" width="267" height="16.3" rx="2" ry="2" fill="var(--bg)" />
+  <text x="506.41499999999996" y="360.45" font-size="11" text-anchor="middle" font-weight="400" fill="var(--_text-muted)" dy="3.8499999999999996">200 OK with JWT Bearer Token (user ID and roles)</text>
+</g>
+<g class="message" data-from="Web" data-to="U" data-label="Authenticated session" data-line-style="dashed" data-arrow-head="filled" data-self="false">
+  <line x1="373.978" y1="410.45" x2="80" y2="410.45" stroke="var(--_line)" stroke-width="1" stroke-dasharray="6 4" marker-end="url(#seq-arrow)" />
+  <rect x="165.489" y="392.3" width="123" height="16.3" rx="2" ry="2" fill="var(--bg)" />
+  <text x="226.989" y="400.45" font-size="11" text-anchor="middle" font-weight="400" fill="var(--_text-muted)" dy="3.8499999999999996">Authenticated session</text>
+</g>
+<g class="message" data-from="U" data-to="Web" data-label="Choose Continue with Google" data-line-style="solid" data-arrow-head="filled" data-self="false">
+  <line x1="80" y1="474.45" x2="373.978" y2="474.45" stroke="var(--_line)" stroke-width="1" marker-end="url(#seq-arrow)" />
+  <rect x="148.489" y="456.3" width="157" height="16.3" rx="2" ry="2" fill="var(--bg)" />
+  <text x="226.989" y="464.45" font-size="11" text-anchor="middle" font-weight="400" fill="var(--_text-muted)" dy="3.8499999999999996">Choose Continue with Google</text>
+</g>
+<g class="message" data-from="Web" data-to="API" data-label="POST /auth/google with Google token" data-line-style="solid" data-arrow-head="filled" data-self="false">
+  <line x1="373.978" y1="514.45" x2="638.852" y2="514.45" stroke="var(--_line)" stroke-width="1" marker-end="url(#seq-arrow)" />
+  <rect x="408.41499999999996" y="496.30000000000007" width="196" height="16.3" rx="2" ry="2" fill="var(--bg)" />
+  <text x="506.41499999999996" y="504.45000000000005" font-size="11" text-anchor="middle" font-weight="400" fill="var(--_text-muted)" dy="3.8499999999999996">POST /auth/google with Google token</text>
+</g>
+<g class="message" data-from="API" data-to="GAuth" data-label="Verify Google auth token" data-line-style="solid" data-arrow-head="filled" data-self="false">
+  <line x1="638.852" y1="554.45" x2="1164.183" y2="554.45" stroke="var(--_line)" stroke-width="1" marker-end="url(#seq-arrow)" />
+  <rect x="835.0174999999999" y="536.3000000000001" width="133" height="16.3" rx="2" ry="2" fill="var(--bg)" />
+  <text x="901.5174999999999" y="544.45" font-size="11" text-anchor="middle" font-weight="400" fill="var(--_text-muted)" dy="3.8499999999999996">Verify Google auth token</text>
+</g>
+<g class="message" data-from="GAuth" data-to="API" data-label="Verified Google account ID" data-line-style="dashed" data-arrow-head="filled" data-self="false">
+  <line x1="1164.183" y1="594.45" x2="638.852" y2="594.45" stroke="var(--_line)" stroke-width="1" stroke-dasharray="6 4" marker-end="url(#seq-arrow)" />
+  <rect x="829.5174999999999" y="576.3000000000001" width="144" height="16.3" rx="2" ry="2" fill="var(--bg)" />
+  <text x="901.5174999999999" y="584.45" font-size="11" text-anchor="middle" font-weight="400" fill="var(--_text-muted)" dy="3.8499999999999996">Verified Google account ID</text>
+</g>
+<g class="message" data-from="API" data-to="DB" data-label="Insert or load user by Google account ID and load any assigned user roles" data-line-style="solid" data-arrow-head="filled" data-self="false">
+  <line x1="638.852" y1="634.45" x2="1012.4279999999999" y2="634.45" stroke="var(--_line)" stroke-width="1" marker-end="url(#seq-arrow)" />
+  <rect x="632.1399999999999" y="616.3000000000001" width="387" height="16.3" rx="2" ry="2" fill="var(--bg)" />
+  <text x="825.6399999999999" y="624.45" font-size="11" text-anchor="middle" font-weight="400" fill="var(--_text-muted)" dy="3.8499999999999996">Insert or load user by Google account ID and load any assigned user roles</text>
+</g>
+<g class="message" data-from="DB" data-to="API" data-label="User and assigned roles" data-line-style="dashed" data-arrow-head="filled" data-self="false">
+  <line x1="1012.4279999999999" y1="674.45" x2="638.852" y2="674.45" stroke="var(--_line)" stroke-width="1" stroke-dasharray="6 4" marker-end="url(#seq-arrow)" />
+  <rect x="757.6399999999999" y="656.3000000000001" width="136" height="16.3" rx="2" ry="2" fill="var(--bg)" />
+  <text x="825.6399999999999" y="664.45" font-size="11" text-anchor="middle" font-weight="400" fill="var(--_text-muted)" dy="3.8499999999999996">User and assigned roles</text>
+</g>
+<g class="message" data-from="API" data-to="Web" data-label="200 OK with JWT Bearer Token (user ID and roles)" data-line-style="dashed" data-arrow-head="filled" data-self="false">
+  <line x1="638.852" y1="714.45" x2="373.978" y2="714.45" stroke="var(--_line)" stroke-width="1" stroke-dasharray="6 4" marker-end="url(#seq-arrow)" />
+  <rect x="372.91499999999996" y="696.3000000000001" width="267" height="16.3" rx="2" ry="2" fill="var(--bg)" />
+  <text x="506.41499999999996" y="704.45" font-size="11" text-anchor="middle" font-weight="400" fill="var(--_text-muted)" dy="3.8499999999999996">200 OK with JWT Bearer Token (user ID and roles)</text>
+</g>
+<g class="message" data-from="Web" data-to="U" data-label="Authenticated session" data-line-style="dashed" data-arrow-head="filled" data-self="false">
+  <line x1="373.978" y1="754.45" x2="80" y2="754.45" stroke="var(--_line)" stroke-width="1" stroke-dasharray="6 4" marker-end="url(#seq-arrow)" />
+  <rect x="165.489" y="736.3000000000001" width="123" height="16.3" rx="2" ry="2" fill="var(--bg)" />
+  <text x="226.989" y="744.45" font-size="11" text-anchor="middle" font-weight="400" fill="var(--_text-muted)" dy="3.8499999999999996">Authenticated session</text>
+</g>
+<g class="message" data-from="Admin" data-to="Web" data-label="Assign role to target user" data-line-style="solid" data-arrow-head="filled" data-self="false">
+  <line x1="220" y1="837.45" x2="373.978" y2="837.45" stroke="var(--_line)" stroke-width="1" marker-end="url(#seq-arrow)" />
+  <rect x="227.98900000000003" y="819.3000000000001" width="138" height="16.3" rx="2" ry="2" fill="var(--bg)" />
+  <text x="296.98900000000003" y="827.45" font-size="11" text-anchor="middle" font-weight="400" fill="var(--_text-muted)" dy="3.8499999999999996">Assign role to target user</text>
+</g>
+<g class="message" data-from="Web" data-to="API" data-label="POST /admin/users/{userId}/roles (JWT Bearer)" data-line-style="solid" data-arrow-head="filled" data-self="false">
+  <line x1="373.978" y1="877.45" x2="638.852" y2="877.45" stroke="var(--_line)" stroke-width="1" marker-end="url(#seq-arrow)" />
+  <rect x="377.41499999999996" y="859.3000000000001" width="258" height="16.3" rx="2" ry="2" fill="var(--bg)" />
+  <text x="506.41499999999996" y="867.45" font-size="11" text-anchor="middle" font-weight="400" fill="var(--_text-muted)" dy="3.8499999999999996">POST /admin/users/{userId}/roles (JWT Bearer)</text>
+</g>
+<g class="message" data-from="API" data-to="API" data-label="Verify caller holds Platform Admin role" data-line-style="solid" data-arrow-head="filled" data-self="true">
+  <polyline points="638.852,917.45 668.852,917.45 668.852,937.45 638.852,937.45" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#seq-arrow)" />
+  <rect x="673.852" y="919.3000000000001" width="202" height="16.3" rx="2" ry="2" fill="var(--bg)" />
+  <text x="676.852" y="927.45" font-size="11" text-anchor="start" font-weight="400" fill="var(--_text-muted)" dy="3.8499999999999996">Verify caller holds Platform Admin role</text>
+</g>
+<g class="message" data-from="API" data-to="DB" data-label="Save assigned user role" data-line-style="solid" data-arrow-head="filled" data-self="false">
+  <line x1="638.852" y1="987.45" x2="1012.4279999999999" y2="987.45" stroke="var(--_line)" stroke-width="1" marker-end="url(#seq-arrow)" />
+  <rect x="757.6399999999999" y="969.3000000000001" width="136" height="16.3" rx="2" ry="2" fill="var(--bg)" />
+  <text x="825.6399999999999" y="977.45" font-size="11" text-anchor="middle" font-weight="400" fill="var(--_text-muted)" dy="3.8499999999999996">Save assigned user role</text>
+</g>
+<g class="message" data-from="API" data-to="API" data-label="Generate permanent unique mentor code" data-line-style="solid" data-arrow-head="filled" data-self="true">
+  <polyline points="638.852,1055.45 668.852,1055.45 668.852,1075.45 638.852,1075.45" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#seq-arrow)" />
+  <rect x="673.852" y="1057.3" width="216" height="16.3" rx="2" ry="2" fill="var(--bg)" />
+  <text x="676.852" y="1065.45" font-size="11" text-anchor="start" font-weight="400" fill="var(--_text-muted)" dy="3.8499999999999996">Generate permanent unique mentor code</text>
+</g>
+<g class="message" data-from="API" data-to="DB" data-label="Save mentor code on user account" data-line-style="solid" data-arrow-head="filled" data-self="false">
+  <line x1="638.852" y1="1125.45" x2="1012.4279999999999" y2="1125.45" stroke="var(--_line)" stroke-width="1" marker-end="url(#seq-arrow)" />
+  <rect x="732.1399999999999" y="1107.3" width="187" height="16.3" rx="2" ry="2" fill="var(--bg)" />
+  <text x="825.6399999999999" y="1115.45" font-size="11" text-anchor="middle" font-weight="400" fill="var(--_text-muted)" dy="3.8499999999999996">Save mentor code on user account</text>
+</g>
+<g class="message" data-from="DB" data-to="API" data-label="Updated user and role" data-line-style="dashed" data-arrow-head="filled" data-self="false">
+  <line x1="1012.4279999999999" y1="1165.45" x2="638.852" y2="1165.45" stroke="var(--_line)" stroke-width="1" stroke-dasharray="6 4" marker-end="url(#seq-arrow)" />
+  <rect x="764.1399999999999" y="1147.3" width="123" height="16.3" rx="2" ry="2" fill="var(--bg)" />
+  <text x="825.6399999999999" y="1155.45" font-size="11" text-anchor="middle" font-weight="400" fill="var(--_text-muted)" dy="3.8499999999999996">Updated user and role</text>
+</g>
+<g class="message" data-from="API" data-to="Web" data-label="200 OK role assigned" data-line-style="dashed" data-arrow-head="filled" data-self="false">
+  <line x1="638.852" y1="1205.45" x2="373.978" y2="1205.45" stroke="var(--_line)" stroke-width="1" stroke-dasharray="6 4" marker-end="url(#seq-arrow)" />
+  <rect x="446.91499999999996" y="1187.3" width="119" height="16.3" rx="2" ry="2" fill="var(--bg)" />
+  <text x="506.41499999999996" y="1195.45" font-size="11" text-anchor="middle" font-weight="400" fill="var(--_text-muted)" dy="3.8499999999999996">200 OK role assigned</text>
+</g>
+<g class="message" data-from="Web" data-to="Admin" data-label="Confirmation displayed" data-line-style="dashed" data-arrow-head="filled" data-self="false">
+  <line x1="373.978" y1="1245.45" x2="220" y2="1245.45" stroke="var(--_line)" stroke-width="1" stroke-dasharray="6 4" marker-end="url(#seq-arrow)" />
+  <rect x="234.48900000000003" y="1227.3" width="125" height="16.3" rx="2" ry="2" fill="var(--bg)" />
+  <text x="296.98900000000003" y="1235.45" font-size="11" text-anchor="middle" font-weight="400" fill="var(--_text-muted)" dy="3.8499999999999996">Confirmation displayed</text>
+</g>
+<g class="note" data-position="over" data-actors="API,DB">
+  <polygon points="259.80099999999925,762.45 1385.4790000000005,762.45 1391.4790000000005,768.45 1391.4790000000005,785.45 259.80099999999925,785.45" fill="var(--bg)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <polygon points="1385.4790000000005,762.45 1391.4790000000005,768.45 1385.4790000000005,768.45" fill="var(--_inner-stroke)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="825.6399999999999" y="773.95" font-size="11" text-anchor="middle" font-weight="400" fill="var(--_text-muted)" dy="3.8499999999999996">Initial role assignment policy for newly registered accounts is undecided in the approved baseline and must be finalized before implementation (assigned roles are loaded for JWT issuance and admins assign roles via the separate admin flow)</text>
+</g>
+<g class="actor" data-id="U" data-label="User" data-type="actor">
+  <g transform="translate(62,32) scale(1.5)">
+    <path d="M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z" fill="none" stroke="var(--_line)" stroke-width="0.6666666666666666" />
+    <path d="M15 10C15 11.6569 13.6569 13 12 13C10.3431 13 9 11.6569 9 10C9 8.34315 10.3431 7 12 7C13.6569 7 15 8.34315 15 10Z" fill="none" stroke="var(--_line)" stroke-width="0.6666666666666666" />
+    <path d="M5.62842 18.3563C7.08963 17.0398 9.39997 16 12 16C14.6 16 16.9104 17.0398 18.3716 18.3563" fill="none" stroke="var(--_line)" stroke-width="0.6666666666666666" />
+  </g>
+  <text x="80" y="84" font-size="13" text-anchor="middle" font-weight="500" fill="var(--_text)" dy="4.55">User</text>
+</g>
+<g class="actor" data-id="Admin" data-label="Platform Admin" data-type="actor">
+  <g transform="translate(202,32) scale(1.5)">
+    <path d="M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z" fill="none" stroke="var(--_line)" stroke-width="0.6666666666666666" />
+    <path d="M15 10C15 11.6569 13.6569 13 12 13C10.3431 13 9 11.6569 9 10C9 8.34315 10.3431 7 12 7C13.6569 7 15 8.34315 15 10Z" fill="none" stroke="var(--_line)" stroke-width="0.6666666666666666" />
+    <path d="M5.62842 18.3563C7.08963 17.0398 9.39997 16 12 16C14.6 16 16.9104 17.0398 18.3716 18.3563" fill="none" stroke="var(--_line)" stroke-width="0.6666666666666666" />
+  </g>
+  <text x="220" y="84" font-size="13" text-anchor="middle" font-weight="500" fill="var(--_text)" dy="4.55">Platform Admin</text>
+</g>
+<g class="actor" data-id="Web" data-label="Next.js Client" data-type="participant">
+  <rect x="319.5825" y="30" width="108.791" height="40" rx="4" ry="4" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <text x="373.978" y="50" font-size="13" text-anchor="middle" font-weight="500" fill="var(--_text)" dy="4.55">Next.js Client</text>
+</g>
+<g class="actor" data-id="API" data-label="ASP.NET Core API" data-type="participant">
+  <rect x="566.302" y="30" width="145.1" height="40" rx="4" ry="4" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <text x="638.852" y="50" font-size="13" text-anchor="middle" font-weight="500" fill="var(--_text)" dy="4.55">ASP.NET Core API</text>
+</g>
+<g class="actor" data-id="DB" data-label="MySQL 8.0 DB" data-type="participant">
+  <rect x="952.8454999999999" y="30" width="119.16499999999999" height="40" rx="4" ry="4" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <text x="1012.4279999999999" y="50" font-size="13" text-anchor="middle" font-weight="500" fill="var(--_text)" dy="4.55">MySQL 8.0 DB</text>
+</g>
+<g class="actor" data-id="GAuth" data-label="Google Auth" data-type="participant">
+  <rect x="1112.0105" y="30" width="104.34500000000001" height="40" rx="4" ry="4" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <text x="1164.183" y="50" font-size="13" text-anchor="middle" font-weight="500" fill="var(--_text)" dy="4.55">Google Auth</text>
+</g>
+</svg>

@@ -1,0 +1,260 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1911.3664999999999 1672.45" width="1911.3664999999999" height="1672.45" style="--bg:#18181B;--fg:#F4F4F5;--line:#71717A;--muted:#A1A1AA;--surface:#27272A;--border:#3F3F46;background:var(--bg)">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap');
+  text { font-family: 'Inter', system-ui, sans-serif; }
+  svg {
+    /* Derived from --bg and --fg (overridable via --line, --accent, etc.) */
+    --_text:          var(--fg);
+    --_text-sec:      var(--muted, color-mix(in srgb, var(--fg) 60%, var(--bg)));
+    --_text-muted:    var(--muted, color-mix(in srgb, var(--fg) 40%, var(--bg)));
+    --_text-faint:    color-mix(in srgb, var(--fg) 25%, var(--bg));
+    --_line:          var(--line, color-mix(in srgb, var(--fg) 50%, var(--bg)));
+    --_arrow:         var(--accent, color-mix(in srgb, var(--fg) 85%, var(--bg)));
+    --_node-fill:     var(--surface, color-mix(in srgb, var(--fg) 3%, var(--bg)));
+    --_node-stroke:   var(--border, color-mix(in srgb, var(--fg) 20%, var(--bg)));
+    --_group-fill:    var(--bg);
+    --_group-hdr:     color-mix(in srgb, var(--fg) 5%, var(--bg));
+    --_inner-stroke:  color-mix(in srgb, var(--fg) 12%, var(--bg));
+    --_key-badge:     color-mix(in srgb, var(--fg) 10%, var(--bg));
+  }
+</style>
+<defs>
+  <marker id="seq-arrow" markerWidth="8" markerHeight="5" refX="8" refY="2.5" orient="auto-start-reverse">
+    <polygon points="0 0, 8 2.5, 0 5" fill="var(--_arrow)" />
+  </marker>
+  <marker id="seq-arrow-open" markerWidth="8" markerHeight="5" refX="8" refY="2.5" orient="auto-start-reverse">
+    <polyline points="0 0, 8 2.5, 0 5" fill="none" stroke="var(--_arrow)" stroke-width="1" />
+  </marker>
+</defs>
+<line class="lifeline" data-actor="L" x1="82.169" y1="92.45" x2="82.169" y2="1642.45" stroke="var(--_line)" stroke-width="0.75" stroke-dasharray="6 4" />
+<line class="lifeline" data-actor="M" x1="223.55" y1="92.45" x2="223.55" y2="1642.45" stroke="var(--_line)" stroke-width="0.75" stroke-dasharray="6 4" />
+<line class="lifeline" data-actor="Web" x1="558.5160000000001" y1="70" x2="558.5160000000001" y2="1642.45" stroke="var(--_line)" stroke-width="0.75" stroke-dasharray="6 4" />
+<line class="lifeline" data-actor="API" x1="916.054" y1="70" x2="916.054" y2="1642.45" stroke="var(--_line)" stroke-width="0.75" stroke-dasharray="6 4" />
+<line class="lifeline" data-actor="DB" x1="1623.7199999999998" y1="70" x2="1623.7199999999998" y2="1642.45" stroke="var(--_line)" stroke-width="0.75" stroke-dasharray="6 4" />
+<line class="lifeline" data-actor="AI" x1="1797.3345" y1="70" x2="1797.3345" y2="1642.45" stroke="var(--_line)" stroke-width="0.75" stroke-dasharray="6 4" />
+<g class="block" data-type="alt" data-label="Official Mentor Review (Mentor-Managed Roadmap Only)">
+  <rect x="30" y="340.45" width="1851.3664999999999" height="609" rx="0" ry="0" fill="none" stroke="var(--_node-stroke)" stroke-width="1" />
+  <rect x="30" y="340.45" width="372" height="20" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <text x="38" y="350.45" font-size="11" font-weight="600" fill="var(--_text-sec)" dy="3.8499999999999996">alt [Official Mentor Review (Mentor-Managed Roadmap Only)]</text>
+  <line x1="30" y1="623.45" x2="1881.3664999999999" y2="623.45" stroke="var(--_line)" stroke-width="0.75" stroke-dasharray="6 4" />
+  <rect x="35" y="629.3000000000001" width="269" height="16.3" rx="2" ry="2" fill="var(--bg)" />
+  <text x="38" y="637.45" font-size="11" text-anchor="start" font-weight="400" fill="var(--_text-muted)" dy="3.8499999999999996">[Non-Official AI Guidance (Never an Official Review)]</text>
+</g>
+<g class="block" data-type="opt" data-label="Learner Requests AI Data Deletion">
+  <rect x="30" y="1362.45" width="1663.3024999999998" height="260" rx="0" ry="0" fill="none" stroke="var(--_node-stroke)" stroke-width="1" />
+  <rect x="30" y="1362.45" width="253" height="20" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <text x="38" y="1372.45" font-size="11" font-weight="600" fill="var(--_text-sec)" dy="3.8499999999999996">opt [Learner Requests AI Data Deletion]</text>
+</g>
+<g class="message" data-from="L" data-to="Web" data-label="Submit project GitHub URL" data-line-style="solid" data-arrow-head="filled" data-self="false">
+  <line x1="82.169" y1="112.45" x2="558.5160000000001" y2="112.45" stroke="var(--_line)" stroke-width="1" marker-end="url(#seq-arrow)" />
+  <rect x="249.34250000000003" y="94.3" width="142" height="16.3" rx="2" ry="2" fill="var(--bg)" />
+  <text x="320.34250000000003" y="102.45" font-size="11" text-anchor="middle" font-weight="400" fill="var(--_text-muted)" dy="3.8499999999999996">Submit project GitHub URL</text>
+</g>
+<g class="message" data-from="Web" data-to="API" data-label="POST /projects/{id}/submissions (JWT Bearer)" data-line-style="solid" data-arrow-head="filled" data-self="false">
+  <line x1="558.5160000000001" y1="152.45" x2="916.054" y2="152.45" stroke="var(--_line)" stroke-width="1" marker-end="url(#seq-arrow)" />
+  <rect x="612.7850000000001" y="134.29999999999998" width="249" height="16.3" rx="2" ry="2" fill="var(--bg)" />
+  <text x="737.2850000000001" y="142.45" font-size="11" text-anchor="middle" font-weight="400" fill="var(--_text-muted)" dy="3.8499999999999996">POST /projects/{id}/submissions (JWT Bearer)</text>
+</g>
+<g class="message" data-from="API" data-to="DB" data-label="Verify Learner role and roadmap owner" data-line-style="solid" data-arrow-head="filled" data-self="false">
+  <line x1="916.054" y1="192.45" x2="1623.7199999999998" y2="192.45" stroke="var(--_line)" stroke-width="1" marker-end="url(#seq-arrow)" />
+  <rect x="1163.387" y="174.29999999999998" width="213" height="16.3" rx="2" ry="2" fill="var(--bg)" />
+  <text x="1269.887" y="182.45" font-size="11" text-anchor="middle" font-weight="400" fill="var(--_text-muted)" dy="3.8499999999999996">Verify Learner role and roadmap owner</text>
+</g>
+<g class="message" data-from="API" data-to="DB" data-label="Save new project submission with next sequence number while preserving prior versions" data-line-style="solid" data-arrow-head="filled" data-self="false">
+  <line x1="916.054" y1="232.45" x2="1623.7199999999998" y2="232.45" stroke="var(--_line)" stroke-width="1" marker-end="url(#seq-arrow)" />
+  <rect x="1037.387" y="214.29999999999998" width="465" height="16.3" rx="2" ry="2" fill="var(--bg)" />
+  <text x="1269.887" y="222.45" font-size="11" text-anchor="middle" font-weight="400" fill="var(--_text-muted)" dy="3.8499999999999996">Save new project submission with next sequence number while preserving prior versions</text>
+</g>
+<g class="message" data-from="DB" data-to="API" data-label="Saved project submission" data-line-style="dashed" data-arrow-head="filled" data-self="false">
+  <line x1="1623.7199999999998" y1="272.45" x2="916.054" y2="272.45" stroke="var(--_line)" stroke-width="1" stroke-dasharray="6 4" marker-end="url(#seq-arrow)" />
+  <rect x="1198.887" y="254.29999999999998" width="142" height="16.3" rx="2" ry="2" fill="var(--bg)" />
+  <text x="1269.887" y="262.45" font-size="11" text-anchor="middle" font-weight="400" fill="var(--_text-muted)" dy="3.8499999999999996">Saved project submission</text>
+</g>
+<g class="message" data-from="API" data-to="Web" data-label="201 Created project submission" data-line-style="dashed" data-arrow-head="filled" data-self="false">
+  <line x1="916.054" y1="312.45" x2="558.5160000000001" y2="312.45" stroke="var(--_line)" stroke-width="1" stroke-dasharray="6 4" marker-end="url(#seq-arrow)" />
+  <rect x="653.7850000000001" y="294.3" width="167" height="16.3" rx="2" ry="2" fill="var(--bg)" />
+  <text x="737.2850000000001" y="302.45" font-size="11" text-anchor="middle" font-weight="400" fill="var(--_text-muted)" dy="3.8499999999999996">201 Created project submission</text>
+</g>
+<g class="message" data-from="M" data-to="Web" data-label="Submit official review (Approved or Needs Revision) and feedback" data-line-style="solid" data-arrow-head="filled" data-self="false">
+  <line x1="223.55" y1="380.45" x2="558.5160000000001" y2="380.45" stroke="var(--_line)" stroke-width="1" marker-end="url(#seq-arrow)" />
+  <rect x="219.03300000000002" y="362.3" width="344" height="16.3" rx="2" ry="2" fill="var(--bg)" />
+  <text x="391.033" y="370.45" font-size="11" text-anchor="middle" font-weight="400" fill="var(--_text-muted)" dy="3.8499999999999996">Submit official review (Approved or Needs Revision) and feedback</text>
+</g>
+<g class="message" data-from="Web" data-to="API" data-label="POST /project-submissions/{id}/official-review (JWT Bearer)" data-line-style="solid" data-arrow-head="filled" data-self="false">
+  <line x1="558.5160000000001" y1="420.45" x2="916.054" y2="420.45" stroke="var(--_line)" stroke-width="1" marker-end="url(#seq-arrow)" />
+  <rect x="578.7850000000001" y="402.3" width="317" height="16.3" rx="2" ry="2" fill="var(--bg)" />
+  <text x="737.2850000000001" y="410.45" font-size="11" text-anchor="middle" font-weight="400" fill="var(--_text-muted)" dy="3.8499999999999996">POST /project-submissions/{id}/official-review (JWT Bearer)</text>
+</g>
+<g class="message" data-from="API" data-to="DB" data-label="Verify mentor-managed roadmap, active responsible Human Mentor, and no prior official review" data-line-style="solid" data-arrow-head="filled" data-self="false">
+  <line x1="916.054" y1="460.45" x2="1623.7199999999998" y2="460.45" stroke="var(--_line)" stroke-width="1" marker-end="url(#seq-arrow)" />
+  <rect x="1024.387" y="442.3" width="491" height="16.3" rx="2" ry="2" fill="var(--bg)" />
+  <text x="1269.887" y="450.45" font-size="11" text-anchor="middle" font-weight="400" fill="var(--_text-muted)" dy="3.8499999999999996">Verify mentor-managed roadmap, active responsible Human Mentor, and no prior official review</text>
+</g>
+<g class="message" data-from="API" data-to="DB" data-label="Save official Human Mentor project review" data-line-style="solid" data-arrow-head="filled" data-self="false">
+  <line x1="916.054" y1="500.45" x2="1623.7199999999998" y2="500.45" stroke="var(--_line)" stroke-width="1" marker-end="url(#seq-arrow)" />
+  <rect x="1158.387" y="482.3" width="223" height="16.3" rx="2" ry="2" fill="var(--bg)" />
+  <text x="1269.887" y="490.45" font-size="11" text-anchor="middle" font-weight="400" fill="var(--_text-muted)" dy="3.8499999999999996">Save official Human Mentor project review</text>
+</g>
+<g class="message" data-from="DB" data-to="API" data-label="Saved official project review" data-line-style="dashed" data-arrow-head="filled" data-self="false">
+  <line x1="1623.7199999999998" y1="540.45" x2="916.054" y2="540.45" stroke="var(--_line)" stroke-width="1" stroke-dasharray="6 4" marker-end="url(#seq-arrow)" />
+  <rect x="1193.387" y="522.3000000000001" width="153" height="16.3" rx="2" ry="2" fill="var(--bg)" />
+  <text x="1269.887" y="530.45" font-size="11" text-anchor="middle" font-weight="400" fill="var(--_text-muted)" dy="3.8499999999999996">Saved official project review</text>
+</g>
+<g class="message" data-from="API" data-to="Web" data-label="201 Created official review (shown separately from AI guidance)" data-line-style="dashed" data-arrow-head="filled" data-self="false">
+  <line x1="916.054" y1="580.45" x2="558.5160000000001" y2="580.45" stroke="var(--_line)" stroke-width="1" stroke-dasharray="6 4" marker-end="url(#seq-arrow)" />
+  <rect x="573.7850000000001" y="562.3000000000001" width="327" height="16.3" rx="2" ry="2" fill="var(--bg)" />
+  <text x="737.2850000000001" y="570.45" font-size="11" text-anchor="middle" font-weight="400" fill="var(--_text-muted)" dy="3.8499999999999996">201 Created official review (shown separately from AI guidance)</text>
+</g>
+<g class="message" data-from="L" data-to="Web" data-label="Request non-official AI guidance on project submission" data-line-style="solid" data-arrow-head="filled" data-self="false">
+  <line x1="82.169" y1="659.45" x2="558.5160000000001" y2="659.45" stroke="var(--_line)" stroke-width="1" marker-end="url(#seq-arrow)" />
+  <rect x="177.34250000000003" y="641.3000000000001" width="286" height="16.3" rx="2" ry="2" fill="var(--bg)" />
+  <text x="320.34250000000003" y="649.45" font-size="11" text-anchor="middle" font-weight="400" fill="var(--_text-muted)" dy="3.8499999999999996">Request non-official AI guidance on project submission</text>
+</g>
+<g class="message" data-from="Web" data-to="API" data-label="POST /project-submissions/{id}/ai-guidance (JWT Bearer)" data-line-style="solid" data-arrow-head="filled" data-self="false">
+  <line x1="558.5160000000001" y1="699.45" x2="916.054" y2="699.45" stroke="var(--_line)" stroke-width="1" marker-end="url(#seq-arrow)" />
+  <rect x="583.7850000000001" y="681.3000000000001" width="307" height="16.3" rx="2" ry="2" fill="var(--bg)" />
+  <text x="737.2850000000001" y="689.45" font-size="11" text-anchor="middle" font-weight="400" fill="var(--_text-muted)" dy="3.8499999999999996">POST /project-submissions/{id}/ai-guidance (JWT Bearer)</text>
+</g>
+<g class="message" data-from="API" data-to="DB" data-label="Load project submission and parent roadmap ownership" data-line-style="solid" data-arrow-head="filled" data-self="false">
+  <line x1="916.054" y1="739.45" x2="1623.7199999999998" y2="739.45" stroke="var(--_line)" stroke-width="1" marker-end="url(#seq-arrow)" />
+  <rect x="1121.387" y="721.3000000000001" width="297" height="16.3" rx="2" ry="2" fill="var(--bg)" />
+  <text x="1269.887" y="729.45" font-size="11" text-anchor="middle" font-weight="400" fill="var(--_text-muted)" dy="3.8499999999999996">Load project submission and parent roadmap ownership</text>
+</g>
+<g class="message" data-from="API" data-to="API" data-label="Verify authenticated caller holds Learner role, owns this project submission, and parent roadmap is learner-owned (not mentor-managed)" data-line-style="solid" data-arrow-head="filled" data-self="true">
+  <polyline points="916.054,779.45 946.054,779.45 946.054,799.45 916.054,799.45" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#seq-arrow)" />
+  <rect x="951.054" y="781.3000000000001" width="704" height="16.3" rx="2" ry="2" fill="var(--bg)" />
+  <text x="954.054" y="789.45" font-size="11" text-anchor="start" font-weight="400" fill="var(--_text-muted)" dy="3.8499999999999996">Verify authenticated caller holds Learner role, owns this project submission, and parent roadmap is learner-owned (not mentor-managed)</text>
+</g>
+<g class="message" data-from="API" data-to="AI" data-label="Request non-official AI guidance with project context" data-line-style="solid" data-arrow-head="filled" data-self="false">
+  <line x1="916.054" y1="849.45" x2="1797.3345" y2="849.45" stroke="var(--_line)" stroke-width="1" marker-end="url(#seq-arrow)" />
+  <rect x="1220.69425" y="831.3000000000001" width="272" height="16.3" rx="2" ry="2" fill="var(--bg)" />
+  <text x="1356.69425" y="839.45" font-size="11" text-anchor="middle" font-weight="400" fill="var(--_text-muted)" dy="3.8499999999999996">Request non-official AI guidance with project context</text>
+</g>
+<g class="message" data-from="AI" data-to="API" data-label="Non-official AI guidance text" data-line-style="dashed" data-arrow-head="filled" data-self="false">
+  <line x1="1797.3345" y1="889.45" x2="916.054" y2="889.45" stroke="var(--_line)" stroke-width="1" stroke-dasharray="6 4" marker-end="url(#seq-arrow)" />
+  <rect x="1282.69425" y="871.3000000000001" width="148" height="16.3" rx="2" ry="2" fill="var(--bg)" />
+  <text x="1356.69425" y="879.45" font-size="11" text-anchor="middle" font-weight="400" fill="var(--_text-muted)" dy="3.8499999999999996">Non-official AI guidance text</text>
+</g>
+<g class="message" data-from="API" data-to="Web" data-label="200 OK non-official AI guidance (shown separately from official reviews)" data-line-style="dashed" data-arrow-head="filled" data-self="false">
+  <line x1="916.054" y1="929.45" x2="558.5160000000001" y2="929.45" stroke="var(--_line)" stroke-width="1" stroke-dasharray="6 4" marker-end="url(#seq-arrow)" />
+  <rect x="552.7850000000001" y="911.3000000000001" width="369" height="16.3" rx="2" ry="2" fill="var(--bg)" />
+  <text x="737.2850000000001" y="919.45" font-size="11" text-anchor="middle" font-weight="400" fill="var(--_text-muted)" dy="3.8499999999999996">200 OK non-official AI guidance (shown separately from official reviews)</text>
+</g>
+<g class="message" data-from="L" data-to="Web" data-label="Send message in private AI Mentor conversation" data-line-style="solid" data-arrow-head="filled" data-self="false">
+  <line x1="82.169" y1="984.45" x2="558.5160000000001" y2="984.45" stroke="var(--_line)" stroke-width="1" marker-end="url(#seq-arrow)" />
+  <rect x="191.84250000000003" y="966.3000000000001" width="257" height="16.3" rx="2" ry="2" fill="var(--bg)" />
+  <text x="320.34250000000003" y="974.45" font-size="11" text-anchor="middle" font-weight="400" fill="var(--_text-muted)" dy="3.8499999999999996">Send message in private AI Mentor conversation</text>
+</g>
+<g class="message" data-from="Web" data-to="API" data-label="POST /ai-conversations/{id}/messages (JWT Bearer)" data-line-style="solid" data-arrow-head="filled" data-self="false">
+  <line x1="558.5160000000001" y1="1024.45" x2="916.054" y2="1024.45" stroke="var(--_line)" stroke-width="1" marker-end="url(#seq-arrow)" />
+  <rect x="595.7850000000001" y="1006.3000000000001" width="283" height="16.3" rx="2" ry="2" fill="var(--bg)" />
+  <text x="737.2850000000001" y="1014.45" font-size="11" text-anchor="middle" font-weight="400" fill="var(--_text-muted)" dy="3.8499999999999996">POST /ai-conversations/{id}/messages (JWT Bearer)</text>
+</g>
+<g class="message" data-from="API" data-to="API" data-label="Enforce prior AI privacy and retention disclosure" data-line-style="solid" data-arrow-head="filled" data-self="true">
+  <polyline points="916.054,1064.45 946.054,1064.45 946.054,1084.45 916.054,1084.45" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#seq-arrow)" />
+  <rect x="951.054" y="1066.3" width="261" height="16.3" rx="2" ry="2" fill="var(--bg)" />
+  <text x="954.054" y="1074.45" font-size="11" text-anchor="start" font-weight="400" fill="var(--_text-muted)" dy="3.8499999999999996">Enforce prior AI privacy and retention disclosure</text>
+</g>
+<g class="message" data-from="API" data-to="DB" data-label="Verify conversation belongs to learner and save learner message in order" data-line-style="solid" data-arrow-head="filled" data-self="false">
+  <line x1="916.054" y1="1134.45" x2="1623.7199999999998" y2="1134.45" stroke="var(--_line)" stroke-width="1" marker-end="url(#seq-arrow)" />
+  <rect x="1074.887" y="1116.3" width="390" height="16.3" rx="2" ry="2" fill="var(--bg)" />
+  <text x="1269.887" y="1124.45" font-size="11" text-anchor="middle" font-weight="400" fill="var(--_text-muted)" dy="3.8499999999999996">Verify conversation belongs to learner and save learner message in order</text>
+</g>
+<g class="message" data-from="API" data-to="AI" data-label="Send prompt and selected learning context" data-line-style="solid" data-arrow-head="filled" data-self="false">
+  <line x1="916.054" y1="1174.45" x2="1797.3345" y2="1174.45" stroke="var(--_line)" stroke-width="1" marker-end="url(#seq-arrow)" />
+  <rect x="1243.69425" y="1156.3" width="226" height="16.3" rx="2" ry="2" fill="var(--bg)" />
+  <text x="1356.69425" y="1164.45" font-size="11" text-anchor="middle" font-weight="400" fill="var(--_text-muted)" dy="3.8499999999999996">Send prompt and selected learning context</text>
+</g>
+<g class="message" data-from="AI" data-to="API" data-label="AI Mentor response" data-line-style="dashed" data-arrow-head="filled" data-self="false">
+  <line x1="1797.3345" y1="1214.45" x2="916.054" y2="1214.45" stroke="var(--_line)" stroke-width="1" stroke-dasharray="6 4" marker-end="url(#seq-arrow)" />
+  <rect x="1301.19425" y="1196.3" width="111" height="16.3" rx="2" ry="2" fill="var(--bg)" />
+  <text x="1356.69425" y="1204.45" font-size="11" text-anchor="middle" font-weight="400" fill="var(--_text-muted)" dy="3.8499999999999996">AI Mentor response</text>
+</g>
+<g class="message" data-from="API" data-to="DB" data-label="Save AI Mentor reply with next sequence order" data-line-style="solid" data-arrow-head="filled" data-self="false">
+  <line x1="916.054" y1="1254.45" x2="1623.7199999999998" y2="1254.45" stroke="var(--_line)" stroke-width="1" marker-end="url(#seq-arrow)" />
+  <rect x="1145.387" y="1236.3" width="249" height="16.3" rx="2" ry="2" fill="var(--bg)" />
+  <text x="1269.887" y="1244.45" font-size="11" text-anchor="middle" font-weight="400" fill="var(--_text-muted)" dy="3.8499999999999996">Save AI Mentor reply with next sequence order</text>
+</g>
+<g class="message" data-from="DB" data-to="API" data-label="Saved AI Mentor reply" data-line-style="dashed" data-arrow-head="filled" data-self="false">
+  <line x1="1623.7199999999998" y1="1294.45" x2="916.054" y2="1294.45" stroke="var(--_line)" stroke-width="1" stroke-dasharray="6 4" marker-end="url(#seq-arrow)" />
+  <rect x="1208.387" y="1276.3" width="123" height="16.3" rx="2" ry="2" fill="var(--bg)" />
+  <text x="1269.887" y="1284.45" font-size="11" text-anchor="middle" font-weight="400" fill="var(--_text-muted)" dy="3.8499999999999996">Saved AI Mentor reply</text>
+</g>
+<g class="message" data-from="API" data-to="Web" data-label="200 OK AI Mentor reply" data-line-style="dashed" data-arrow-head="filled" data-self="false">
+  <line x1="916.054" y1="1334.45" x2="558.5160000000001" y2="1334.45" stroke="var(--_line)" stroke-width="1" stroke-dasharray="6 4" marker-end="url(#seq-arrow)" />
+  <rect x="673.7850000000001" y="1316.3" width="127" height="16.3" rx="2" ry="2" fill="var(--bg)" />
+  <text x="737.2850000000001" y="1324.45" font-size="11" text-anchor="middle" font-weight="400" fill="var(--_text-muted)" dy="3.8499999999999996">200 OK AI Mentor reply</text>
+</g>
+<g class="message" data-from="L" data-to="Web" data-label="Request deletion of AI conversation data" data-line-style="solid" data-arrow-head="filled" data-self="false">
+  <line x1="82.169" y1="1402.45" x2="558.5160000000001" y2="1402.45" stroke="var(--_line)" stroke-width="1" marker-end="url(#seq-arrow)" />
+  <rect x="213.84250000000003" y="1384.3" width="213" height="16.3" rx="2" ry="2" fill="var(--bg)" />
+  <text x="320.34250000000003" y="1392.45" font-size="11" text-anchor="middle" font-weight="400" fill="var(--_text-muted)" dy="3.8499999999999996">Request deletion of AI conversation data</text>
+</g>
+<g class="message" data-from="Web" data-to="API" data-label="DELETE /ai-conversations/{id} (JWT Bearer)" data-line-style="solid" data-arrow-head="filled" data-self="false">
+  <line x1="558.5160000000001" y1="1442.45" x2="916.054" y2="1442.45" stroke="var(--_line)" stroke-width="1" marker-end="url(#seq-arrow)" />
+  <rect x="616.2850000000001" y="1424.3" width="242" height="16.3" rx="2" ry="2" fill="var(--bg)" />
+  <text x="737.2850000000001" y="1432.45" font-size="11" text-anchor="middle" font-weight="400" fill="var(--_text-muted)" dy="3.8499999999999996">DELETE /ai-conversations/{id} (JWT Bearer)</text>
+</g>
+<g class="message" data-from="API" data-to="DB" data-label="Verify conversation belongs to learner and delete eligible learner AI conversation data per disclosed retention and deletion rules" data-line-style="solid" data-arrow-head="filled" data-self="false">
+  <line x1="916.054" y1="1482.45" x2="1623.7199999999998" y2="1482.45" stroke="var(--_line)" stroke-width="1" marker-end="url(#seq-arrow)" />
+  <rect x="937.887" y="1464.3" width="664" height="16.3" rx="2" ry="2" fill="var(--bg)" />
+  <text x="1269.887" y="1472.45" font-size="11" text-anchor="middle" font-weight="400" fill="var(--_text-muted)" dy="3.8499999999999996">Verify conversation belongs to learner and delete eligible learner AI conversation data per disclosed retention and deletion rules</text>
+</g>
+<g class="message" data-from="DB" data-to="API" data-label="Eligible data deleted per disclosed retention and deletion limits" data-line-style="dashed" data-arrow-head="filled" data-self="false">
+  <line x1="1623.7199999999998" y1="1522.45" x2="916.054" y2="1522.45" stroke="var(--_line)" stroke-width="1" stroke-dasharray="6 4" marker-end="url(#seq-arrow)" />
+  <rect x="1108.887" y="1504.3" width="322" height="16.3" rx="2" ry="2" fill="var(--bg)" />
+  <text x="1269.887" y="1512.45" font-size="11" text-anchor="middle" font-weight="400" fill="var(--_text-muted)" dy="3.8499999999999996">Eligible data deleted per disclosed retention and deletion limits</text>
+</g>
+<g class="message" data-from="API" data-to="Web" data-label="204 No Content (deletion request processed per disclosed limits)" data-line-style="dashed" data-arrow-head="filled" data-self="false">
+  <line x1="916.054" y1="1562.45" x2="558.5160000000001" y2="1562.45" stroke="var(--_line)" stroke-width="1" stroke-dasharray="6 4" marker-end="url(#seq-arrow)" />
+  <rect x="569.2850000000001" y="1544.3" width="336" height="16.3" rx="2" ry="2" fill="var(--bg)" />
+  <text x="737.2850000000001" y="1552.45" font-size="11" text-anchor="middle" font-weight="400" fill="var(--_text-muted)" dy="3.8499999999999996">204 No Content (deletion request processed per disclosed limits)</text>
+</g>
+<g class="message" data-from="Web" data-to="L" data-label="Confirm deletion request processed per disclosed deletion and retention limits" data-line-style="dashed" data-arrow-head="filled" data-self="false">
+  <line x1="558.5160000000001" y1="1602.45" x2="82.169" y2="1602.45" stroke="var(--_line)" stroke-width="1" stroke-dasharray="6 4" marker-end="url(#seq-arrow)" />
+  <rect x="118.34250000000003" y="1584.3" width="404" height="16.3" rx="2" ry="2" fill="var(--bg)" />
+  <text x="320.34250000000003" y="1592.45" font-size="11" text-anchor="middle" font-weight="400" fill="var(--_text-muted)" dy="3.8499999999999996">Confirm deletion request processed per disclosed deletion and retention limits</text>
+</g>
+<g class="note" data-position="over" data-actors="Web,API">
+  <polygon points="508.54100000000017,588.45 960.029,588.45 966.029,594.45 966.029,611.45 508.54100000000017,611.45" fill="var(--bg)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <polygon points="960.029,588.45 966.029,594.45 960.029,594.45" fill="var(--_inner-stroke)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="737.2850000000001" y="599.95" font-size="11" text-anchor="middle" font-weight="400" fill="var(--_text-muted)" dy="3.8499999999999996">Present prior AI disclosure of processing, external transmission, and retention/deletion rules</text>
+</g>
+<g class="note" data-position="over" data-actors="L,API">
+  <polygon points="245.71650000000005,937.45 746.5065,937.45 752.5065,943.45 752.5065,960.45 245.71650000000005,960.45" fill="var(--bg)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <polygon points="746.5065,937.45 752.5065,943.45 746.5065,943.45" fill="var(--_inner-stroke)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="499.1115" y="948.95" font-size="11" text-anchor="middle" font-weight="400" fill="var(--_text-muted)" dy="3.8499999999999996">Private Learner AI Mentor Conversation (strictly private to learner, never accessible to human mentors)</text>
+</g>
+<g class="actor" data-id="L" data-label="Learner" data-type="actor">
+  <g transform="translate(64.169,32) scale(1.5)">
+    <path d="M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z" fill="none" stroke="var(--_line)" stroke-width="0.6666666666666666" />
+    <path d="M15 10C15 11.6569 13.6569 13 12 13C10.3431 13 9 11.6569 9 10C9 8.34315 10.3431 7 12 7C13.6569 7 15 8.34315 15 10Z" fill="none" stroke="var(--_line)" stroke-width="0.6666666666666666" />
+    <path d="M5.62842 18.3563C7.08963 17.0398 9.39997 16 12 16C14.6 16 16.9104 17.0398 18.3716 18.3563" fill="none" stroke="var(--_line)" stroke-width="0.6666666666666666" />
+  </g>
+  <text x="82.169" y="84" font-size="13" text-anchor="middle" font-weight="500" fill="var(--_text)" dy="4.55">Learner</text>
+</g>
+<g class="actor" data-id="M" data-label="Human Mentor" data-type="actor">
+  <g transform="translate(205.55,32) scale(1.5)">
+    <path d="M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z" fill="none" stroke="var(--_line)" stroke-width="0.6666666666666666" />
+    <path d="M15 10C15 11.6569 13.6569 13 12 13C10.3431 13 9 11.6569 9 10C9 8.34315 10.3431 7 12 7C13.6569 7 15 8.34315 15 10Z" fill="none" stroke="var(--_line)" stroke-width="0.6666666666666666" />
+    <path d="M5.62842 18.3563C7.08963 17.0398 9.39997 16 12 16C14.6 16 16.9104 17.0398 18.3716 18.3563" fill="none" stroke="var(--_line)" stroke-width="0.6666666666666666" />
+  </g>
+  <text x="223.55" y="84" font-size="13" text-anchor="middle" font-weight="500" fill="var(--_text)" dy="4.55">Human Mentor</text>
+</g>
+<g class="actor" data-id="Web" data-label="Next.js Client" data-type="participant">
+  <rect x="504.1205000000001" y="30" width="108.791" height="40" rx="4" ry="4" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <text x="558.5160000000001" y="50" font-size="13" text-anchor="middle" font-weight="500" fill="var(--_text)" dy="4.55">Next.js Client</text>
+</g>
+<g class="actor" data-id="API" data-label="ASP.NET Core API" data-type="participant">
+  <rect x="843.504" y="30" width="145.1" height="40" rx="4" ry="4" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <text x="916.054" y="50" font-size="13" text-anchor="middle" font-weight="500" fill="var(--_text)" dy="4.55">ASP.NET Core API</text>
+</g>
+<g class="actor" data-id="DB" data-label="MySQL 8.0 DB" data-type="participant">
+  <rect x="1564.1374999999998" y="30" width="119.16499999999999" height="40" rx="4" ry="4" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <text x="1623.7199999999998" y="50" font-size="13" text-anchor="middle" font-weight="500" fill="var(--_text)" dy="4.55">MySQL 8.0 DB</text>
+</g>
+<g class="actor" data-id="AI" data-label="External AI Service" data-type="participant">
+  <rect x="1723.3025" y="30" width="148.06400000000002" height="40" rx="4" ry="4" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <text x="1797.3345" y="50" font-size="13" text-anchor="middle" font-weight="500" fill="var(--_text)" dy="4.55">External AI Service</text>
+</g>
+</svg>

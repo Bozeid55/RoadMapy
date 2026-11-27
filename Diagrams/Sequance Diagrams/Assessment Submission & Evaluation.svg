@@ -1,0 +1,236 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2127.4185 1528.45" width="2127.4185" height="1528.45" style="--bg:#18181B;--fg:#F4F4F5;--line:#71717A;--muted:#A1A1AA;--surface:#27272A;--border:#3F3F46;background:var(--bg)">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap');
+  text { font-family: 'Inter', system-ui, sans-serif; }
+  svg {
+    /* Derived from --bg and --fg (overridable via --line, --accent, etc.) */
+    --_text:          var(--fg);
+    --_text-sec:      var(--muted, color-mix(in srgb, var(--fg) 60%, var(--bg)));
+    --_text-muted:    var(--muted, color-mix(in srgb, var(--fg) 40%, var(--bg)));
+    --_text-faint:    color-mix(in srgb, var(--fg) 25%, var(--bg));
+    --_line:          var(--line, color-mix(in srgb, var(--fg) 50%, var(--bg)));
+    --_arrow:         var(--accent, color-mix(in srgb, var(--fg) 85%, var(--bg)));
+    --_node-fill:     var(--surface, color-mix(in srgb, var(--fg) 3%, var(--bg)));
+    --_node-stroke:   var(--border, color-mix(in srgb, var(--fg) 20%, var(--bg)));
+    --_group-fill:    var(--bg);
+    --_group-hdr:     color-mix(in srgb, var(--fg) 5%, var(--bg));
+    --_inner-stroke:  color-mix(in srgb, var(--fg) 12%, var(--bg));
+    --_key-badge:     color-mix(in srgb, var(--fg) 10%, var(--bg));
+  }
+</style>
+<defs>
+  <marker id="seq-arrow" markerWidth="8" markerHeight="5" refX="8" refY="2.5" orient="auto-start-reverse">
+    <polygon points="0 0, 8 2.5, 0 5" fill="var(--_arrow)" />
+  </marker>
+  <marker id="seq-arrow-open" markerWidth="8" markerHeight="5" refX="8" refY="2.5" orient="auto-start-reverse">
+    <polyline points="0 0, 8 2.5, 0 5" fill="none" stroke="var(--_arrow)" stroke-width="1" />
+  </marker>
+</defs>
+<line class="lifeline" data-actor="L" x1="72.169" y1="92.45" x2="72.169" y2="1498.45" stroke="var(--_line)" stroke-width="0.75" stroke-dasharray="6 4" />
+<line class="lifeline" data-actor="M" x1="213.55" y1="92.45" x2="213.55" y2="1498.45" stroke="var(--_line)" stroke-width="0.75" stroke-dasharray="6 4" />
+<line class="lifeline" data-actor="Web" x1="392.88800000000003" y1="70" x2="392.88800000000003" y2="1498.45" stroke="var(--_line)" stroke-width="0.75" stroke-dasharray="6 4" />
+<line class="lifeline" data-actor="API" x1="1053.366" y1="70" x2="1053.366" y2="1498.45" stroke="var(--_line)" stroke-width="0.75" stroke-dasharray="6 4" />
+<line class="lifeline" data-actor="DB" x1="1839.7720000000002" y1="70" x2="1839.7720000000002" y2="1498.45" stroke="var(--_line)" stroke-width="0.75" stroke-dasharray="6 4" />
+<line class="lifeline" data-actor="AI" x1="2013.3865" y1="70" x2="2013.3865" y2="1498.45" stroke="var(--_line)" stroke-width="0.75" stroke-dasharray="6 4" />
+<g class="block" data-type="alt" data-label="Quiz Assessment">
+  <rect x="328.49250000000006" y="220.45" width="1580.862" height="464.00000000000006" rx="0" ry="0" fill="none" stroke="var(--_node-stroke)" stroke-width="1" />
+  <rect x="328.49250000000006" y="220.45" width="149" height="20" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <text x="336.49250000000006" y="230.45" font-size="11" font-weight="600" fill="var(--_text-sec)" dy="3.8499999999999996">alt [Quiz Assessment]</text>
+  <line x1="328.49250000000006" y1="556.45" x2="1909.3545000000001" y2="556.45" stroke="var(--_line)" stroke-width="0.75" stroke-dasharray="6 4" />
+  <rect x="333.49250000000006" y="562.3000000000001" width="108" height="16.3" rx="2" ry="2" fill="var(--bg)" />
+  <text x="336.49250000000006" y="570.45" font-size="11" text-anchor="start" font-weight="400" fill="var(--_text-muted)" dy="3.8499999999999996">[Task Assessment]</text>
+</g>
+<g class="block" data-type="alt" data-label="External AI Service Succeeded">
+  <rect x="328.49250000000006" y="1124.45" width="1768.9260000000002" height="354" rx="0" ry="0" fill="none" stroke="var(--_node-stroke)" stroke-width="1" />
+  <rect x="328.49250000000006" y="1124.45" width="231" height="20" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <text x="336.49250000000006" y="1134.45" font-size="11" font-weight="600" fill="var(--_text-sec)" dy="3.8499999999999996">alt [External AI Service Succeeded]</text>
+  <line x1="328.49250000000006" y1="1390.45" x2="2097.4185" y2="1390.45" stroke="var(--_line)" stroke-width="0.75" stroke-dasharray="6 4" />
+  <rect x="333.49250000000006" y="1396.3" width="150" height="16.3" rx="2" ry="2" fill="var(--bg)" />
+  <text x="336.49250000000006" y="1404.45" font-size="11" text-anchor="start" font-weight="400" fill="var(--_text-muted)" dy="3.8499999999999996">[External AI Service Failed]</text>
+</g>
+<g class="block" data-type="alt" data-label="Mentor-Managed Roadmap">
+  <rect x="144.33800000000002" y="692.45" width="1953.0805000000003" height="786" rx="0" ry="0" fill="none" stroke="var(--_node-stroke)" stroke-width="1" />
+  <rect x="144.33800000000002" y="692.45" width="205" height="20" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <text x="152.33800000000002" y="702.45" font-size="11" font-weight="600" fill="var(--_text-sec)" dy="3.8499999999999996">alt [Mentor-Managed Roadmap]</text>
+  <line x1="144.33800000000002" y1="1068.45" x2="2097.4185" y2="1068.45" stroke="var(--_line)" stroke-width="0.75" stroke-dasharray="6 4" />
+  <rect x="149.33800000000002" y="1074.3" width="148" height="16.3" rx="2" ry="2" fill="var(--bg)" />
+  <text x="152.33800000000002" y="1082.45" font-size="11" text-anchor="start" font-weight="400" fill="var(--_text-muted)" dy="3.8499999999999996">[Learner-Owned Roadmap]</text>
+</g>
+<g class="message" data-from="L" data-to="Web" data-label="Submit assessment" data-line-style="solid" data-arrow-head="filled" data-self="false">
+  <line x1="72.169" y1="112.45" x2="392.88800000000003" y2="112.45" stroke="var(--_line)" stroke-width="1" marker-end="url(#seq-arrow)" />
+  <rect x="179.0285" y="94.3" width="107" height="16.3" rx="2" ry="2" fill="var(--bg)" />
+  <text x="232.5285" y="102.45" font-size="11" text-anchor="middle" font-weight="400" fill="var(--_text-muted)" dy="3.8499999999999996">Submit assessment</text>
+</g>
+<g class="message" data-from="Web" data-to="API" data-label="POST /assessments/{id}/submission (JWT Bearer)" data-line-style="solid" data-arrow-head="filled" data-self="false">
+  <line x1="392.88800000000003" y1="152.45" x2="1053.366" y2="152.45" stroke="var(--_line)" stroke-width="1" marker-end="url(#seq-arrow)" />
+  <rect x="588.627" y="134.29999999999998" width="269" height="16.3" rx="2" ry="2" fill="var(--bg)" />
+  <text x="723.127" y="142.45" font-size="11" text-anchor="middle" font-weight="400" fill="var(--_text-muted)" dy="3.8499999999999996">POST /assessments/{id}/submission (JWT Bearer)</text>
+</g>
+<g class="message" data-from="API" data-to="DB" data-label="Verify roadmap owner and no prior submission for this assessment" data-line-style="solid" data-arrow-head="filled" data-self="false">
+  <line x1="1053.366" y1="192.45" x2="1839.7720000000002" y2="192.45" stroke="var(--_line)" stroke-width="1" marker-end="url(#seq-arrow)" />
+  <rect x="1272.069" y="174.29999999999998" width="349" height="16.3" rx="2" ry="2" fill="var(--bg)" />
+  <text x="1446.569" y="182.45" font-size="11" text-anchor="middle" font-weight="400" fill="var(--_text-muted)" dy="3.8499999999999996">Verify roadmap owner and no prior submission for this assessment</text>
+</g>
+<g class="message" data-from="API" data-to="DB" data-label="Load quiz questions and answer choices for assessment" data-line-style="solid" data-arrow-head="filled" data-self="false">
+  <line x1="1053.366" y1="260.45" x2="1839.7720000000002" y2="260.45" stroke="var(--_line)" stroke-width="1" marker-end="url(#seq-arrow)" />
+  <rect x="1296.569" y="242.29999999999998" width="300" height="16.3" rx="2" ry="2" fill="var(--bg)" />
+  <text x="1446.569" y="250.45" font-size="11" text-anchor="middle" font-weight="400" fill="var(--_text-muted)" dy="3.8499999999999996">Load quiz questions and answer choices for assessment</text>
+</g>
+<g class="message" data-from="API" data-to="API" data-label="Validate all submitted question IDs, short answer inputs, and selected choice IDs before creating submission" data-line-style="solid" data-arrow-head="filled" data-self="true">
+  <polyline points="1053.366,300.45 1083.366,300.45 1083.366,320.45 1053.366,320.45" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#seq-arrow)" />
+  <rect x="1088.366" y="302.3" width="555" height="16.3" rx="2" ry="2" fill="var(--bg)" />
+  <text x="1091.366" y="310.45" font-size="11" text-anchor="start" font-weight="400" fill="var(--_text-muted)" dy="3.8499999999999996">Validate all submitted question IDs, short answer inputs, and selected choice IDs before creating submission</text>
+</g>
+<g class="message" data-from="API" data-to="API" data-label="Auto-grade choice questions (all-or-nothing for multiple select)" data-line-style="solid" data-arrow-head="filled" data-self="true">
+  <polyline points="1053.366,370.45 1083.366,370.45 1083.366,390.45 1053.366,390.45" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#seq-arrow)" />
+  <rect x="1088.366" y="372.3" width="323" height="16.3" rx="2" ry="2" fill="var(--bg)" />
+  <text x="1091.366" y="380.45" font-size="11" text-anchor="start" font-weight="400" fill="var(--_text-muted)" dy="3.8499999999999996">Auto-grade choice questions (all-or-nothing for multiple select)</text>
+</g>
+<g class="message" data-from="API" data-to="DB" data-label="Begin atomic transaction - insert assessment submission first to generate submission ID, then insert question answers and selected choices (roll back on any failure)" data-line-style="solid" data-arrow-head="filled" data-self="false">
+  <line x1="1053.366" y1="440.45" x2="1839.7720000000002" y2="440.45" stroke="var(--_line)" stroke-width="1" marker-end="url(#seq-arrow)" />
+  <rect x="1026.069" y="422.3" width="841" height="16.3" rx="2" ry="2" fill="var(--bg)" />
+  <text x="1446.569" y="430.45" font-size="11" text-anchor="middle" font-weight="400" fill="var(--_text-muted)" dy="3.8499999999999996">Begin atomic transaction - insert assessment submission first to generate submission ID, then insert question answers and selected choices (roll back on any failure)</text>
+</g>
+<g class="message" data-from="DB" data-to="API" data-label="Committed quiz submission and auto-graded answers" data-line-style="dashed" data-arrow-head="filled" data-self="false">
+  <line x1="1839.7720000000002" y1="480.45" x2="1053.366" y2="480.45" stroke="var(--_line)" stroke-width="1" stroke-dasharray="6 4" marker-end="url(#seq-arrow)" />
+  <rect x="1307.069" y="462.3" width="279" height="16.3" rx="2" ry="2" fill="var(--bg)" />
+  <text x="1446.569" y="470.45" font-size="11" text-anchor="middle" font-weight="400" fill="var(--_text-muted)" dy="3.8499999999999996">Committed quiz submission and auto-graded answers</text>
+</g>
+<g class="message" data-from="API" data-to="Web" data-label="201 Created quiz submission" data-line-style="dashed" data-arrow-head="filled" data-self="false">
+  <line x1="1053.366" y1="520.45" x2="392.88800000000003" y2="520.45" stroke="var(--_line)" stroke-width="1" stroke-dasharray="6 4" marker-end="url(#seq-arrow)" />
+  <rect x="646.627" y="502.30000000000007" width="153" height="16.3" rx="2" ry="2" fill="var(--bg)" />
+  <text x="723.127" y="510.45000000000005" font-size="11" text-anchor="middle" font-weight="400" fill="var(--_text-muted)" dy="3.8499999999999996">201 Created quiz submission</text>
+</g>
+<g class="message" data-from="API" data-to="DB" data-label="Save task submission with GitHub URL" data-line-style="solid" data-arrow-head="filled" data-self="false">
+  <line x1="1053.366" y1="584.45" x2="1839.7720000000002" y2="584.45" stroke="var(--_line)" stroke-width="1" marker-end="url(#seq-arrow)" />
+  <rect x="1344.569" y="566.3000000000001" width="204" height="16.3" rx="2" ry="2" fill="var(--bg)" />
+  <text x="1446.569" y="574.45" font-size="11" text-anchor="middle" font-weight="400" fill="var(--_text-muted)" dy="3.8499999999999996">Save task submission with GitHub URL</text>
+</g>
+<g class="message" data-from="DB" data-to="API" data-label="Saved task submission" data-line-style="dashed" data-arrow-head="filled" data-self="false">
+  <line x1="1839.7720000000002" y1="624.45" x2="1053.366" y2="624.45" stroke="var(--_line)" stroke-width="1" stroke-dasharray="6 4" marker-end="url(#seq-arrow)" />
+  <rect x="1383.069" y="606.3000000000001" width="127" height="16.3" rx="2" ry="2" fill="var(--bg)" />
+  <text x="1446.569" y="614.45" font-size="11" text-anchor="middle" font-weight="400" fill="var(--_text-muted)" dy="3.8499999999999996">Saved task submission</text>
+</g>
+<g class="message" data-from="API" data-to="Web" data-label="201 Created task submission" data-line-style="dashed" data-arrow-head="filled" data-self="false">
+  <line x1="1053.366" y1="664.45" x2="392.88800000000003" y2="664.45" stroke="var(--_line)" stroke-width="1" stroke-dasharray="6 4" marker-end="url(#seq-arrow)" />
+  <rect x="646.627" y="646.3000000000001" width="153" height="16.3" rx="2" ry="2" fill="var(--bg)" />
+  <text x="723.127" y="654.45" font-size="11" text-anchor="middle" font-weight="400" fill="var(--_text-muted)" dy="3.8499999999999996">201 Created task submission</text>
+</g>
+<g class="message" data-from="M" data-to="Web" data-label="Submit mentor review and marks" data-line-style="solid" data-arrow-head="filled" data-self="false">
+  <line x1="213.55" y1="732.45" x2="392.88800000000003" y2="732.45" stroke="var(--_line)" stroke-width="1" marker-end="url(#seq-arrow)" />
+  <rect x="216.71900000000005" y="714.3000000000001" width="173" height="16.3" rx="2" ry="2" fill="var(--bg)" />
+  <text x="303.21900000000005" y="722.45" font-size="11" text-anchor="middle" font-weight="400" fill="var(--_text-muted)" dy="3.8499999999999996">Submit mentor review and marks</text>
+</g>
+<g class="message" data-from="Web" data-to="API" data-label="POST /assessment-submissions/{id}/mentor-review (JWT Bearer)" data-line-style="solid" data-arrow-head="filled" data-self="false">
+  <line x1="392.88800000000003" y1="772.45" x2="1053.366" y2="772.45" stroke="var(--_line)" stroke-width="1" marker-end="url(#seq-arrow)" />
+  <rect x="550.127" y="754.3000000000001" width="346" height="16.3" rx="2" ry="2" fill="var(--bg)" />
+  <text x="723.127" y="762.45" font-size="11" text-anchor="middle" font-weight="400" fill="var(--_text-muted)" dy="3.8499999999999996">POST /assessment-submissions/{id}/mentor-review (JWT Bearer)</text>
+</g>
+<g class="message" data-from="API" data-to="DB" data-label="Verify active responsible Human Mentor and no prior review" data-line-style="solid" data-arrow-head="filled" data-self="false">
+  <line x1="1053.366" y1="812.45" x2="1839.7720000000002" y2="812.45" stroke="var(--_line)" stroke-width="1" marker-end="url(#seq-arrow)" />
+  <rect x="1288.569" y="794.3000000000001" width="316" height="16.3" rx="2" ry="2" fill="var(--bg)" />
+  <text x="1446.569" y="802.45" font-size="11" text-anchor="middle" font-weight="400" fill="var(--_text-muted)" dy="3.8499999999999996">Verify active responsible Human Mentor and no prior review</text>
+</g>
+<g class="message" data-from="API" data-to="API" data-label="Validate short answer marks within question limits and record per-question marks" data-line-style="solid" data-arrow-head="filled" data-self="true">
+  <polyline points="1053.366,852.45 1083.366,852.45 1083.366,872.45 1053.366,872.45" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#seq-arrow)" />
+  <rect x="1088.366" y="854.3000000000001" width="422" height="16.3" rx="2" ry="2" fill="var(--bg)" />
+  <text x="1091.366" y="862.45" font-size="11" text-anchor="start" font-weight="400" fill="var(--_text-muted)" dy="3.8499999999999996">Validate short answer marks within question limits and record per-question marks</text>
+</g>
+<g class="message" data-from="API" data-to="DB" data-label="Update short answer marks and save Human Mentor review with marks and feedback" data-line-style="solid" data-arrow-head="filled" data-self="false">
+  <line x1="1053.366" y1="937.45" x2="1839.7720000000002" y2="937.45" stroke="var(--_line)" stroke-width="1" marker-end="url(#seq-arrow)" />
+  <rect x="1225.569" y="919.3000000000001" width="442" height="16.3" rx="2" ry="2" fill="var(--bg)" />
+  <text x="1446.569" y="927.45" font-size="11" text-anchor="middle" font-weight="400" fill="var(--_text-muted)" dy="3.8499999999999996">Update short answer marks and save Human Mentor review with marks and feedback</text>
+</g>
+<g class="message" data-from="DB" data-to="API" data-label="Saved assessment review" data-line-style="dashed" data-arrow-head="filled" data-self="false">
+  <line x1="1839.7720000000002" y1="977.45" x2="1053.366" y2="977.45" stroke="var(--_line)" stroke-width="1" stroke-dasharray="6 4" marker-end="url(#seq-arrow)" />
+  <rect x="1374.569" y="959.3000000000001" width="144" height="16.3" rx="2" ry="2" fill="var(--bg)" />
+  <text x="1446.569" y="967.45" font-size="11" text-anchor="middle" font-weight="400" fill="var(--_text-muted)" dy="3.8499999999999996">Saved assessment review</text>
+</g>
+<g class="message" data-from="API" data-to="Web" data-label="201 Created assessment review (visible to learner)" data-line-style="dashed" data-arrow-head="filled" data-self="false">
+  <line x1="1053.366" y1="1017.45" x2="392.88800000000003" y2="1017.45" stroke="var(--_line)" stroke-width="1" stroke-dasharray="6 4" marker-end="url(#seq-arrow)" />
+  <rect x="591.127" y="999.3000000000001" width="264" height="16.3" rx="2" ry="2" fill="var(--bg)" />
+  <text x="723.127" y="1007.45" font-size="11" text-anchor="middle" font-weight="400" fill="var(--_text-muted)" dy="3.8499999999999996">201 Created assessment review (visible to learner)</text>
+</g>
+<g class="message" data-from="API" data-to="AI" data-label="Request AI assessment evaluation and per-question short answer marks" data-line-style="solid" data-arrow-head="filled" data-self="false">
+  <line x1="1053.366" y1="1096.45" x2="2013.3865" y2="1096.45" stroke="var(--_line)" stroke-width="1" marker-end="url(#seq-arrow)" />
+  <rect x="1343.87625" y="1078.3" width="379" height="16.3" rx="2" ry="2" fill="var(--bg)" />
+  <text x="1533.37625" y="1086.45" font-size="11" text-anchor="middle" font-weight="400" fill="var(--_text-muted)" dy="3.8499999999999996">Request AI assessment evaluation and per-question short answer marks</text>
+</g>
+<g class="message" data-from="AI" data-to="API" data-label="AI feedback, task mark if applicable, and short answer marks (empty map for tasks or choice-only quizzes)" data-line-style="dashed" data-arrow-head="filled" data-self="false">
+  <line x1="2013.3865" y1="1164.45" x2="1053.366" y2="1164.45" stroke="var(--_line)" stroke-width="1" stroke-dasharray="6 4" marker-end="url(#seq-arrow)" />
+  <rect x="1260.87625" y="1146.3" width="545" height="16.3" rx="2" ry="2" fill="var(--bg)" />
+  <text x="1533.37625" y="1154.45" font-size="11" text-anchor="middle" font-weight="400" fill="var(--_text-muted)" dy="3.8499999999999996">AI feedback, task mark if applicable, and short answer marks (empty map for tasks or choice-only quizzes)</text>
+</g>
+<g class="message" data-from="API" data-to="API" data-label="Validate short answer marks, record per-question marks, and compute derived quiz total (or keep task mark)" data-line-style="solid" data-arrow-head="filled" data-self="true">
+  <polyline points="1053.366,1204.45 1083.366,1204.45 1083.366,1224.45 1053.366,1224.45" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#seq-arrow)" />
+  <rect x="1088.366" y="1206.3" width="558" height="16.3" rx="2" ry="2" fill="var(--bg)" />
+  <text x="1091.366" y="1214.45" font-size="11" text-anchor="start" font-weight="400" fill="var(--_text-muted)" dy="3.8499999999999996">Validate short answer marks, record per-question marks, and compute derived quiz total (or keep task mark)</text>
+</g>
+<g class="message" data-from="API" data-to="DB" data-label="Update short answer marks and save AI Mentor review with marks and feedback" data-line-style="solid" data-arrow-head="filled" data-self="false">
+  <line x1="1053.366" y1="1274.45" x2="1839.7720000000002" y2="1274.45" stroke="var(--_line)" stroke-width="1" marker-end="url(#seq-arrow)" />
+  <rect x="1238.069" y="1256.3" width="417" height="16.3" rx="2" ry="2" fill="var(--bg)" />
+  <text x="1446.569" y="1264.45" font-size="11" text-anchor="middle" font-weight="400" fill="var(--_text-muted)" dy="3.8499999999999996">Update short answer marks and save AI Mentor review with marks and feedback</text>
+</g>
+<g class="message" data-from="DB" data-to="API" data-label="Saved AI assessment review" data-line-style="dashed" data-arrow-head="filled" data-self="false">
+  <line x1="1839.7720000000002" y1="1314.45" x2="1053.366" y2="1314.45" stroke="var(--_line)" stroke-width="1" stroke-dasharray="6 4" marker-end="url(#seq-arrow)" />
+  <rect x="1368.069" y="1296.3" width="157" height="16.3" rx="2" ry="2" fill="var(--bg)" />
+  <text x="1446.569" y="1304.45" font-size="11" text-anchor="middle" font-weight="400" fill="var(--_text-muted)" dy="3.8499999999999996">Saved AI assessment review</text>
+</g>
+<g class="message" data-from="API" data-to="Web" data-label="201 Created assessment review (visible to learner)" data-line-style="dashed" data-arrow-head="filled" data-self="false">
+  <line x1="1053.366" y1="1354.45" x2="392.88800000000003" y2="1354.45" stroke="var(--_line)" stroke-width="1" stroke-dasharray="6 4" marker-end="url(#seq-arrow)" />
+  <rect x="591.127" y="1336.3" width="264" height="16.3" rx="2" ry="2" fill="var(--bg)" />
+  <text x="723.127" y="1344.45" font-size="11" text-anchor="middle" font-weight="400" fill="var(--_text-muted)" dy="3.8499999999999996">201 Created assessment review (visible to learner)</text>
+</g>
+<g class="message" data-from="AI" data-to="API" data-label="External AI service error or timeout" data-line-style="dashed" data-arrow-head="filled" data-self="false">
+  <line x1="2013.3865" y1="1418.45" x2="1053.366" y2="1418.45" stroke="var(--_line)" stroke-width="1" stroke-dasharray="6 4" marker-end="url(#seq-arrow)" />
+  <rect x="1438.87625" y="1400.3" width="189" height="16.3" rx="2" ry="2" fill="var(--bg)" />
+  <text x="1533.37625" y="1408.45" font-size="11" text-anchor="middle" font-weight="400" fill="var(--_text-muted)" dy="3.8499999999999996">External AI service error or timeout</text>
+</g>
+<g class="message" data-from="API" data-to="Web" data-label="503 Service Unavailable (persisted submission remains intact so AI evaluation can be retried later without creating a second submission)" data-line-style="dashed" data-arrow-head="filled" data-self="false">
+  <line x1="1053.366" y1="1458.45" x2="392.88800000000003" y2="1458.45" stroke="var(--_line)" stroke-width="1" stroke-dasharray="6 4" marker-end="url(#seq-arrow)" />
+  <rect x="372.12699999999995" y="1440.3" width="702" height="16.3" rx="2" ry="2" fill="var(--bg)" />
+  <text x="723.127" y="1448.45" font-size="11" text-anchor="middle" font-weight="400" fill="var(--_text-muted)" dy="3.8499999999999996">503 Service Unavailable (persisted submission remains intact so AI evaluation can be retried later without creating a second submission)</text>
+</g>
+<g class="note" data-position="over" data-actors="API">
+  <polygon points="681.4680000000001,890.45 1419.264,890.45 1425.264,896.45 1425.264,913.45 681.4680000000001,913.45" fill="var(--bg)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <polygon points="1419.264,890.45 1425.264,896.45 1419.264,896.45" fill="var(--_inner-stroke)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="1053.366" y="901.95" font-size="11" text-anchor="middle" font-weight="400" fill="var(--_text-muted)" dy="3.8499999999999996">For quizzes, compute total from choice plus short answer marks (no separate task mark). For tasks or choice-only quizzes, short answer mark map is empty</text>
+</g>
+<g class="note" data-position="over" data-actors="Web,API">
+  <polygon points="494.38300000000004,1025.45 945.8709999999999,1025.45 951.8709999999999,1031.45 951.8709999999999,1048.45 494.38300000000004,1048.45" fill="var(--bg)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <polygon points="945.8709999999999,1025.45 951.8709999999999,1031.45 945.8709999999999,1031.45" fill="var(--_inner-stroke)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="723.127" y="1036.95" font-size="11" text-anchor="middle" font-weight="400" fill="var(--_text-muted)" dy="3.8499999999999996">Present prior AI disclosure of processing, external transmission, and retention/deletion rules</text>
+</g>
+<g class="actor" data-id="L" data-label="Learner" data-type="actor">
+  <g transform="translate(54.169,32) scale(1.5)">
+    <path d="M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z" fill="none" stroke="var(--_line)" stroke-width="0.6666666666666666" />
+    <path d="M15 10C15 11.6569 13.6569 13 12 13C10.3431 13 9 11.6569 9 10C9 8.34315 10.3431 7 12 7C13.6569 7 15 8.34315 15 10Z" fill="none" stroke="var(--_line)" stroke-width="0.6666666666666666" />
+    <path d="M5.62842 18.3563C7.08963 17.0398 9.39997 16 12 16C14.6 16 16.9104 17.0398 18.3716 18.3563" fill="none" stroke="var(--_line)" stroke-width="0.6666666666666666" />
+  </g>
+  <text x="72.169" y="84" font-size="13" text-anchor="middle" font-weight="500" fill="var(--_text)" dy="4.55">Learner</text>
+</g>
+<g class="actor" data-id="M" data-label="Human Mentor" data-type="actor">
+  <g transform="translate(195.55,32) scale(1.5)">
+    <path d="M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z" fill="none" stroke="var(--_line)" stroke-width="0.6666666666666666" />
+    <path d="M15 10C15 11.6569 13.6569 13 12 13C10.3431 13 9 11.6569 9 10C9 8.34315 10.3431 7 12 7C13.6569 7 15 8.34315 15 10Z" fill="none" stroke="var(--_line)" stroke-width="0.6666666666666666" />
+    <path d="M5.62842 18.3563C7.08963 17.0398 9.39997 16 12 16C14.6 16 16.9104 17.0398 18.3716 18.3563" fill="none" stroke="var(--_line)" stroke-width="0.6666666666666666" />
+  </g>
+  <text x="213.55" y="84" font-size="13" text-anchor="middle" font-weight="500" fill="var(--_text)" dy="4.55">Human Mentor</text>
+</g>
+<g class="actor" data-id="Web" data-label="Next.js Client" data-type="participant">
+  <rect x="338.49250000000006" y="30" width="108.791" height="40" rx="4" ry="4" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <text x="392.88800000000003" y="50" font-size="13" text-anchor="middle" font-weight="500" fill="var(--_text)" dy="4.55">Next.js Client</text>
+</g>
+<g class="actor" data-id="API" data-label="ASP.NET Core API" data-type="participant">
+  <rect x="980.816" y="30" width="145.1" height="40" rx="4" ry="4" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <text x="1053.366" y="50" font-size="13" text-anchor="middle" font-weight="500" fill="var(--_text)" dy="4.55">ASP.NET Core API</text>
+</g>
+<g class="actor" data-id="DB" data-label="MySQL 8.0 DB" data-type="participant">
+  <rect x="1780.1895000000002" y="30" width="119.16499999999999" height="40" rx="4" ry="4" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <text x="1839.7720000000002" y="50" font-size="13" text-anchor="middle" font-weight="500" fill="var(--_text)" dy="4.55">MySQL 8.0 DB</text>
+</g>
+<g class="actor" data-id="AI" data-label="External AI Service" data-type="participant">
+  <rect x="1939.3545000000001" y="30" width="148.06400000000002" height="40" rx="4" ry="4" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <text x="2013.3865" y="50" font-size="13" text-anchor="middle" font-weight="500" fill="var(--_text)" dy="4.55">External AI Service</text>
+</g>
+</svg>

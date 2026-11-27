@@ -1,0 +1,223 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1456.9475 1478.45" width="1456.9475" height="1478.45" style="--bg:#18181B;--fg:#F4F4F5;--line:#71717A;--muted:#A1A1AA;--surface:#27272A;--border:#3F3F46;background:var(--bg)">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap');
+  text { font-family: 'Inter', system-ui, sans-serif; }
+  svg {
+    /* Derived from --bg and --fg (overridable via --line, --accent, etc.) */
+    --_text:          var(--fg);
+    --_text-sec:      var(--muted, color-mix(in srgb, var(--fg) 60%, var(--bg)));
+    --_text-muted:    var(--muted, color-mix(in srgb, var(--fg) 40%, var(--bg)));
+    --_text-faint:    color-mix(in srgb, var(--fg) 25%, var(--bg));
+    --_line:          var(--line, color-mix(in srgb, var(--fg) 50%, var(--bg)));
+    --_arrow:         var(--accent, color-mix(in srgb, var(--fg) 85%, var(--bg)));
+    --_node-fill:     var(--surface, color-mix(in srgb, var(--fg) 3%, var(--bg)));
+    --_node-stroke:   var(--border, color-mix(in srgb, var(--fg) 20%, var(--bg)));
+    --_group-fill:    var(--bg);
+    --_group-hdr:     color-mix(in srgb, var(--fg) 5%, var(--bg));
+    --_inner-stroke:  color-mix(in srgb, var(--fg) 12%, var(--bg));
+    --_key-badge:     color-mix(in srgb, var(--fg) 10%, var(--bg));
+  }
+</style>
+<defs>
+  <marker id="seq-arrow" markerWidth="8" markerHeight="5" refX="8" refY="2.5" orient="auto-start-reverse">
+    <polygon points="0 0, 8 2.5, 0 5" fill="var(--_arrow)" />
+  </marker>
+  <marker id="seq-arrow-open" markerWidth="8" markerHeight="5" refX="8" refY="2.5" orient="auto-start-reverse">
+    <polyline points="0 0, 8 2.5, 0 5" fill="none" stroke="var(--_arrow)" stroke-width="1" />
+  </marker>
+</defs>
+<line class="lifeline" data-actor="L" x1="82.169" y1="92.45" x2="82.169" y2="1448.45" stroke="var(--_line)" stroke-width="0.75" stroke-dasharray="6 4" />
+<line class="lifeline" data-actor="Web" x1="301.305" y1="70" x2="301.305" y2="1448.45" stroke="var(--_line)" stroke-width="0.75" stroke-dasharray="6 4" />
+<line class="lifeline" data-actor="API" x1="576.277" y1="70" x2="576.277" y2="1448.45" stroke="var(--_line)" stroke-width="0.75" stroke-dasharray="6 4" />
+<line class="lifeline" data-actor="DB" x1="1169.301" y1="70" x2="1169.301" y2="1448.45" stroke="var(--_line)" stroke-width="0.75" stroke-dasharray="6 4" />
+<line class="lifeline" data-actor="AI" x1="1342.9155" y1="70" x2="1342.9155" y2="1448.45" stroke="var(--_line)" stroke-width="0.75" stroke-dasharray="6 4" />
+<g class="block" data-type="opt" data-label="Learner Regenerates Recommendation Before Saving">
+  <rect x="30" y="680.45" width="1396.9475" height="370" rx="0" ry="0" fill="none" stroke="var(--_node-stroke)" stroke-width="1" />
+  <rect x="30" y="680.45" width="368" height="20" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <text x="38" y="690.45" font-size="11" font-weight="600" fill="var(--_text-sec)" dy="3.8499999999999996">opt [Learner Regenerates Recommendation Before Saving]</text>
+</g>
+<g class="block" data-type="opt" data-label="Learner Saves Recommended Roadmap">
+  <rect x="30" y="1058.45" width="1208.8835" height="370" rx="0" ry="0" fill="none" stroke="var(--_node-stroke)" stroke-width="1" />
+  <rect x="30" y="1058.45" width="288" height="20" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <text x="38" y="1068.45" font-size="11" font-weight="600" fill="var(--_text-sec)" dy="3.8499999999999996">opt [Learner Saves Recommended Roadmap]</text>
+</g>
+<g class="message" data-from="L" data-to="Web" data-label="Enter goal, track, and current knowledge" data-line-style="solid" data-arrow-head="filled" data-self="false">
+  <line x1="82.169" y1="112.45" x2="301.305" y2="112.45" stroke="var(--_line)" stroke-width="1" marker-end="url(#seq-arrow)" />
+  <rect x="83.237" y="94.3" width="217" height="16.3" rx="2" ry="2" fill="var(--bg)" />
+  <text x="191.737" y="102.45" font-size="11" text-anchor="middle" font-weight="400" fill="var(--_text-muted)" dy="3.8499999999999996">Enter goal, track, and current knowledge</text>
+</g>
+<g class="message" data-from="Web" data-to="API" data-label="POST /learning-paths (JWT Bearer)" data-line-style="solid" data-arrow-head="filled" data-self="false">
+  <line x1="301.305" y1="152.45" x2="576.277" y2="152.45" stroke="var(--_line)" stroke-width="1" marker-end="url(#seq-arrow)" />
+  <rect x="341.79100000000005" y="134.29999999999998" width="194" height="16.3" rx="2" ry="2" fill="var(--bg)" />
+  <text x="438.79100000000005" y="142.45" font-size="11" text-anchor="middle" font-weight="400" fill="var(--_text-muted)" dy="3.8499999999999996">POST /learning-paths (JWT Bearer)</text>
+</g>
+<g class="message" data-from="API" data-to="DB" data-label="Verify Learner role and save learning path" data-line-style="solid" data-arrow-head="filled" data-self="false">
+  <line x1="576.277" y1="192.45" x2="1169.301" y2="192.45" stroke="var(--_line)" stroke-width="1" marker-end="url(#seq-arrow)" />
+  <rect x="758.789" y="174.29999999999998" width="228" height="16.3" rx="2" ry="2" fill="var(--bg)" />
+  <text x="872.789" y="182.45" font-size="11" text-anchor="middle" font-weight="400" fill="var(--_text-muted)" dy="3.8499999999999996">Verify Learner role and save learning path</text>
+</g>
+<g class="message" data-from="DB" data-to="API" data-label="Saved learning path" data-line-style="dashed" data-arrow-head="filled" data-self="false">
+  <line x1="1169.301" y1="232.45" x2="576.277" y2="232.45" stroke="var(--_line)" stroke-width="1" stroke-dasharray="6 4" marker-end="url(#seq-arrow)" />
+  <rect x="816.789" y="214.29999999999998" width="112" height="16.3" rx="2" ry="2" fill="var(--bg)" />
+  <text x="872.789" y="222.45" font-size="11" text-anchor="middle" font-weight="400" fill="var(--_text-muted)" dy="3.8499999999999996">Saved learning path</text>
+</g>
+<g class="message" data-from="API" data-to="Web" data-label="201 Created learning path" data-line-style="dashed" data-arrow-head="filled" data-self="false">
+  <line x1="576.277" y1="272.45" x2="301.305" y2="272.45" stroke="var(--_line)" stroke-width="1" stroke-dasharray="6 4" marker-end="url(#seq-arrow)" />
+  <rect x="370.29100000000005" y="254.29999999999998" width="137" height="16.3" rx="2" ry="2" fill="var(--bg)" />
+  <text x="438.79100000000005" y="262.45" font-size="11" text-anchor="middle" font-weight="400" fill="var(--_text-muted)" dy="3.8499999999999996">201 Created learning path</text>
+</g>
+<g class="message" data-from="L" data-to="Web" data-label="Request AI roadmap recommendation" data-line-style="solid" data-arrow-head="filled" data-self="false">
+  <line x1="82.169" y1="327.45" x2="301.305" y2="327.45" stroke="var(--_line)" stroke-width="1" marker-end="url(#seq-arrow)" />
+  <rect x="92.737" y="309.3" width="198" height="16.3" rx="2" ry="2" fill="var(--bg)" />
+  <text x="191.737" y="317.45" font-size="11" text-anchor="middle" font-weight="400" fill="var(--_text-muted)" dy="3.8499999999999996">Request AI roadmap recommendation</text>
+</g>
+<g class="message" data-from="Web" data-to="API" data-label="POST /learning-paths/{id}/recommend (JWT Bearer)" data-line-style="solid" data-arrow-head="filled" data-self="false">
+  <line x1="301.305" y1="367.45" x2="576.277" y2="367.45" stroke="var(--_line)" stroke-width="1" marker-end="url(#seq-arrow)" />
+  <rect x="300.79100000000005" y="349.3" width="276" height="16.3" rx="2" ry="2" fill="var(--bg)" />
+  <text x="438.79100000000005" y="357.45" font-size="11" text-anchor="middle" font-weight="400" fill="var(--_text-muted)" dy="3.8499999999999996">POST /learning-paths/{id}/recommend (JWT Bearer)</text>
+</g>
+<g class="message" data-from="API" data-to="DB" data-label="Load learning path" data-line-style="solid" data-arrow-head="filled" data-self="false">
+  <line x1="576.277" y1="407.45" x2="1169.301" y2="407.45" stroke="var(--_line)" stroke-width="1" marker-end="url(#seq-arrow)" />
+  <rect x="820.289" y="389.3" width="105" height="16.3" rx="2" ry="2" fill="var(--bg)" />
+  <text x="872.789" y="397.45" font-size="11" text-anchor="middle" font-weight="400" fill="var(--_text-muted)" dy="3.8499999999999996">Load learning path</text>
+</g>
+<g class="message" data-from="API" data-to="API" data-label="Verify authenticated caller holds Learner role and owns this learning path" data-line-style="solid" data-arrow-head="filled" data-self="true">
+  <polyline points="576.277,447.45 606.277,447.45 606.277,467.45 576.277,467.45" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#seq-arrow)" />
+  <rect x="611.277" y="449.3" width="383" height="16.3" rx="2" ry="2" fill="var(--bg)" />
+  <text x="614.277" y="457.45" font-size="11" text-anchor="start" font-weight="400" fill="var(--_text-muted)" dy="3.8499999999999996">Verify authenticated caller holds Learner role and owns this learning path</text>
+</g>
+<g class="message" data-from="API" data-to="AI" data-label="Request roadmap recommendation from goal, track, and knowledge" data-line-style="solid" data-arrow-head="filled" data-self="false">
+  <line x1="576.277" y1="517.45" x2="1342.9155" y2="517.45" stroke="var(--_line)" stroke-width="1" marker-end="url(#seq-arrow)" />
+  <rect x="785.09625" y="499.30000000000007" width="349" height="16.3" rx="2" ry="2" fill="var(--bg)" />
+  <text x="959.59625" y="507.45000000000005" font-size="11" text-anchor="middle" font-weight="400" fill="var(--_text-muted)" dy="3.8499999999999996">Request roadmap recommendation from goal, track, and knowledge</text>
+</g>
+<g class="message" data-from="AI" data-to="API" data-label="Draft roadmap recommendation" data-line-style="dashed" data-arrow-head="filled" data-self="false">
+  <line x1="1342.9155" y1="557.45" x2="576.277" y2="557.45" stroke="var(--_line)" stroke-width="1" stroke-dasharray="6 4" marker-end="url(#seq-arrow)" />
+  <rect x="875.59625" y="539.3000000000001" width="168" height="16.3" rx="2" ry="2" fill="var(--bg)" />
+  <text x="959.59625" y="547.45" font-size="11" text-anchor="middle" font-weight="400" fill="var(--_text-muted)" dy="3.8499999999999996">Draft roadmap recommendation</text>
+</g>
+<g class="message" data-from="API" data-to="Web" data-label="200 OK draft recommendation (not saved in database)" data-line-style="dashed" data-arrow-head="filled" data-self="false">
+  <line x1="576.277" y1="597.45" x2="301.305" y2="597.45" stroke="var(--_line)" stroke-width="1" stroke-dasharray="6 4" marker-end="url(#seq-arrow)" />
+  <rect x="299.79100000000005" y="579.3000000000001" width="278" height="16.3" rx="2" ry="2" fill="var(--bg)" />
+  <text x="438.79100000000005" y="587.45" font-size="11" text-anchor="middle" font-weight="400" fill="var(--_text-muted)" dy="3.8499999999999996">200 OK draft recommendation (not saved in database)</text>
+</g>
+<g class="message" data-from="Web" data-to="L" data-label="Display draft roadmap" data-line-style="dashed" data-arrow-head="filled" data-self="false">
+  <line x1="301.305" y1="637.45" x2="82.169" y2="637.45" stroke="var(--_line)" stroke-width="1" stroke-dasharray="6 4" marker-end="url(#seq-arrow)" />
+  <rect x="131.237" y="619.3000000000001" width="121" height="16.3" rx="2" ry="2" fill="var(--bg)" />
+  <text x="191.737" y="627.45" font-size="11" text-anchor="middle" font-weight="400" fill="var(--_text-muted)" dy="3.8499999999999996">Display draft roadmap</text>
+</g>
+<g class="message" data-from="L" data-to="Web" data-label="Request another recommendation" data-line-style="solid" data-arrow-head="filled" data-self="false">
+  <line x1="82.169" y1="720.45" x2="301.305" y2="720.45" stroke="var(--_line)" stroke-width="1" marker-end="url(#seq-arrow)" />
+  <rect x="101.237" y="702.3000000000001" width="181" height="16.3" rx="2" ry="2" fill="var(--bg)" />
+  <text x="191.737" y="710.45" font-size="11" text-anchor="middle" font-weight="400" fill="var(--_text-muted)" dy="3.8499999999999996">Request another recommendation</text>
+</g>
+<g class="message" data-from="Web" data-to="API" data-label="POST /learning-paths/{id}/regenerate (JWT Bearer)" data-line-style="solid" data-arrow-head="filled" data-self="false">
+  <line x1="301.305" y1="760.45" x2="576.277" y2="760.45" stroke="var(--_line)" stroke-width="1" marker-end="url(#seq-arrow)" />
+  <rect x="301.29100000000005" y="742.3000000000001" width="275" height="16.3" rx="2" ry="2" fill="var(--bg)" />
+  <text x="438.79100000000005" y="750.45" font-size="11" text-anchor="middle" font-weight="400" fill="var(--_text-muted)" dy="3.8499999999999996">POST /learning-paths/{id}/regenerate (JWT Bearer)</text>
+</g>
+<g class="message" data-from="API" data-to="DB" data-label="Load learning path and verify no saved roadmap exists" data-line-style="solid" data-arrow-head="filled" data-self="false">
+  <line x1="576.277" y1="800.45" x2="1169.301" y2="800.45" stroke="var(--_line)" stroke-width="1" marker-end="url(#seq-arrow)" />
+  <rect x="728.289" y="782.3000000000001" width="289" height="16.3" rx="2" ry="2" fill="var(--bg)" />
+  <text x="872.789" y="790.45" font-size="11" text-anchor="middle" font-weight="400" fill="var(--_text-muted)" dy="3.8499999999999996">Load learning path and verify no saved roadmap exists</text>
+</g>
+<g class="message" data-from="API" data-to="API" data-label="Verify authenticated caller holds Learner role and owns this learning path" data-line-style="solid" data-arrow-head="filled" data-self="true">
+  <polyline points="576.277,840.45 606.277,840.45 606.277,860.45 576.277,860.45" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#seq-arrow)" />
+  <rect x="611.277" y="842.3000000000001" width="383" height="16.3" rx="2" ry="2" fill="var(--bg)" />
+  <text x="614.277" y="850.45" font-size="11" text-anchor="start" font-weight="400" fill="var(--_text-muted)" dy="3.8499999999999996">Verify authenticated caller holds Learner role and owns this learning path</text>
+</g>
+<g class="message" data-from="API" data-to="AI" data-label="Request new roadmap recommendation" data-line-style="solid" data-arrow-head="filled" data-self="false">
+  <line x1="576.277" y1="910.45" x2="1342.9155" y2="910.45" stroke="var(--_line)" stroke-width="1" marker-end="url(#seq-arrow)" />
+  <rect x="855.09625" y="892.3000000000001" width="209" height="16.3" rx="2" ry="2" fill="var(--bg)" />
+  <text x="959.59625" y="900.45" font-size="11" text-anchor="middle" font-weight="400" fill="var(--_text-muted)" dy="3.8499999999999996">Request new roadmap recommendation</text>
+</g>
+<g class="message" data-from="AI" data-to="API" data-label="New draft roadmap recommendation" data-line-style="dashed" data-arrow-head="filled" data-self="false">
+  <line x1="1342.9155" y1="950.45" x2="576.277" y2="950.45" stroke="var(--_line)" stroke-width="1" stroke-dasharray="6 4" marker-end="url(#seq-arrow)" />
+  <rect x="864.09625" y="932.3000000000001" width="191" height="16.3" rx="2" ry="2" fill="var(--bg)" />
+  <text x="959.59625" y="940.45" font-size="11" text-anchor="middle" font-weight="400" fill="var(--_text-muted)" dy="3.8499999999999996">New draft roadmap recommendation</text>
+</g>
+<g class="message" data-from="API" data-to="Web" data-label="200 OK draft recommendation (not saved in database)" data-line-style="dashed" data-arrow-head="filled" data-self="false">
+  <line x1="576.277" y1="990.45" x2="301.305" y2="990.45" stroke="var(--_line)" stroke-width="1" stroke-dasharray="6 4" marker-end="url(#seq-arrow)" />
+  <rect x="299.79100000000005" y="972.3000000000001" width="278" height="16.3" rx="2" ry="2" fill="var(--bg)" />
+  <text x="438.79100000000005" y="980.45" font-size="11" text-anchor="middle" font-weight="400" fill="var(--_text-muted)" dy="3.8499999999999996">200 OK draft recommendation (not saved in database)</text>
+</g>
+<g class="message" data-from="Web" data-to="L" data-label="Display regenerated draft roadmap" data-line-style="dashed" data-arrow-head="filled" data-self="false">
+  <line x1="301.305" y1="1030.45" x2="82.169" y2="1030.45" stroke="var(--_line)" stroke-width="1" stroke-dasharray="6 4" marker-end="url(#seq-arrow)" />
+  <rect x="97.737" y="1012.3000000000001" width="188" height="16.3" rx="2" ry="2" fill="var(--bg)" />
+  <text x="191.737" y="1020.45" font-size="11" text-anchor="middle" font-weight="400" fill="var(--_text-muted)" dy="3.8499999999999996">Display regenerated draft roadmap</text>
+</g>
+<g class="message" data-from="L" data-to="Web" data-label="Save recommended roadmap" data-line-style="solid" data-arrow-head="filled" data-self="false">
+  <line x1="82.169" y1="1098.45" x2="301.305" y2="1098.45" stroke="var(--_line)" stroke-width="1" marker-end="url(#seq-arrow)" />
+  <rect x="112.237" y="1080.3" width="159" height="16.3" rx="2" ry="2" fill="var(--bg)" />
+  <text x="191.737" y="1088.45" font-size="11" text-anchor="middle" font-weight="400" fill="var(--_text-muted)" dy="3.8499999999999996">Save recommended roadmap</text>
+</g>
+<g class="message" data-from="Web" data-to="API" data-label="POST /learning-paths/{id}/roadmap (JWT Bearer)" data-line-style="solid" data-arrow-head="filled" data-self="false">
+  <line x1="301.305" y1="1138.45" x2="576.277" y2="1138.45" stroke="var(--_line)" stroke-width="1" marker-end="url(#seq-arrow)" />
+  <rect x="307.79100000000005" y="1120.3" width="262" height="16.3" rx="2" ry="2" fill="var(--bg)" />
+  <text x="438.79100000000005" y="1128.45" font-size="11" text-anchor="middle" font-weight="400" fill="var(--_text-muted)" dy="3.8499999999999996">POST /learning-paths/{id}/roadmap (JWT Bearer)</text>
+</g>
+<g class="message" data-from="API" data-to="DB" data-label="Load learning path and verify at most one saved roadmap" data-line-style="solid" data-arrow-head="filled" data-self="false">
+  <line x1="576.277" y1="1178.45" x2="1169.301" y2="1178.45" stroke="var(--_line)" stroke-width="1" marker-end="url(#seq-arrow)" />
+  <rect x="723.289" y="1160.3" width="299" height="16.3" rx="2" ry="2" fill="var(--bg)" />
+  <text x="872.789" y="1168.45" font-size="11" text-anchor="middle" font-weight="400" fill="var(--_text-muted)" dy="3.8499999999999996">Load learning path and verify at most one saved roadmap</text>
+</g>
+<g class="message" data-from="API" data-to="API" data-label="Verify authenticated caller holds Learner role, owns this learning path, and validate learner-owned roadmap link" data-line-style="solid" data-arrow-head="filled" data-self="true">
+  <polyline points="576.277,1218.45 606.277,1218.45 606.277,1238.45 576.277,1238.45" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#seq-arrow)" />
+  <rect x="611.277" y="1220.3" width="577" height="16.3" rx="2" ry="2" fill="var(--bg)" />
+  <text x="614.277" y="1228.45" font-size="11" text-anchor="start" font-weight="400" fill="var(--_text-muted)" dy="3.8499999999999996">Verify authenticated caller holds Learner role, owns this learning path, and validate learner-owned roadmap link</text>
+</g>
+<g class="message" data-from="API" data-to="DB" data-label="Save learner-owned roadmap and ordered topics" data-line-style="solid" data-arrow-head="filled" data-self="false">
+  <line x1="576.277" y1="1288.45" x2="1169.301" y2="1288.45" stroke="var(--_line)" stroke-width="1" marker-end="url(#seq-arrow)" />
+  <rect x="741.789" y="1270.3" width="262" height="16.3" rx="2" ry="2" fill="var(--bg)" />
+  <text x="872.789" y="1278.45" font-size="11" text-anchor="middle" font-weight="400" fill="var(--_text-muted)" dy="3.8499999999999996">Save learner-owned roadmap and ordered topics</text>
+</g>
+<g class="message" data-from="DB" data-to="API" data-label="Saved roadmap and ordered topics" data-line-style="dashed" data-arrow-head="filled" data-self="false">
+  <line x1="1169.301" y1="1328.45" x2="576.277" y2="1328.45" stroke="var(--_line)" stroke-width="1" stroke-dasharray="6 4" marker-end="url(#seq-arrow)" />
+  <rect x="777.789" y="1310.3" width="190" height="16.3" rx="2" ry="2" fill="var(--bg)" />
+  <text x="872.789" y="1318.45" font-size="11" text-anchor="middle" font-weight="400" fill="var(--_text-muted)" dy="3.8499999999999996">Saved roadmap and ordered topics</text>
+</g>
+<g class="message" data-from="API" data-to="Web" data-label="201 Created saved roadmap" data-line-style="dashed" data-arrow-head="filled" data-self="false">
+  <line x1="576.277" y1="1368.45" x2="301.305" y2="1368.45" stroke="var(--_line)" stroke-width="1" stroke-dasharray="6 4" marker-end="url(#seq-arrow)" />
+  <rect x="363.79100000000005" y="1350.3" width="150" height="16.3" rx="2" ry="2" fill="var(--bg)" />
+  <text x="438.79100000000005" y="1358.45" font-size="11" text-anchor="middle" font-weight="400" fill="var(--_text-muted)" dy="3.8499999999999996">201 Created saved roadmap</text>
+</g>
+<g class="message" data-from="Web" data-to="L" data-label="Display saved roadmap" data-line-style="dashed" data-arrow-head="filled" data-self="false">
+  <line x1="301.305" y1="1408.45" x2="82.169" y2="1408.45" stroke="var(--_line)" stroke-width="1" stroke-dasharray="6 4" marker-end="url(#seq-arrow)" />
+  <rect x="126.737" y="1390.3" width="130" height="16.3" rx="2" ry="2" fill="var(--bg)" />
+  <text x="191.737" y="1398.45" font-size="11" text-anchor="middle" font-weight="400" fill="var(--_text-muted)" dy="3.8499999999999996">Display saved roadmap</text>
+</g>
+<g class="note" data-position="over" data-actors="Web,API">
+  <polygon points="199.0580000000001,280.45 672.524,280.45 678.524,286.45 678.524,303.45 199.0580000000001,303.45" fill="var(--bg)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <polygon points="672.524,280.45 678.524,286.45 672.524,286.45" fill="var(--_inner-stroke)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="438.79100000000005" y="291.95" font-size="11" text-anchor="middle" font-weight="400" fill="var(--_text-muted)" dy="3.8499999999999996">Present prior AI disclosure of data processing, external transmission, and retention/deletion rules</text>
+</g>
+<g class="note" data-position="over" data-actors="Web,API">
+  <polygon points="210.0470000000001,645.45 661.535,645.45 667.535,651.45 667.535,668.45 210.0470000000001,668.45" fill="var(--bg)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <polygon points="661.535,645.45 667.535,651.45 661.535,651.45" fill="var(--_inner-stroke)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="438.79100000000005" y="656.95" font-size="11" text-anchor="middle" font-weight="400" fill="var(--_text-muted)" dy="3.8499999999999996">Present prior AI disclosure of processing, external transmission, and retention/deletion rules</text>
+</g>
+<g class="actor" data-id="L" data-label="Learner" data-type="actor">
+  <g transform="translate(64.169,32) scale(1.5)">
+    <path d="M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z" fill="none" stroke="var(--_line)" stroke-width="0.6666666666666666" />
+    <path d="M15 10C15 11.6569 13.6569 13 12 13C10.3431 13 9 11.6569 9 10C9 8.34315 10.3431 7 12 7C13.6569 7 15 8.34315 15 10Z" fill="none" stroke="var(--_line)" stroke-width="0.6666666666666666" />
+    <path d="M5.62842 18.3563C7.08963 17.0398 9.39997 16 12 16C14.6 16 16.9104 17.0398 18.3716 18.3563" fill="none" stroke="var(--_line)" stroke-width="0.6666666666666666" />
+  </g>
+  <text x="82.169" y="84" font-size="13" text-anchor="middle" font-weight="500" fill="var(--_text)" dy="4.55">Learner</text>
+</g>
+<g class="actor" data-id="Web" data-label="Next.js Client" data-type="participant">
+  <rect x="246.9095" y="30" width="108.791" height="40" rx="4" ry="4" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <text x="301.305" y="50" font-size="13" text-anchor="middle" font-weight="500" fill="var(--_text)" dy="4.55">Next.js Client</text>
+</g>
+<g class="actor" data-id="API" data-label="ASP.NET Core API" data-type="participant">
+  <rect x="503.72700000000003" y="30" width="145.1" height="40" rx="4" ry="4" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <text x="576.277" y="50" font-size="13" text-anchor="middle" font-weight="500" fill="var(--_text)" dy="4.55">ASP.NET Core API</text>
+</g>
+<g class="actor" data-id="DB" data-label="MySQL 8.0 DB" data-type="participant">
+  <rect x="1109.7185" y="30" width="119.16499999999999" height="40" rx="4" ry="4" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <text x="1169.301" y="50" font-size="13" text-anchor="middle" font-weight="500" fill="var(--_text)" dy="4.55">MySQL 8.0 DB</text>
+</g>
+<g class="actor" data-id="AI" data-label="External AI Service" data-type="participant">
+  <rect x="1268.8835000000001" y="30" width="148.06400000000002" height="40" rx="4" ry="4" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <text x="1342.9155" y="50" font-size="13" text-anchor="middle" font-weight="500" fill="var(--_text)" dy="4.55">External AI Service</text>
+</g>
+</svg>
